@@ -14,9 +14,10 @@ const { ValidationError } = require("sequelize");
 const app = express();
 
 // ...
-
+// adding a new comment here, let's see how this works
 // here's a comment to test push to main and pull request!
 
+// adding a space lower too!
 app.use(morgan("dev"));
 
 app.use(cookieParser());
