@@ -14,10 +14,7 @@ const { ValidationError } = require("sequelize");
 const app = express();
 
 // ...
-// adding a new comment here, let's see how this works
-// here's a comment to test push to main and pull request!
 
-// adding a space lower too!
 app.use(morgan("dev"));
 
 app.use(cookieParser());
@@ -81,7 +78,5 @@ app.use((err, _req, res, _next) => {
     stack: isProduction ? null : err.stack,
   });
 });
-// going to add a comment here and test this too
-// maybe a multi-liner will break it? lol
 
 module.exports = app;
