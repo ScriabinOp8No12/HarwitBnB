@@ -67,7 +67,6 @@ app.use((err, _req, _res, next) => {
   }
   next(err);
 });
-// test comment here!
 
 app.use((err, _req, res, _next) => {
   res.status(err.status || 500);
