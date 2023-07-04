@@ -2,6 +2,7 @@
 const router = require("express").Router();
 const sessionRouter = require("./session.js");
 const usersRouter = require("./users.js");
+const spotsRouter = require("./spots.js"); // NEED TO ADD THESE HERE LATER ONCE WE CREATE THE ROUTERS!
 const { restoreUser } = require("../../utils/auth.js");
 
 // Connect restoreUser middleware to the API router
