@@ -1,13 +1,12 @@
 "use strict";
 
-// this block below HAS to go in every migration and seeder that we create!
-let options = {};
-if (process.env.NODE_ENV === "production") {
-  options.schema = process.env.SCHEMA; // define your schema in options object
-}
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
+    // this block below HAS to go in every migration and seeder that we create!
+    let options = {};
+    if (process.env.NODE_ENV === "production") {
+      options.schema = process.env.SCHEMA; // define your schema in options object
+    }
     return queryInterface.createTable(
       "Users",
       {
@@ -55,7 +54,11 @@ module.exports = {
     );
   },
   down: async (queryInterface, Sequelize) => {
-    options.tableName = "Users";
+    // define the options object locally within the down function
+    let options = { tableName: "Users" };
+    if (process.env.NODE_ENV === "production") {
+      options.schema = process.env.SCHEMA;
+    }
     return queryInterface.dropTable(options);
   },
 };

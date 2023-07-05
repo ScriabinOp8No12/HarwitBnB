@@ -2,14 +2,12 @@
 
 /** @type {import('sequelize-cli').Migration} */
 
-let options = {};
-if (process.env.NODE_ENV === "production") {
-  options.schema = process.env.SCHEMA; // define your schema in options object
-}
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    options.tableName = "Reviews";
+    let options = { tableName: "Reviews" };
+    if (process.env.NODE_ENV === "production") {
+      options.schema = process.env.SCHEMA; // define your schema in options object
+    }
     return queryInterface.bulkInsert(
       options,
       [
@@ -42,7 +40,11 @@ module.exports = {
     );
   },
   down: async (queryInterface, Sequelize) => {
-    options.tableName = "Reviews";
+    let options = { tableName: "Reviews" };
+    if (process.env.NODE_ENV === "production") {
+      options.schema = process.env.SCHEMA;
+    }
+
     await queryInterface.bulkDelete(options, null, {});
   },
 };
