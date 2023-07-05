@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Review extends Model {
     /**
@@ -10,17 +8,36 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Review.belongsTo(models.User, { foreignKey: "userId" });
+      Review.belongsTo(models.Spot, { foreignKey: "spotId" });
     }
   }
-  Review.init({
-    spotId: DataTypes.INTEGER,
-    userId: DataTypes.INTEGER,
-    review: DataTypes.STRING,
-    stars: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'Review',
-  });
+  Review.init(
+    {
+      spotId: {
+        // added allownull
+        allowNull: false,
+        type: DataTypes.INTEGER,
+      },
+      userId: {
+        // added allownull
+        allowNull: false,
+        type: DataTypes.INTEGER,
+      },
+      review: DataTypes.STRING,
+      stars: {
+        type: DataTypes.INTEGER,
+        // add a custom validator allowing stars to be from 1 to 5 only
+        validate: {
+          min: 1,
+          max: 5,
+        },
+      },
+    },
+    {
+      sequelize,
+      modelName: "Review",
+    }
+  );
   return Review;
 };
