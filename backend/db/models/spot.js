@@ -56,6 +56,10 @@ module.exports = (sequelize, DataTypes) => {
       price: {
         allowNull: false,
         type: DataTypes.DECIMAL,
+        // add custom validator that price has to be 0 or greater
+        validate: {
+          min: 0,
+        },
       },
     },
     {
