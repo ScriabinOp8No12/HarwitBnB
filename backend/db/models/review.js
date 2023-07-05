@@ -25,7 +25,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
       },
       review: DataTypes.STRING,
-      stars: DataTypes.INTEGER,
+      stars: {
+        type: DataTypes.INTEGER,
+        // add a custom validator allowing stars to be from 1 to 5 only
+        validate: {
+          min: 1,
+          max: 5,
+        },
+      },
     },
     {
       sequelize,
