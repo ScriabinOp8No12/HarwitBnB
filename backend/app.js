@@ -8,6 +8,7 @@ const cookieParser = require("cookie-parser");
 
 const { environment } = require("./config");
 const isProduction = environment === "production";
+// we are already getting all the routes from the folder, so no need to require individual routes
 const routes = require("./routes");
 const { ValidationError } = require("sequelize");
 
