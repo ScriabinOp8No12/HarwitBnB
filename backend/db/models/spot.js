@@ -40,10 +40,19 @@ module.exports = (sequelize, DataTypes) => {
       lat: {
         allowNull: false,
         type: DataTypes.DECIMAL,
+        // make sure latitude is between -90 and 90
+        validate: {
+          min: -90,
+          max: 90,
+        },
       },
       lng: {
         allowNull: false,
         type: DataTypes.DECIMAL,
+        validate: {
+          min: -180,
+          max: 180,
+        },
       },
       name: {
         allowNull: false,
