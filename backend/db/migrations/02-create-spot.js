@@ -1,15 +1,14 @@
 "use strict";
-/** @type {import('sequelize-cli').Migration} */
+
+// this block below HAS to go in every migration and seeder that we create!
+let options = {};
+
+if (process.env.NODE_ENV === "production") {
+  options.schema = process.env.SCHEMA; // define your schema in options object
+}
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    // this block below HAS to go in every migration and seeder that we create!
-    let options = {};
-    // added this line below so I can push changes to github on main
-    console.log(options);
-    if (process.env.NODE_ENV === "production") {
-      options.schema = process.env.SCHEMA; // define your schema in options object
-    }
     await queryInterface.createTable(
       "Spots",
       {
@@ -23,12 +22,16 @@ module.exports = {
           // added allowNull false
           allowNull: false,
           type: Sequelize.INTEGER,
+          // added on delete cascade here
+          onDelete: "CASCADE",
           // added foreign key reference to primary key of id in Users table
           references: { model: "Users", key: "id" },
         },
         address: {
           allowNull: false,
           type: Sequelize.STRING,
+          // added unique true here because can't have duplicate address
+          unique: true,
         },
         city: {
           allowNull: false,
@@ -75,10 +78,6 @@ module.exports = {
     );
   },
   async down(queryInterface, Sequelize) {
-    let options = { tableName: "Spots" };
-    if (process.env.NODE_ENV === "production") {
-      options.schema = process.env.SCHEMA;
-    }
-    await queryInterface.dropTable(options);
+    await queryInterface.dropTable("Spots", options);
   },
 };

@@ -1,13 +1,13 @@
 "use strict";
-/** @type {import('sequelize-cli').Migration} */
+
+// this block below HAS to go in every migration and seeder that we create!
+let options = {};
+if (process.env.NODE_ENV === "production") {
+  options.schema = process.env.SCHEMA; // define your schema in options object
+}
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    // this block below HAS to go in every migration and seeder that we create!
-    let options = {};
-    if (process.env.NODE_ENV === "production") {
-      options.schema = process.env.SCHEMA; // define your schema in options object
-    }
     await queryInterface.createTable(
       "Reviews",
       {
@@ -50,10 +50,6 @@ module.exports = {
     );
   },
   async down(queryInterface, Sequelize) {
-    let options = { tableName: "Reviews" };
-    if (process.env.NODE_ENV === "production") {
-      options.schema = process.env.SCHEMA;
-    }
-    await queryInterface.dropTable(options);
+    await queryInterface.dropTable("Reviews", options);
   },
 };
