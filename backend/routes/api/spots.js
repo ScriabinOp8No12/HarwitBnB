@@ -26,8 +26,9 @@ router.get("/", async (req, res) => {
         ],
       },
     ],
-    // need a group option to use AVG aggregate function when across multiple tables (render needs Reviews.id!!)
-    group: ["Spot.id", "SpotImages.id", "Reviews.id"],
+    // need a group option to use AVG aggregate function when across multiple tables (render needs Reviews.id to not throw error, but then it fails to get the average)
+    // group: ["Spot.id", "SpotImages.id", "Reviews.id"],
+    group: ["Spot.id", "SpotImages.id"],
   });
   return res.json(spots);
 });
