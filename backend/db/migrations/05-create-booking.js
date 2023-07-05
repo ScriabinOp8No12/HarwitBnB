@@ -33,9 +33,12 @@ module.exports = {
           references: { model: "Users", key: "id" },
         },
         startDate: {
+          // made dates not be null either
+          allowNull: false,
           type: Sequelize.DATE,
         },
         endDate: {
+          allowNull: false,
           type: Sequelize.DATE,
         },
         createdAt: {
