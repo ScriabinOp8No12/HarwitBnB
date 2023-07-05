@@ -20,11 +20,15 @@ router.get("/", async (req, res) => {
     ],
   });
 
-  // Calculate the average rating for each spot
+  // Calculate the average rating for each spot by looping through the spot array we queried above
   spots.forEach((spot) => {
+    // access the reviews from the spots
     const reviews = spot.Reviews;
+    // reduce it to one value, start accumulator at 0
     const totalStars = reviews.reduce((acc, review) => acc + review.stars, 0);
+    // now we divide that value by the amount of reviews we have to get the average
     const avgRating = totalStars / reviews.length;
+    // now we alias the value to be 'avgRating'
     spot.dataValues.avgRating = avgRating;
   });
 
