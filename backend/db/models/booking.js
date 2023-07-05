@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
           isDate: true,
           isAfterToday(value) {
             // create new Date object, and pass in value of the startDate's value, then compare it to the current Date object (date right now)
-            if (new Date(value) < new Date()) {
+            if (new Date(value) <= new Date()) {
               throw new Error("Start date must be after today!");
             }
           },
@@ -45,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
           isAfterStartDate(value) {
             // same logic as isAfterToday() except now we compare the endDate's value with the startDate
             // use this.startDate to compare to the current Booking instance
-            if (value < this.startDate) {
+            if (value <= this.startDate) {
               throw new Error("End date must be after start date!");
             }
           },
