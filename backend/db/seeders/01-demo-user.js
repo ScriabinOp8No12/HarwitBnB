@@ -1,14 +1,13 @@
 "use strict";
 const bcrypt = require("bcryptjs");
 
-let options = {};
-if (process.env.NODE_ENV === "production") {
-  options.schema = process.env.SCHEMA; // define your schema in options object
-}
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    options.tableName = "Users";
+    let options = { tableName: "Users" };
+    if (process.env.NODE_ENV === "production") {
+      options.schema = process.env.SCHEMA; // define your schema in options object
+    }
+
     return queryInterface.bulkInsert(
       options,
       [
@@ -39,7 +38,12 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    options.tableName = "Users";
+    // define the options object locally within the down function
+    let options = { tableName: "Users" };
+    if (process.env.NODE_ENV === "production") {
+      options.schema = process.env.SCHEMA;
+    }
+
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(
       options,
