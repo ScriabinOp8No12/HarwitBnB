@@ -1,13 +1,15 @@
 "use strict";
 const bcrypt = require("bcryptjs");
 
+let options = {};
+if (process.env.NODE_ENV === "production") {
+  options.schema = process.env.SCHEMA; // define your schema in options object
+}
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    let options = {};
-    if (process.env.NODE_ENV === "production") {
-      options.schema = process.env.SCHEMA; // define your schema in options object
-    }
-
+    // put tableName here inside up function instead of outside
+    options.tableName = "Users";
     return queryInterface.bulkInsert(
       options,
       [
@@ -38,17 +40,14 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    // define the options object locally within the down function
-    let options = { tableName: "Users" };
-    if (process.env.NODE_ENV === "production") {
-      options.schema = process.env.SCHEMA;
-    }
-
     const Op = Sequelize.Op;
+    // added this line here, removed the let options block of code
+    options.tableName = "Users";
     return queryInterface.bulkDelete(
       options,
       {
-        username: { [Op.in]: ["Demo-lition", "FakeUser1", "FakeUser2"] },
+        // needed to rename the usernames below to match what we changed in seeder data!
+        username: { [Op.in]: ["Nathan", "Nathann", "Nathannn"] },
       },
       {}
     );
