@@ -26,9 +26,11 @@ module.exports = {
           references: { model: "Spots", key: "id" },
         },
         url: {
+          allowNull: false,
           type: Sequelize.STRING,
         },
         preview: {
+          allowNull: false,
           type: Sequelize.BOOLEAN,
         },
         createdAt: {
