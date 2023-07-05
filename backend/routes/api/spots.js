@@ -13,7 +13,8 @@ router.get("/", async (req, res) => {
     include: [
       {
         model: SpotImage,
-        where: { preview: true },
+        // this line below would weed out 1 of the 3 seed data, so remove it since we need all the spots!
+        // where: { preview: true },
       },
       {
         model: Review,
