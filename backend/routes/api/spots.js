@@ -196,30 +196,27 @@ router.get("/:spotId", async (req, res) => {
         attributes: ["id", "firstName", "lastName"],
       },
     ],
-    attributes: {
-      include: [
-        // use raw sql below, if Model is "Review", then render wants table names like "reviews"
-        [
-          Sequelize.literal(`(
-            SELECT COUNT(*)
-            FROM reviews
-            WHERE reviews.spotId = Spot.id
-          )`),
-          "numReviews",
-        ],
-        [
-          Sequelize.literal(`(
-            SELECT AVG(stars)
-            FROM reviews
-            WHERE reviews.spotId = Spot.id
-          )`),
-          "avgStarRating",
-        ],
-      ],
-    },
   });
 
-  return res.json(spotDetails);
+  const reviewData = await Review.findOne({
+    where: { spotId },
+    attributes: [
+      [Sequelize.fn("COUNT", Sequelize.col("id")), "numReviews"],
+      [Sequelize.fn("AVG", Sequelize.col("stars")), "avgStarRating"],
+    ],
+    raw: true,
+  });
+
+  const { SpotImages, Owner, ...rest } = spotDetails.toJSON();
+  const result = {
+    ...rest,
+    numReviews: reviewData.numReviews,
+    avgStarRating: reviewData.avgStarRating,
+    SpotImages,
+    Owner,
+  };
+
+  return res.json(result);
 });
 
 module.exports = router;
