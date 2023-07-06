@@ -198,19 +198,20 @@ router.get("/:spotId", async (req, res) => {
     ],
     attributes: {
       include: [
+        // use raw sql below, if Model is "Review", then render wants table names like "reviews"
         [
           Sequelize.literal(`(
             SELECT COUNT(*)
-            FROM Reviews
-            WHERE Reviews.spotId = Spot.id
+            FROM reviews
+            WHERE reviews.spotId = Spot.id
           )`),
           "numReviews",
         ],
         [
           Sequelize.literal(`(
             SELECT AVG(stars)
-            FROM Reviews
-            WHERE Reviews.spotId = Spot.id
+            FROM reviews
+            WHERE reviews.spotId = Spot.id
           )`),
           "avgStarRating",
         ],
@@ -219,78 +220,6 @@ router.get("/:spotId", async (req, res) => {
   });
 
   return res.json(spotDetails);
-
-  // const { spotId } = req.params;
-  // const spot = await Spot.findByPk(spotId);
-  // if (!spot) {
-  //   return res.status(404).json("Spot does not exist");
-  // }
-  // const spotDetails = await Spot.findAll({
-  //   where: { id: spotId },
-  //   include: [
-  //     {
-  //       model: SpotImage,
-  //       as: "SpotImages",
-  //       attributes: ["id", "url", "preview"],
-  //     },
-  //     {
-  //       model: User,
-  //       // alias User as Owner -> need quotes
-  //       // need to change the model now too!
-  //       as: "Owner",
-  //       // include the following values in the query
-  //       attributes: ["id", "firstName", "lastName"],
-  //     },
-  //     {
-  //       model: Review,
-  //     },
-  //   ],
-  // });
-
-  // // same logic to get the avgRating
-
-  // // Calculate the average rating for each spot by looping through the spot array we queried above
-  // const formattedSpots = spotDetails.map((spot) => {
-  //   // aggregate for COUNT -> number of reviews (drop Await?)
-  //   const numReviews = Review.count();
-  //   // access the reviews from the spots
-  //   const reviews = spot.Reviews;
-  //   // reduce it to one value, start accumulator at 0
-  //   const totalStars = reviews.reduce((acc, review) => acc + review.stars, 0);
-  //   // now we divide that value by the amount of reviews (CHANGED TO numReviews) we have to get the average
-  //   const avgStarRating = totalStars / numReviews;
-
-  //   return {
-  //     id: spot.id,
-  //     ownerId: spot.ownerId,
-  //     address: spot.address,
-  //     city: spot.city,
-  //     state: spot.state,
-  //     country: spot.country,
-  //     lat: spot.lat,
-  //     lng: spot.lng,
-  //     name: spot.name,
-  //     description: spot.description,
-  //     price: spot.price,
-  //     createdAt: spot.createdAt,
-  //     updatedAt: spot.updatedAt,
-  //     numReviews,
-  //     avgStarRating,
-  //     // map the id, url, and preview here
-  //     SpotImages: spot.SpotImages.map((image) => ({
-  //       id: image.id,
-  //       url: image.url,
-  //       preview: image.preview,
-  //     })),
-  //     // do the same with the owner's values
-  //     Owner: {
-  //       id: spot.Owner.id,
-  //       firstName: spot.Owner.firstName,
-  //       lastName: spot.Owner.lastName,
-  //     },
-  //   };
-  // });
-  // return res.json({ Spots: formattedSpots });
 });
 
 module.exports = router;
