@@ -177,21 +177,26 @@ router.get("/current", requireAuth, async (req, res) => {
 // Returns the details of a spot specified by its id
 router.get("/:spotId", async (req, res) => {
   const { spotId } = req.params;
+  // don't forget await keyword, otherwise we basically always get back an empty {}
   const spot = await Spot.findByPk(spotId);
   if (!spot) {
     return res.status(404).json({ message: "Spot couldn't be found" });
   }
 
   const spotDetails = await Spot.findOne({
+    // make sure the spotId matches the id of the Spot we want to get
     where: { id: spotId },
     include: [
       {
         model: SpotImage,
+        // when aliasing here, we need to also update the models! here we update the SpotImage model
         as: "SpotImages",
+        // attributes are what we include in the results since there are far more columns we could have included
         attributes: ["id", "url", "preview"],
       },
       {
         model: User,
+        // this alias goes in the SPOT MODEL, NOT the User model!!!
         as: "Owner",
         attributes: ["id", "firstName", "lastName"],
       },
@@ -200,22 +205,32 @@ router.get("/:spotId", async (req, res) => {
 
   const reviewData = await Review.findOne({
     where: { spotId },
+    // postgres works if we don't use group by and omit a column!
     attributes: [
+      // aggregate functions count and avg on their respective columns and then aliased, probably could have not used map
+      // on the previous endpoints and just done it this way too lol
       [Sequelize.fn("COUNT", Sequelize.col("id")), "numReviews"],
       [Sequelize.fn("AVG", Sequelize.col("stars")), "avgStarRating"],
     ],
+    // return output of query as a plain object, not Sequelize model instance!  This allows us to merge with the first/main query above
     raw: true,
   });
 
+  // below block of code orders our response the "proper way" with spread
+  // convert the "spotDetails" to json, then destructure it to get the column values we want
+  // store that in an object "result" then return that as our response at the end
   const { SpotImages, Owner, ...rest } = spotDetails.toJSON();
   const result = {
     ...rest,
+    // rest of the query result goes above this, then we put numReviews, followed by avgStarRating, then spotImages, then finally Owner last
+    // as we can see in the API docs
     numReviews: reviewData.numReviews,
     avgStarRating: reviewData.avgStarRating,
     SpotImages,
     Owner,
   };
 
+  // note that if we only return "reviewData" we only get the "numReviews" and "avgStarRating" and not the entire response we want
   return res.json(result);
 });
 
