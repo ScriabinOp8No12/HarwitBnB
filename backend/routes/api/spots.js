@@ -4,12 +4,12 @@ const express = require("express");
 const { requireAuth } = require("../../utils/auth");
 // get the spot, spotimage, AND review models, because avgRating is the "stars" column from Review table, and
 // we need the preview from the spotImage table
-const { Spot, SpotImage, Review } = require("../../db/models");
-const { UniqueConstraintError } = require("sequelize");
+const { Spot, SpotImage, Review, User } = require("../../db/models");
+const { Sequelize } = require("sequelize");
 
 const router = express.Router();
 
-// Get all spots
+// Returns all the spots [DONE!]
 router.get("/", async (req, res) => {
   const spots = await Spot.findAll({
     include: [
@@ -34,7 +34,7 @@ router.get("/", async (req, res) => {
     // Find the preview image
     const previewImage = spot.SpotImages.find((image) => image.preview);
 
-    // Create a new object with the desired properties
+    // Create a new object with the properties we want
     return {
       id: spot.id,
       ownerId: spot.ownerId,
@@ -50,7 +50,8 @@ router.get("/", async (req, res) => {
       createdAt: spot.createdAt,
       updatedAt: spot.updatedAt,
       avgRating,
-      // shows previewImage unless there's no url, then it's set to null instead
+      // Ternary -> condition ? <execute if true> : execute if false
+      // What it does: shows previewImage unless there's no url, then the value is set to null instead
       previewImage: previewImage ? previewImage.url : null,
     };
   });
@@ -58,8 +59,8 @@ router.get("/", async (req, res) => {
   return res.json({ Spots: formattedSpots });
 });
 
-// needs authorization, so we use 'requireAuth' in request below
-// create a spot endpoint
+// Needs authorization, so we use 'requireAuth' in request below
+// Creates and returns a new spot [DONE!]
 router.post("/", requireAuth, async (req, res) => {
   let {
     ownerId,
@@ -90,7 +91,7 @@ router.post("/", requireAuth, async (req, res) => {
 });
 
 // Requires Authorization
-// Create an image for a spot
+// Create and return a new image for a spot specified by id [DONE!]
 router.post("/:spotId/images", requireAuth, async (req, res) => {
   const { spotId } = req.params;
   const { url, preview } = req.body;
@@ -109,44 +110,192 @@ router.post("/:spotId/images", requireAuth, async (req, res) => {
     url,
     preview,
   });
-  return res.json(imageData);
+
+  // Create a new object with the properties we want (same trick as the first get route)
+  const formattedImageData = {
+    id: imageData.id,
+    url: imageData.url,
+    preview: imageData.preview,
+  };
+
+  return res.json(formattedImageData);
 });
 
 // Requires authorization
-// Get all Spots owned by the Current User
+// Returns all the spots owned (created) by the current user [DONE!]
 router.get("/current", requireAuth, async (req, res) => {
   // Find all the spots owned by the current logged in user
   const spots = await Spot.findAll({
     // get only the spots that the current logged in user has
     where: { ownerId: req.user.id },
-    // include the SpotImage model
-    include: [{ model: SpotImage }],
-    // only if the preview is true -> that way we can give the previewImage (url) too
-    // include: [{ model: SpotImage, where: { preview: true } }]
+    // include the SpotImage and Review model
+    include: [
+      {
+        model: SpotImage,
+      },
+      {
+        model: Review,
+      },
+    ],
   });
-  // Calculate the average rating for each spot
-  // use Promise.all to wait for all the Review.findAll() to resolve -> see Review.findAll() 4 lines below
-  const spotsRatingPreview = await Promise.all(
-    // use map instead of forEach()
-    spots.map(async (spot) => {
-      // we don't pass in review into the findAll, so it won't show up in the response
-      const reviews = await Review.findAll({ where: { spotId: spot.id } });
-      // use reduce to get the review down to one value, starting value is 0
-      const totalStars = reviews.reduce((acc, review) => acc + review.stars, 0);
-      // divide by number of total reviews
-      const avgRating = totalStars / reviews.length;
-      // Extract the URL of the first preview image
-      // const previewImage = spot.SpotImages[0].url;
 
-      // dataValues is an object that contains the raw data of the instance as key-value pairs
-      // Spot instance representing a row in the Spots table, its dataValues property would be an object containing properties like id, ownerId, address
-      // with values corresponding to the data in that row. We then alias this value as the "avgRating"
-      return { ...spot.dataValues, avgRating };
-      // also add previewImage into response
-      // return { ...spot.dataValues, avgRating, previewImage };
-    })
-  );
-  return res.json(spotsRatingPreview);
+  // Calculate the average rating for each spot by looping through the spot array we queried above
+  const formattedSpots = spots.map((spot) => {
+    // access the reviews from the spots
+    const reviews = spot.Reviews;
+    // reduce it to one value, start accumulator at 0
+    const totalStars = reviews.reduce((acc, review) => acc + review.stars, 0);
+    // now we divide that value by the amount of reviews we have to get the average
+    const avgRating = totalStars / reviews.length;
+    // Find the preview image
+    const previewImage = spot.SpotImages.find((image) => image.preview);
+
+    // Create a new object with the properties we want
+    return {
+      id: spot.id,
+      ownerId: spot.ownerId,
+      address: spot.address,
+      city: spot.city,
+      state: spot.state,
+      country: spot.country,
+      lat: spot.lat,
+      lng: spot.lng,
+      name: spot.name,
+      description: spot.description,
+      price: spot.price,
+      createdAt: spot.createdAt,
+      updatedAt: spot.updatedAt,
+      avgRating,
+      // shows previewImage unless there's no url, then it's set to null instead
+      previewImage: previewImage ? previewImage.url : null,
+    };
+  });
+
+  return res.json({ Spots: formattedSpots });
+});
+
+// Returns the details of a spot specified by its id
+router.get("/:spotId", async (req, res) => {
+  const { spotId } = req.params;
+  const spot = await Spot.findByPk(spotId, {
+    attributes: [
+      "id",
+      "ownerId",
+      "address",
+      "city",
+      "state",
+      "country",
+      "lat",
+      "lng",
+      "name",
+      "description",
+      "price",
+      "createdAt",
+      "updatedAt",
+      // aggregate functions to get the values back and alias them as different names
+      // remember to require Sequelize at the top of this file
+      [Sequelize.fn("COUNT", Sequelize.col("Reviews.id")), "numReviews"],
+      [Sequelize.fn("AVG", Sequelize.col("Reviews.stars")), "avgStarRating"],
+    ],
+    include: [
+      {
+        model: SpotImage,
+        // need to add alias to model TOO!
+        as: "SpotImages",
+        // we only want the following 3 attributes when we get our results back
+        attributes: ["id", "url", "preview"],
+      },
+      {
+        model: User,
+        // need to alias in the SPOT model NOT the User model!
+        as: "Owner",
+        attributes: ["id", "firstName", "lastName"],
+      },
+      {
+        model: Review,
+        attributes: [],
+      },
+    ],
+    group: ["Spot.id"],
+  });
+
+  if (!spot) {
+    return res.status(404).json({ message: "Spot couldn't be found" });
+  }
+
+  return res.json(spot);
+
+  // const { spotId } = req.params;
+  // const spot = await Spot.findByPk(spotId);
+  // if (!spot) {
+  //   return res.status(404).json("Spot does not exist");
+  // }
+  // const spotDetails = await Spot.findAll({
+  //   where: { id: spotId },
+  //   include: [
+  //     {
+  //       model: SpotImage,
+  //       as: "SpotImages",
+  //       attributes: ["id", "url", "preview"],
+  //     },
+  //     {
+  //       model: User,
+  //       // alias User as Owner -> need quotes
+  //       // need to change the model now too!
+  //       as: "Owner",
+  //       // include the following values in the query
+  //       attributes: ["id", "firstName", "lastName"],
+  //     },
+  //     {
+  //       model: Review,
+  //     },
+  //   ],
+  // });
+
+  // // same logic to get the avgRating
+
+  // // Calculate the average rating for each spot by looping through the spot array we queried above
+  // const formattedSpots = spotDetails.map((spot) => {
+  //   // aggregate for COUNT -> number of reviews (drop Await?)
+  //   const numReviews = Review.count();
+  //   // access the reviews from the spots
+  //   const reviews = spot.Reviews;
+  //   // reduce it to one value, start accumulator at 0
+  //   const totalStars = reviews.reduce((acc, review) => acc + review.stars, 0);
+  //   // now we divide that value by the amount of reviews (CHANGED TO numReviews) we have to get the average
+  //   const avgStarRating = totalStars / numReviews;
+
+  //   return {
+  //     id: spot.id,
+  //     ownerId: spot.ownerId,
+  //     address: spot.address,
+  //     city: spot.city,
+  //     state: spot.state,
+  //     country: spot.country,
+  //     lat: spot.lat,
+  //     lng: spot.lng,
+  //     name: spot.name,
+  //     description: spot.description,
+  //     price: spot.price,
+  //     createdAt: spot.createdAt,
+  //     updatedAt: spot.updatedAt,
+  //     numReviews,
+  //     avgStarRating,
+  //     // map the id, url, and preview here
+  //     SpotImages: spot.SpotImages.map((image) => ({
+  //       id: image.id,
+  //       url: image.url,
+  //       preview: image.preview,
+  //     })),
+  //     // do the same with the owner's values
+  //     Owner: {
+  //       id: spot.Owner.id,
+  //       firstName: spot.Owner.firstName,
+  //       lastName: spot.Owner.lastName,
+  //     },
+  //   };
+  // });
+  // return res.json({ Spots: formattedSpots });
 });
 
 module.exports = router;

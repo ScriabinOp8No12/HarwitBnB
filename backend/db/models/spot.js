@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
       // defined many to one relationship between Spot table and User table, remember the foreign key is the non-primary key
       Spot.belongsTo(models.User, {
         foreignKey: "ownerId",
+        // need to alias in Spot model NOT the User model!
+        as: "Owner",
       });
       Spot.hasMany(models.SpotImage, {
         foreignKey: "spotId",
