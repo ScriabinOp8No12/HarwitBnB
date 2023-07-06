@@ -63,7 +63,8 @@ router.get("/", async (req, res) => {
 // Creates and returns a new spot [DONE!]
 router.post("/", requireAuth, async (req, res) => {
   let {
-    ownerId,
+    // DO NOT SEND ownerId manually in the req.body
+    // ownerId,
     address,
     city,
     state,
@@ -76,7 +77,8 @@ router.post("/", requireAuth, async (req, res) => {
   } = req.body;
 
   const spotsData = await Spot.create({
-    ownerId,
+    // add req.user.id here, not in the body above
+    ownerId: req.user.id,
     address,
     city,
     state,
@@ -293,6 +295,18 @@ router.put("/:spotId", requireAuth, async (req, res) => {
   }
 });
 
-module.exports = router;
+// Deletes an existing spot
 
-// need to use .update here instead of .create()
+router.delete("/:spotId", requireAuth, async (req, res) => {
+  const { spotId } = req.params;
+  const spot = await Spot.findByPk(spotId);
+  if (!spot) {
+    return res.status(404).json({ message: "Spot couldn't be found" });
+  } else if (spot.ownerId !== req.user.id) {
+    return res.status(403).json({ message: "Not Authorized!" });
+  }
+  // use spot.destroy() to remove the spot from the database
+  spot.destroy();
+  res.json({ message: "Successfully deleted" });
+});
+module.exports = router;
