@@ -1,5 +1,5 @@
 const express = require("express");
-const { Sequelize } = require("sequelize");
+// const { Sequelize } = require("sequelize");
 // spot doesn't need auth?
 const { requireAuth } = require("../../utils/auth");
 // get the spot, spotimage, AND review models, because avgRating is the "stars" column from Review table, and
@@ -36,6 +36,33 @@ router.get("/", async (req, res) => {
 });
 
 // using requireAuth in post request
-// router.post("/", requireAuth, (req, res) => {});
+router.post("/", requireAuth, async (req, res) => {
+  let {
+    ownerId,
+    address,
+    city,
+    state,
+    country,
+    lat,
+    lng,
+    name,
+    description,
+    price,
+  } = req.body;
+
+  const spotsData = await Spot.create({
+    ownerId,
+    address,
+    city,
+    state,
+    country,
+    lat,
+    lng,
+    name,
+    description,
+    price,
+  });
+  return res.json(spotsData);
+});
 
 module.exports = router;
