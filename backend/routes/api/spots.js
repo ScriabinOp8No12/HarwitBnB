@@ -177,53 +177,48 @@ router.get("/current", requireAuth, async (req, res) => {
 // Returns the details of a spot specified by its id
 router.get("/:spotId", async (req, res) => {
   const { spotId } = req.params;
-  const spot = await Spot.findByPk(spotId, {
-    attributes: [
-      "id",
-      "ownerId",
-      "address",
-      "city",
-      "state",
-      "country",
-      "lat",
-      "lng",
-      "name",
-      "description",
-      "price",
-      "createdAt",
-      "updatedAt",
-      // aggregate functions to get the values back and alias them as different names
-      // remember to require Sequelize at the top of this file
-      [Sequelize.fn("COUNT", Sequelize.col("Reviews.id")), "numReviews"],
-      [Sequelize.fn("AVG", Sequelize.col("Reviews.stars")), "avgStarRating"],
-    ],
-    include: [
-      {
-        model: SpotImage,
-        // need to add alias to model TOO!
-        as: "SpotImages",
-        // we only want the following 3 attributes when we get our results back
-        attributes: ["id", "url", "preview"],
-      },
-      {
-        model: User,
-        // need to alias in the SPOT model NOT the User model!
-        as: "Owner",
-        attributes: ["id", "firstName", "lastName"],
-      },
-      {
-        model: Review,
-        attributes: [],
-      },
-    ],
-    group: ["Spot.id"],
-  });
-
+  const spot = await Spot.findByPk(spotId);
   if (!spot) {
     return res.status(404).json({ message: "Spot couldn't be found" });
   }
 
-  return res.json(spot);
+  const spotDetails = await Spot.findOne({
+    where: { id: spotId },
+    include: [
+      {
+        model: SpotImage,
+        as: "SpotImages",
+        attributes: ["id", "url", "preview"],
+      },
+      {
+        model: User,
+        as: "Owner",
+        attributes: ["id", "firstName", "lastName"],
+      },
+    ],
+    attributes: {
+      include: [
+        [
+          Sequelize.literal(`(
+            SELECT COUNT(*)
+            FROM Reviews
+            WHERE Reviews.spotId = Spot.id
+          )`),
+          "numReviews",
+        ],
+        [
+          Sequelize.literal(`(
+            SELECT AVG(stars)
+            FROM Reviews
+            WHERE Reviews.spotId = Spot.id
+          )`),
+          "avgStarRating",
+        ],
+      ],
+    },
+  });
+
+  return res.json(spotDetails);
 
   // const { spotId } = req.params;
   // const spot = await Spot.findByPk(spotId);
@@ -344,3 +339,57 @@ module.exports = router;
 
 //   return res.json(spotsWithAvgRating);
 // });
+
+// Works locally, but render hates it
+
+// Returns the details of a spot specified by its id
+// router.get("/:spotId", async (req, res) => {
+//   const { spotId } = req.params;
+//   const spot = await Spot.findByPk(spotId, {
+//     attributes: [
+//       "id",
+//       "ownerId",
+//       "address",
+//       "city",
+//       "state",
+//       "country",
+//       "lat",
+//       "lng",
+//       "name",
+//       "description",
+//       "price",
+//       "createdAt",
+//       "updatedAt",
+//       // aggregate functions to get the values back and alias them as different names
+//       // remember to require Sequelize at the top of this file
+//       [Sequelize.fn("COUNT", Sequelize.col("Reviews.id")), "numReviews"],
+//       [Sequelize.fn("AVG", Sequelize.col("Reviews.stars")), "avgStarRating"],
+//     ],
+//     include: [
+//       {
+//         model: SpotImage,
+//         // need to add alias to model TOO!
+//         as: "SpotImages",
+//         // we only want the following 3 attributes when we get our results back
+//         attributes: ["id", "url", "preview"],
+//       },
+//       {
+//         model: User,
+//         // need to alias in the SPOT model NOT the User model!
+//         as: "Owner",
+//         attributes: ["id", "firstName", "lastName"],
+//       },
+//       {
+//         model: Review,
+//         attributes: [],
+//       },
+//     ],
+//     group: ["Spot.id"],
+//   });
+
+//   if (!spot) {
+//     return res.status(404).json({ message: "Spot couldn't be found" });
+//   }
+
+//   return res.json(spot);
+// })
