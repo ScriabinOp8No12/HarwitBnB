@@ -234,103 +234,65 @@ router.get("/:spotId", async (req, res) => {
   return res.json(result);
 });
 
+// When testing in postman, DO NOT send same request twice, it won't catch the address unique validation error, you must
+// use a different address that exists in the database already!
+// Updates and returns an existing spot
+router.put("/:spotId", requireAuth, async (req, res) => {
+  // only owner of spot can make the edit
+  // compare the url's spotId with the logged in user (req.user.id) only let them edit if it's the same
+  // otherwise throw an error with status code 403
+  // also check the spotId against the Spot.findByPK() if it doesn't exist, throw a 404 error, spot not found
+
+  try {
+    const { spotId } = req.params;
+    const spot = await Spot.findByPk(spotId);
+    if (!spot) {
+      return res.status(404).json({ message: "Spot couldn't be found" });
+    } else if (spot.ownerId !== req.user.id) {
+      return res.status(403).json({ message: "Not Authorized!" });
+    }
+    // example in API docs didn't have ownerId in the body... but it definitely needs it
+    const {
+      ownerId,
+      address,
+      city,
+      state,
+      country,
+      lat,
+      lng,
+      name,
+      description,
+      price,
+    } = req.body;
+
+    // use .update() instead of .create() in a put/patch to update record.  .create() is for post requests
+    // it's interesting how sqlite3 lets us create a new record in a put request as if it's a post request... (I see the record in my database if I use .create())
+    await spot.update({
+      ownerId,
+      address,
+      city,
+      state,
+      country,
+      lat,
+      lng,
+      name,
+      description,
+      price,
+    });
+
+    return res.json(spot);
+    // res needs to have: id, ownerId, address, city, state, country, lat, lng, name, description, price, createdAt, and updatedAt
+    // error response 400 given when body has validation errors, this should be setup already! Nope, needs to be a 400 status code
+  } catch (err) {
+    // check for validation error, if there is, change the response to 400 (otherwise it defaults to 500 status code)
+    if (err instanceof Sequelize.ValidationError) {
+      return res.status(400).json({ message: err.message });
+    }
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 module.exports = router;
 
-// // Get all spots (wrong format, also included reviews which wasn't necessary)
-
-// router.get("/", async (req, res) => {
-//   const spots = await Spot.findAll({
-//     include: [
-//       {
-//         model: SpotImage,
-//       },
-//       {
-//         model: Review,
-//       },
-//     ],
-//   });
-
-//   // this block of code below gave us the review data with it, which we don't really want
-//   // Calculate the average rating for each spot by looping through the spot array we queried above
-//   spots.forEach((spot) => {
-//     // access the reviews from the spots
-//     const reviews = spot.Reviews;
-//     // reduce it to one value, start accumulator at 0
-//     const totalStars = reviews.reduce((acc, review) => acc + review.stars, 0);
-//     // now we divide that value by the amount of reviews we have to get the average
-//     const avgRating = totalStars / reviews.length;
-//     // now we alias the value to be 'avgRating'
-//     spot.dataValues.avgRating = avgRating;
-//   });
-//   return res.json(spots);
-// });
-
-// using map below worked well for the other get endpoint -> see .get("/current")
-// Calculate the average rating for each spot without including the review in the response
-// const spotsWithAvgRating = spots.map((spot) => {
-//   // access the reviews from the spots
-//   const reviews = spot.Reviews;
-//   // reduce it to one value, start accumulator at 0
-//   const totalStars = reviews.reduce((acc, review) => acc + review.stars, 0);
-//   // now we divide that value by the amount of reviews we have to get the average
-//   const avgRating = totalStars / reviews.length;
-//   // Create a new object with the spot data and the calculated average rating
-//   return { ...spot.dataValues, avgRating };
-// });
-
-//   return res.json(spotsWithAvgRating);
-// });
-
-// Works locally, but render hates it
-
-// Returns the details of a spot specified by its id
-// router.get("/:spotId", async (req, res) => {
-//   const { spotId } = req.params;
-//   const spot = await Spot.findByPk(spotId, {
-//     attributes: [
-//       "id",
-//       "ownerId",
-//       "address",
-//       "city",
-//       "state",
-//       "country",
-//       "lat",
-//       "lng",
-//       "name",
-//       "description",
-//       "price",
-//       "createdAt",
-//       "updatedAt",
-//       // aggregate functions to get the values back and alias them as different names
-//       // remember to require Sequelize at the top of this file
-//       [Sequelize.fn("COUNT", Sequelize.col("Reviews.id")), "numReviews"],
-//       [Sequelize.fn("AVG", Sequelize.col("Reviews.stars")), "avgStarRating"],
-//     ],
-//     include: [
-//       {
-//         model: SpotImage,
-//         // need to add alias to model TOO!
-//         as: "SpotImages",
-//         // we only want the following 3 attributes when we get our results back
-//         attributes: ["id", "url", "preview"],
-//       },
-//       {
-//         model: User,
-//         // need to alias in the SPOT model NOT the User model!
-//         as: "Owner",
-//         attributes: ["id", "firstName", "lastName"],
-//       },
-//       {
-//         model: Review,
-//         attributes: [],
-//       },
-//     ],
-//     group: ["Spot.id"],
-//   });
-
-//   if (!spot) {
-//     return res.status(404).json({ message: "Spot couldn't be found" });
-//   }
-
-//   return res.json(spot);
-// })
+// need to use .update here instead of .create()

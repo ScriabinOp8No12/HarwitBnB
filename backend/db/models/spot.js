@@ -32,6 +32,15 @@ module.exports = (sequelize, DataTypes) => {
       address: {
         allowNull: false,
         type: DataTypes.STRING,
+        // need custom unique validator, if it's only in the migration, it won't work with the Sequelize.ValidationError if statement
+        validate: {
+          isUnique: async function (value) {
+            const spot = await Spot.findOne({ where: { address: value } });
+            if (spot) {
+              throw new Error("Address must be unique");
+            }
+          },
+        },
       },
       city: {
         allowNull: false,
