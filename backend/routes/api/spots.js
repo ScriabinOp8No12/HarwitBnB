@@ -9,7 +9,7 @@ const { UniqueConstraintError } = require("sequelize");
 
 const router = express.Router();
 
-// get all spots endpoint
+// Get all spots
 router.get("/", async (req, res) => {
   const spots = await Spot.findAll({
     include: [
@@ -53,7 +53,7 @@ router.get("/", async (req, res) => {
 //   return res.json(spotsWithAvgRating);
 // });
 
-// using requireAuth in post request
+// needs authorization, so we use 'requireAuth' in request below
 // create a spot endpoint
 router.post("/", requireAuth, async (req, res) => {
   let {
@@ -84,6 +84,8 @@ router.post("/", requireAuth, async (req, res) => {
   return res.json(spotsData);
 });
 
+// Requires Authorization
+// Create an image for a spot
 router.post("/:spotId/images", requireAuth, async (req, res) => {
   const { spotId } = req.params;
   const { url, preview } = req.body;
@@ -93,7 +95,7 @@ router.post("/:spotId/images", requireAuth, async (req, res) => {
   if (!spot) {
     return res.status(404).json({ message: "No spot found!" });
     // request holds the authenticated user's id
-    // set that equal to the ownerId on the spot
+    // set that equal to the ownerId of the spot
   } else if (req.user.id !== spot.ownerId) {
     return res.status(403).json({ message: "Not authorized!" });
   }
@@ -105,6 +107,7 @@ router.post("/:spotId/images", requireAuth, async (req, res) => {
   return res.json(imageData);
 });
 
+// Requires authorization
 // Get all Spots owned by the Current User
 router.get("/current", requireAuth, async (req, res) => {
   // Find all the spots owned by the current logged in user
@@ -117,7 +120,7 @@ router.get("/current", requireAuth, async (req, res) => {
     // include: [{ model: SpotImage, where: { preview: true } }]
   });
   // Calculate the average rating for each spot
-  // use Promise.all to wait for all the Review.findAll promises to resolve -> see 4 lines below
+  // use Promise.all to wait for all the Review.findAll() to resolve -> see Review.findAll() 4 lines below
   const spotsRatingPreview = await Promise.all(
     // use map instead of forEach()
     spots.map(async (spot) => {
@@ -130,7 +133,9 @@ router.get("/current", requireAuth, async (req, res) => {
       // Extract the URL of the first preview image
       // const previewImage = spot.SpotImages[0].url;
 
-      // use .dataValues to get the actually number back, and alias that as avgRating
+      // dataValues is an object that contains the raw data of the instance as key-value pairs
+      // Spot instance representing a row in the Spots table, its dataValues property would be an object containing properties like id, ownerId, address
+      // with values corresponding to the data in that row. We then alias this value as the "avgRating"
       return { ...spot.dataValues, avgRating };
       // also add previewImage into response
       // return { ...spot.dataValues, avgRating, previewImage };
