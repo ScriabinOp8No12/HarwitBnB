@@ -22,36 +22,41 @@ router.get("/", async (req, res) => {
     ],
   });
 
-  // this block of code below gave us the review data with it, which we don't really want
   // Calculate the average rating for each spot by looping through the spot array we queried above
-  spots.forEach((spot) => {
+  const formattedSpots = spots.map((spot) => {
     // access the reviews from the spots
     const reviews = spot.Reviews;
     // reduce it to one value, start accumulator at 0
     const totalStars = reviews.reduce((acc, review) => acc + review.stars, 0);
     // now we divide that value by the amount of reviews we have to get the average
     const avgRating = totalStars / reviews.length;
-    // now we alias the value to be 'avgRating'
-    spot.dataValues.avgRating = avgRating;
+
+    // Find the preview image
+    const previewImage = spot.SpotImages.find((image) => image.preview);
+
+    // Create a new object with the desired properties
+    return {
+      id: spot.id,
+      ownerId: spot.ownerId,
+      address: spot.address,
+      city: spot.city,
+      state: spot.state,
+      country: spot.country,
+      lat: spot.lat,
+      lng: spot.lng,
+      name: spot.name,
+      description: spot.description,
+      price: spot.price,
+      createdAt: spot.createdAt,
+      updatedAt: spot.updatedAt,
+      avgRating,
+      // shows previewImage unless there's no url, then it's set to null instead
+      previewImage: previewImage ? previewImage.url : null,
+    };
   });
-  return res.json(spots);
+
+  return res.json({ Spots: formattedSpots });
 });
-
-// using map below worked well for the other get endpoint -> see .get("/current")
-// Calculate the average rating for each spot without including the review in the response
-// const spotsWithAvgRating = spots.map((spot) => {
-//   // access the reviews from the spots
-//   const reviews = spot.Reviews;
-//   // reduce it to one value, start accumulator at 0
-//   const totalStars = reviews.reduce((acc, review) => acc + review.stars, 0);
-//   // now we divide that value by the amount of reviews we have to get the average
-//   const avgRating = totalStars / reviews.length;
-//   // Create a new object with the spot data and the calculated average rating
-//   return { ...spot.dataValues, avgRating };
-// });
-
-//   return res.json(spotsWithAvgRating);
-// });
 
 // needs authorization, so we use 'requireAuth' in request below
 // create a spot endpoint
@@ -93,7 +98,7 @@ router.post("/:spotId/images", requireAuth, async (req, res) => {
   // find the spot by primary key, if that spot doesn't exist, then throw a 404 error
   const spot = await Spot.findByPk(spotId);
   if (!spot) {
-    return res.status(404).json({ message: "No spot found!" });
+    return res.status(404).json({ message: "Spot couldn't be found" });
     // request holds the authenticated user's id
     // set that equal to the ownerId of the spot
   } else if (req.user.id !== spot.ownerId) {
@@ -145,3 +150,48 @@ router.get("/current", requireAuth, async (req, res) => {
 });
 
 module.exports = router;
+
+// // Get all spots (wrong format, also included reviews which wasn't necessary)
+
+// router.get("/", async (req, res) => {
+//   const spots = await Spot.findAll({
+//     include: [
+//       {
+//         model: SpotImage,
+//       },
+//       {
+//         model: Review,
+//       },
+//     ],
+//   });
+
+//   // this block of code below gave us the review data with it, which we don't really want
+//   // Calculate the average rating for each spot by looping through the spot array we queried above
+//   spots.forEach((spot) => {
+//     // access the reviews from the spots
+//     const reviews = spot.Reviews;
+//     // reduce it to one value, start accumulator at 0
+//     const totalStars = reviews.reduce((acc, review) => acc + review.stars, 0);
+//     // now we divide that value by the amount of reviews we have to get the average
+//     const avgRating = totalStars / reviews.length;
+//     // now we alias the value to be 'avgRating'
+//     spot.dataValues.avgRating = avgRating;
+//   });
+//   return res.json(spots);
+// });
+
+// using map below worked well for the other get endpoint -> see .get("/current")
+// Calculate the average rating for each spot without including the review in the response
+// const spotsWithAvgRating = spots.map((spot) => {
+//   // access the reviews from the spots
+//   const reviews = spot.Reviews;
+//   // reduce it to one value, start accumulator at 0
+//   const totalStars = reviews.reduce((acc, review) => acc + review.stars, 0);
+//   // now we divide that value by the amount of reviews we have to get the average
+//   const avgRating = totalStars / reviews.length;
+//   // Create a new object with the spot data and the calculated average rating
+//   return { ...spot.dataValues, avgRating };
+// });
+
+//   return res.json(spotsWithAvgRating);
+// });
