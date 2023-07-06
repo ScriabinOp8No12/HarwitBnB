@@ -21,3 +21,5 @@ raw: true,
 Unfortunately, changing our build commands to include the undo migration and undo seed command doesn't work because the syntax we learned in class isn't proper syntax in Postgres.
 
 Solution: Change the SCHEMA within the environment variable on Render to anything different. This likely ran a drop table command so Render was forced to rerun my migrations and seeders to recreate the tables/database, this worked!
+
+3. I was using the alias on the wrong model, needed to make the alias on the Spot model to change it to "Owner" from "User", but I was making the alias on the User model, trying to make it "Owner"
