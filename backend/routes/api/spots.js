@@ -5,9 +5,11 @@ const { requireAuth } = require("../../utils/auth");
 // get the spot, spotimage, AND review models, because avgRating is the "stars" column from Review table, and
 // we need the preview from the spotImage table
 const { Spot, SpotImage, Review } = require("../../db/models");
+const { UniqueConstraintError } = require("sequelize");
 
 const router = express.Router();
 
+// get all spots endpoint
 router.get("/", async (req, res) => {
   const spots = await Spot.findAll({
     include: [
@@ -36,6 +38,7 @@ router.get("/", async (req, res) => {
 });
 
 // using requireAuth in post request
+// create a spot endpoint
 router.post("/", requireAuth, async (req, res) => {
   let {
     ownerId,
@@ -65,4 +68,24 @@ router.post("/", requireAuth, async (req, res) => {
   return res.json(spotsData);
 });
 
-module.exports = router;
+router.post("/:spotId/images", requireAuth, async (req, res) => {
+  const { spotId } = req.params;
+  const { url, preview } = req.body;
+
+  // find the spot by primary key, if that spot doesn't exist, then throw a 404 error
+  const spot = await Spot.findByPk(spotId);
+  if (!spot) {
+    return res.status(404).json({ message: "No spot found!" });
+    // request holds the authenticated user's id
+    // set that equal to the ownerId on the spot
+  } else if (req.user.id !== spot.ownerId) {
+    return res.status(403).json({ message: "Not authorized!" });
+  }
+  const imageData = await SpotImage.create({
+    spotId,
+    url,
+    preview,
+  });
+  return res.json(imageData);
+}),
+  (module.exports = router);
