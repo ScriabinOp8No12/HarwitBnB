@@ -127,4 +127,16 @@ router.put("/:reviewId", requireAuth, async (req, res) => {
   }
 });
 
+router.delete("/:reviewId", requireAuth, async (req, res) => {
+  const { reviewId } = req.params;
+  const review = await Review.findByPk(reviewId);
+  if (!review) {
+    return res.status(404).json({ message: "Review couldn't be found" });
+  } else if (review.userId !== req.user.id) {
+    return res.status(403).json({ message: "Not Authorized!" });
+  }
+  review.destroy();
+  res.json({ message: "Successfully deleted" });
+});
+
 module.exports = router;
