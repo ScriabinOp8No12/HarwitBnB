@@ -1,12 +1,7 @@
 const express = require("express");
-// const { Sequelize } = require("sequelize");
-// spot doesn't need auth?
 const { requireAuth } = require("../../utils/auth");
-// get the spot, spotimage, AND review models, because avgRating is the "stars" column from Review table, and
-// we need the preview from the spotImage table
 const { Spot, SpotImage, Review, User } = require("../../db/models");
 const { Sequelize } = require("sequelize");
-const review = require("../../db/models/review");
 
 const router = express.Router();
 
