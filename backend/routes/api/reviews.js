@@ -44,4 +44,49 @@ router.post("/:reviewId/images", requireAuth, async (req, res) => {
   res.json({ id: reviewImage.id, url: reviewImage.url });
 });
 
+// Get all Reviews of the Current User
+router.get("/current", requireAuth, async (req, res) => {
+  // eventually I'll remember to include the await keyword, just a few more times and I'll get it!
+  const reviews = await Review.findAll({
+    // match logged in user with reviewId?  I think it needs to be userId instead...
+    where: { userId: req.user.id },
+    include: [
+      { model: User, attributes: ["id", "firstName", "lastName"] },
+      {
+        model: Spot,
+        attributes: [
+          "id",
+          "ownerId",
+          "address",
+          "city",
+          "state",
+          "country",
+          "lat",
+          "lng",
+          "name",
+          "price",
+        ],
+        include: [{ model: SpotImage, attributes: ["url"], limit: 1 }],
+      },
+      { model: ReviewImage, attributes: ["id", "url"] },
+    ],
+  });
+
+  //use .map to create an array of formatted reviews
+  const formattedReviews = reviews.map((review) => {
+    // convert the review object into POJO so it can be modified
+    const formattedReview = review.toJSON();
+    // if there are elements within the SpotImages has anything in it
+    if (formattedReview.Spot.SpotImages.length > 0) {
+      // if it has something in it, then set the previewImage property to be equal to the first item (url) in the SpotImages array!
+      formattedReview.Spot.previewImage =
+        formattedReview.Spot.SpotImages[0].url;
+    }
+    // we don't want the SpotImages field in the Spot object
+    delete formattedReview.Spot.SpotImages;
+    return formattedReview;
+  });
+  res.json({ Reviews: formattedReviews });
+});
+
 module.exports = router;
