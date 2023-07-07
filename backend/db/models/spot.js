@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "ownerId",
         // need to alias in Spot model NOT the User model!
         as: "Owner",
+        onDelete: "CASCADE",
       });
       Spot.hasMany(models.SpotImage, {
         foreignKey: "spotId",

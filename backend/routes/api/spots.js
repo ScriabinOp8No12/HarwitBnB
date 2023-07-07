@@ -13,7 +13,7 @@ const { Op } = require("sequelize");
 
 const router = express.Router();
 
-// Returns all the spots [DONE!]
+// Returns all the spots
 router.get("/", async (req, res) => {
   const spots = await Spot.findAll({
     include: [
@@ -64,7 +64,7 @@ router.get("/", async (req, res) => {
 });
 
 // Needs authorization, so we use 'requireAuth' in request below
-// Creates and returns a new spot [DONE!]
+// Creates and returns a new spot
 router.post("/", requireAuth, async (req, res) => {
   let {
     // DO NOT SEND ownerId manually in the req.body
@@ -97,7 +97,7 @@ router.post("/", requireAuth, async (req, res) => {
 });
 
 // Requires Authorization
-// Create and return a new image for a spot specified by id [DONE!]
+// Create and return a new image for a spot specified by id
 router.post("/:spotId/images", requireAuth, async (req, res) => {
   const { spotId } = req.params;
   const { url, preview } = req.body;
@@ -128,7 +128,7 @@ router.post("/:spotId/images", requireAuth, async (req, res) => {
 });
 
 // Requires authorization
-// Returns all the spots owned (created) by the current user [DONE!]
+// Returns all the spots owned (created) by the current user
 router.get("/current", requireAuth, async (req, res) => {
   // Find all the spots owned by the current logged in user
   const spots = await Spot.findAll({
@@ -455,6 +455,11 @@ router.post("/:spotId/bookings", requireAuth, async (req, res) => {
       res.status(500).json({ error: err.message });
     }
   }
+});
+
+// Return all the bookings for a spot specified by id.
+router.get("/:spotId/bookings", requireAuth, async (req, res) => {
+  //
 });
 
 module.exports = router;
