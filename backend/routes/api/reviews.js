@@ -12,6 +12,7 @@ const { Sequelize } = require("sequelize");
 
 const router = express.Router();
 
+// Create and return a new image for a review specified by id
 router.post("/:reviewId/images", requireAuth, async (req, res) => {
   const { reviewId } = req.params;
   const { url } = req.body;
