@@ -22,4 +22,22 @@ Unfortunately, changing our build commands to include the undo migration and und
 
 Solution: Change the SCHEMA within the environment variable on Render to anything different. This likely ran a drop table command so Render was forced to rerun my migrations and seeders to recreate the tables/database, this worked!
 
-3. I was using the alias on the wrong model, needed to make the alias on the Spot model to change it to "Owner" from "User", but I was making the alias on the User model, trying to make it "Owner"
+3. My date string in the seeder data for the bookings was in an invalid format, but sqlite3 wouldn't throw an error, and displays it properly when I use raw sql in the terminal / command line, however postman kept saying the seed data had a null value. However, if I manually add the data using the post request I made earlier, the booking would show up properly with no null values for the start and end date!
+
+Solution: console logging in the endpoint after the .findAll() method showed "invalid date" in the terminal. That meant the seeder data was the culprit!
+
+Here's what the format had to be changed to:
+
+{
+spotId: 1,
+userId: 1,
+// Seeder data date can NOT be how it looks below
+// startDate: "2034-01-01",
+// needs to be like below!
+startDate: "2034-01-01 00:00:00.000",
+endDate: "2035-01-01 00:00:00.000",
+createdAt: new Date(),
+updatedAt: new Date(),
+},
+
+4. I was using the alias on the wrong model, needed to make the alias on the Spot model to change it to "Owner" from "User", but I was making the alias on the User model, trying to make it "Owner"
