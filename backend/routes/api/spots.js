@@ -379,4 +379,15 @@ router.get("/:spotId/reviews", async (req, res) => {
   res.json({ Reviews: reviews });
 });
 
+// Create and return a new booking from a spot specified by id
+router.post("/:spotId/bookings", requireAuth, async (req, res) => {
+  // needs a try catch block for the 400 validation errors
+  // needs the 404 error if spotId doesn't exist
+  // check if the user owns the spot they are trying to make the booking on, if so, then throw a 403 error, unauthorized
+  // logic, const spot = Spot.findOne(where: {spotId}), then compare req.user.id with spot.ownerId to see if they match
+  // use {} = req.body to get the start and end date
+  // use .create() method to construct the response body
+  // the 403 error is the trickiest, "booking conflict" -> if that place is already booked for that time
+});
+
 module.exports = router;
