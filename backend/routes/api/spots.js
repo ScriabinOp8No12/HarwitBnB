@@ -6,8 +6,10 @@ const {
   Review,
   ReviewImage,
   User,
+  Booking,
 } = require("../../db/models");
 const { Sequelize } = require("sequelize");
+const { Op } = require("sequelize");
 
 const router = express.Router();
 
@@ -388,6 +390,70 @@ router.post("/:spotId/bookings", requireAuth, async (req, res) => {
   // use {} = req.body to get the start and end date
   // use .create() method to construct the response body
   // the 403 error is the trickiest, "booking conflict" -> if that place is already booked for that time
+  const { startDate, endDate } = req.body;
+  const spotId = req.params.spotId;
+  try {
+    // Check if the spot exists
+    const spot = await Spot.findByPk(spotId);
+    if (!spot) {
+      return res.status(404).json({ message: "Spot couldn't be found" });
+    }
+
+    // Check if the user owns the spot
+    if (req.user.id === spot.ownerId) {
+      return res.status(403).json({ message: "Unauthorized" });
+    }
+
+    // Check for booking conflicts
+    const conflicts = await Booking.findOne({
+      where: {
+        // look for the booking with the spotId in the url
+        spotId,
+        // Op.or -> logical or statement in sequelize
+        [Op.or]: [
+          {
+            startDate: {
+              [Op.between]: [startDate, endDate],
+            },
+          },
+          {
+            endDate: {
+              [Op.between]: [startDate, endDate],
+            },
+          },
+        ],
+      },
+    });
+    if (conflicts) {
+      return res.status(403).json({
+        message: "Sorry, this spot is already booked for the specified dates",
+        errors: {
+          startDate: "Start date conflicts with an existing booking",
+          endDate: "End date conflicts with an existing booking",
+        },
+      });
+    }
+
+    // Create the booking
+    const booking = await Booking.create({
+      spotId,
+      userId: req.user.id,
+      startDate,
+      endDate,
+    });
+
+    res.json(booking);
+  } catch (err) {
+    if (err.name === "SequelizeValidationError") {
+      const errors = {};
+      // do we need to have the error format look exactly like the API docs?  If so, I'll have to use a forEach loop through all the errors
+      // for all the other endpoints
+      err.errors.forEach((error) => (errors[error.path] = error.message));
+      res.status(400).json({ message: "Validation error", errors });
+    } else {
+      res.status(500).json({ error: err.message });
+    }
+  }
 });
 
 module.exports = router;
