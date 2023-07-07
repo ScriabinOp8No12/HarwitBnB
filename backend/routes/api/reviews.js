@@ -127,6 +127,7 @@ router.put("/:reviewId", requireAuth, async (req, res) => {
   }
 });
 
+// Delete an existing review
 router.delete("/:reviewId", requireAuth, async (req, res) => {
   const { reviewId } = req.params;
   const review = await Review.findByPk(reviewId);
