@@ -24,7 +24,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.INTEGER,
       },
-      review: DataTypes.STRING,
+      review: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
       stars: {
         type: DataTypes.INTEGER,
         // add a custom validator allowing stars to be from 1 to 5 only
