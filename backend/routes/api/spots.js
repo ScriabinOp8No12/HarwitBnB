@@ -6,6 +6,7 @@ const { requireAuth } = require("../../utils/auth");
 // we need the preview from the spotImage table
 const { Spot, SpotImage, Review, User } = require("../../db/models");
 const { Sequelize } = require("sequelize");
+const review = require("../../db/models/review");
 
 const router = express.Router();
 
@@ -253,9 +254,9 @@ router.put("/:spotId", requireAuth, async (req, res) => {
     } else if (spot.ownerId !== req.user.id) {
       return res.status(403).json({ message: "Not Authorized!" });
     }
-    // example in API docs didn't have ownerId in the body... but it definitely needs it
+
     const {
-      ownerId,
+      // ownerId,
       address,
       city,
       state,
@@ -270,7 +271,8 @@ router.put("/:spotId", requireAuth, async (req, res) => {
     // use .update() instead of .create() in a put/patch to update record.  .create() is for post requests
     // it's interesting how sqlite3 lets us create a new record in a put request as if it's a post request... (I see the record in my database if I use .create())
     await spot.update({
-      ownerId,
+      // did the same fix here as in the post request
+      ownerId: req.user.id,
       address,
       city,
       state,
@@ -309,4 +311,52 @@ router.delete("/:spotId", requireAuth, async (req, res) => {
   spot.destroy();
   res.json({ message: "Successfully deleted" });
 });
+
+// Had to change the MIGRATION and the model because I didn't have the review field not allow null, so now Render needs to have the Schema changed again
+// so it can rerun the migrations
+// Create and return a new review for a spot specified by id
+router.post("/:spotId/reviews", requireAuth, async (req, res) => {
+  try {
+    const { spotId } = req.params;
+    const spot = await Spot.findByPk(spotId);
+    if (!spot) {
+      return res.status(404).json({ message: "Spot couldn't be found" });
+    }
+    // checking if the Review for the spot already exists given the logged in user
+    const existingReview = await Review.findOne({
+      // where statement interesting here
+      where: { userId: req.user.id, spotId },
+    });
+    if (existingReview) {
+      return res.status(403).json({
+        message: "A review already exists for this spot from the current user",
+      });
+    }
+
+    const { review, stars } = req.body;
+    const reviewData = await Review.create({
+      userId: req.user.id,
+      spotId,
+      review,
+      stars,
+    });
+
+    return res.json({
+      id: reviewData.id,
+      userId: reviewData.userId,
+      spotId: reviewData.spotId,
+      review: reviewData.review,
+      stars: reviewData.stars,
+      createdAt: reviewData.createdAt,
+      updatedAt: reviewData.updatedAt,
+    });
+  } catch (err) {
+    if (err instanceof Sequelize.ValidationError) {
+      return res.status(400).json({ message: err.message });
+    }
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 module.exports = router;
