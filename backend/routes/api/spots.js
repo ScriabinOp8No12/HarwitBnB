@@ -1,6 +1,12 @@
 const express = require("express");
 const { requireAuth } = require("../../utils/auth");
-const { Spot, SpotImage, Review, User } = require("../../db/models");
+const {
+  Spot,
+  SpotImage,
+  Review,
+  ReviewImage,
+  User,
+} = require("../../db/models");
 const { Sequelize } = require("sequelize");
 
 const router = express.Router();
@@ -352,6 +358,25 @@ router.post("/:spotId/reviews", requireAuth, async (req, res) => {
     console.error(err);
     res.status(500).json({ message: "Internal server error" });
   }
+});
+
+// Returns all the reviews that belong to a spot specified by id
+router.get("/:spotId/reviews", async (req, res) => {
+  // this should be "easy" - has two includes from other tables, that's it
+  const { spotId } = req.params;
+
+  const spot = await Spot.findByPk(spotId);
+  if (!spot) {
+    return res.status(404).json({ error: "Spot couldn't be found" });
+  }
+  const reviews = await Review.findAll({
+    where: { spotId },
+    include: [
+      { model: User, attributes: ["id", "firstName", "lastName"] },
+      { model: ReviewImage, attributes: ["id", "url"] },
+    ],
+  });
+  res.json({ Reviews: reviews });
 });
 
 module.exports = router;
