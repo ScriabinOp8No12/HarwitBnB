@@ -381,6 +381,7 @@ router.get("/:spotId/reviews", async (req, res) => {
   res.json({ Reviews: reviews });
 });
 
+// Used Op.or (sequelize or operator here!)
 // Create and return a new booking from a spot specified by id
 router.post("/:spotId/bookings", requireAuth, async (req, res) => {
   // needs a try catch block for the 400 validation errors
