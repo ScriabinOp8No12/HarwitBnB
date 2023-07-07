@@ -459,7 +459,51 @@ router.post("/:spotId/bookings", requireAuth, async (req, res) => {
 
 // Return all the bookings for a spot specified by id.
 router.get("/:spotId/bookings", requireAuth, async (req, res) => {
-  //
+  // check the spotId using findOne on the Spot model, if !spot, then 404 error
+  // use a where property within findAll on the Booking model to get only the bookings for the specified spot
+  // we will use where: {spotId}
+  // use a findAll(), then use an include statement for the associated data from User model,
+  // which has attributes (columns) of id, firstName, and lastName
+  // tricky part: need 2 if blocks, one if we are NOT the owner of the spot, then we only get back the spotId, startDate and endDate for the booking
+  // if condition check -> compare the req.user.id (logged in user) with the spot.ownerId
+  // maybe we can just use an else block (we are the owner), we need to return back all the columns in the booking table
+
+  const { spotId } = req.params;
+  const spot = await Spot.findOne({ where: { id: spotId } });
+  if (!spot) {
+    return res.status(404).json({ message: "Spot couldn't be found" });
+  }
+  const bookings = await Booking.findAll({
+    where: { spotId },
+    include: {
+      model: User,
+      attributes: ["id", "firstName", "lastName"],
+    },
+  });
+  // if we are NOT the owner, then do this
+  if (req.user.id !== spot.ownerId) {
+    // use .map to iterate through all the bookings and save the results in an array!
+    const filteredBookings = bookings.map((booking) => ({
+      spotId: booking.spotId,
+      startDate: booking.startDate,
+      endDate: booking.endDate,
+    }));
+    return res.json({ Bookings: filteredBookings });
+  }
+  // otherwise, we must be the owner, so then do this
+  else {
+    const formattedBookings = bookings.map((booking) => ({
+      User: booking.User,
+      id: booking.id,
+      spotId: booking.spotId,
+      userId: booking.userId,
+      startDate: booking.startDate,
+      endDate: booking.endDate,
+      createdAt: booking.createdAt,
+      updatedAt: booking.updatedAt,
+    }));
+    return res.json({ Bookings: formattedBookings });
+  }
 });
 
 module.exports = router;

@@ -24,7 +24,7 @@ Solution: Change the SCHEMA within the environment variable on Render to anythin
 
 3. My date string in the seeder data for the bookings was in an invalid format, but sqlite3 wouldn't throw an error, and displays it properly when I use raw sql in the terminal / command line, however postman kept saying the seed data had a null value. However, if I manually add the data using the post request I made earlier, the booking would show up properly with no null values for the start and end date!
 
-Solution: console logging in the endpoint after the .findAll() method showed "invalid date" in the terminal. That meant the seeder data was the culprit!
+Solution: console logging in the endpoint after the .findAll() method showed "invalid date" in the terminal. That meant the seeder data was the culprit! Other than deleting our database and remigrating then reseeding, is there another way to do it? I could not successfully undo my seeders and rerun them, maybe it was because I updated them before I tried to undo them?
 
 Here's what the format had to be changed to:
 
