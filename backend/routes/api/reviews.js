@@ -89,4 +89,42 @@ router.get("/current", requireAuth, async (req, res) => {
   res.json({ Reviews: formattedReviews });
 });
 
+// Update and return an existing review
+router.put("/:reviewId", requireAuth, async (req, res) => {
+  // copy paste, need to wrap it in a try catch block for the 400 validation errors,
+  // need the 404 error if no review found (same as always)
+  // check if REVIEW (should be review.userId) equals req.user.id (the logged in user)
+  // use UPDATE() not CREATE() -> create is for post
+
+  try {
+    const { reviewId } = req.params;
+    const reviews = await Review.findByPk(reviewId);
+    if (!reviews) {
+      return res.status(404).json({ message: "Review couldn't be found" });
+    } else if (reviews.userId !== req.user.id) {
+      return res.status(403).json({ message: "Not Authorized!" });
+    }
+
+    const { spotId, review, stars } = req.body;
+
+    await reviews.update({
+      userId: req.user.id,
+      spotId,
+      review,
+      stars,
+    });
+
+    return res.json(reviews);
+    // res needs to have: id, ownerId, address, city, state, country, lat, lng, name, description, price, createdAt, and updatedAt
+    // error response 400 given when body has validation errors, this should be setup already! Nope, needs to be a 400 status code
+  } catch (err) {
+    // check for validation error, if there is, change the response to 400 (otherwise it defaults to 500 status code)
+    if (err instanceof Sequelize.ValidationError) {
+      return res.status(400).json({ message: err.message });
+    }
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 module.exports = router;
