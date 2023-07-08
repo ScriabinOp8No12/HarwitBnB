@@ -6,7 +6,7 @@ const { Op } = require("sequelize");
 const router = express.Router();
 
 // Return all the bookings that the current user has made
-// ISSUE -> Giving null for start and end date ONLY for seeder data......
+// ISSUE SOLVED -> Was giving null for start and end date ONLY for seeder data......
 router.get("/current", requireAuth, async (req, res) => {
   // use where property in findAll() to include only the bookings where
   // req.user.id (current logged in user) equals Booking table's userId (booking.userId)
@@ -38,7 +38,7 @@ router.get("/current", requireAuth, async (req, res) => {
       },
     ],
   });
-  // this console log saved us!
+  // this console log saved us! our formatting for the dates in the seeder data needed a bunch of extra digits to specify the exact time, not just the day/date
   // console.log("bookings:", bookings);
 
   // same logic with map to add the url to the booking's query, to get it all in one chunk
@@ -48,6 +48,7 @@ router.get("/current", requireAuth, async (req, res) => {
       formattedBooking.Spot.previewImage =
         formattedBooking.Spot.SpotImages[0].url;
     }
+    // again, we don't want the SpotImage appearing in our output
     delete formattedBooking.Spot.SpotImages;
     return formattedBooking;
   });
@@ -56,8 +57,7 @@ router.get("/current", requireAuth, async (req, res) => {
   return res.json({ Bookings: formattedBookings });
 });
 
-// Update and return an existing booking.
-
+// Update and return an existing booking
 router.put("/:bookingId", requireAuth, async (req, res) => {
   // Plan: get the bookingId from the url
   // if req.user.id not equal to Booking.findByPk(bookingId)

@@ -101,9 +101,13 @@ router.get("/", async (req, res) => {
   // Spot.findAll() method
   const where = {};
   // 1st if condition below: lat column must be greater than or equal to minLat
-  // only spots with a latitude greater than or equal to the specified minimum latitude will be returned.
+  // only spots with a latitude greater than or equal to the specified minimum latitude will be returned
+  // Op.gte = greater than equal (gte)
   if (minLat) where.lat = { [Op.gte]: minLat };
-  // this is confusing here...
+  // THIS IS TWO CONDITIONS IN ONE!  We need maxLat to be lte (less than equal) to add it to the where object
+  // however, we need to be careful and also make sure that if there's already a lat, that we make sure it's still greater than
+  // the minLat we got above. Effectively, we have 2 conditionals to make sure the lat is greater than the minLat (if given)
+  // yet still less than the maxLat (second half of the conditional)
   if (maxLat) where.lat = { ...where.lat, [Op.lte]: maxLat };
   if (minLng) where.lng = { [Op.gte]: minLng };
   if (maxLng) where.lng = { ...where.lng, [Op.lte]: maxLng };
@@ -120,7 +124,10 @@ router.get("/", async (req, res) => {
         model: Review,
       },
     ],
+    // same stuff we did in class, limit needs to be the size (limit PER PAGE)
     limit: size,
+    // offset formula, needs the - 1
+    // ex. if you go to page 3 with size 5, that would be an offset of 10 items (not 15, because you need to display the 5 on that page)
     offset: (page - 1) * size,
     // pass where object into options object
     where,
@@ -138,7 +145,7 @@ router.get("/", async (req, res) => {
   //   ],
   // });
 
-  // Calculate the average rating for each spot by looping through the spot array we queried above
+  // Calculate the average rating for each spot by looping through the spot array we queried above (we saw this example below in an AA open reading)
   const formattedSpots = spots.map((spot) => {
     // access the reviews from the spots
     const reviews = spot.Reviews;
@@ -166,7 +173,7 @@ router.get("/", async (req, res) => {
       createdAt: spot.createdAt,
       updatedAt: spot.updatedAt,
       avgRating,
-      // Ternary -> condition ? <execute if true> : execute if false
+      // Ternary -> condition ? <execute if true> : <execute if false>
       // What it does: shows previewImage unless there's no url, then the value is set to null instead
       previewImage: previewImage ? previewImage.url : null,
     };
@@ -422,6 +429,7 @@ router.delete("/:spotId", requireAuth, async (req, res) => {
     return res.status(403).json({ message: "Not Authorized!" });
   }
   // use spot.destroy() to remove the spot from the database
+  // good practice to use await keyword in front of spot.destroy()?
   spot.destroy();
   // added return below
   return res.json({ message: "Successfully deleted" });
@@ -439,7 +447,7 @@ router.post("/:spotId/reviews", requireAuth, async (req, res) => {
     }
     // checking if the Review for the spot already exists given the logged in user
     const existingReview = await Review.findOne({
-      // where statement interesting here
+      // the userId needs to match the logged in user, and the Review (we are using findOne) needs to match the spotId in the url
       where: { userId: req.user.id, spotId },
     });
     if (existingReview) {
@@ -603,7 +611,7 @@ router.get("/:spotId/bookings", requireAuth, async (req, res) => {
     }));
     return res.json({ Bookings: filteredBookings });
   }
-  // otherwise, we must be the owner, so then do this
+  // otherwise, we must be the owner, so then do this (loop through each booking and create the new formatted bookings!)
   else {
     const formattedBookings = bookings.map((booking) => ({
       User: booking.User,
