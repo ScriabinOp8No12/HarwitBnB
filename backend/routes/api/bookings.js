@@ -78,6 +78,7 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
   if (req.user.id !== booking.userId) {
     return res.status(403).json({ message: "Not authorized" });
   }
+  // compare endDate in req.body with current date
   if (new Date(endDate) < new Date()) {
     return res.status(400).json({ message: "Past bookings can't be modified" });
   }
@@ -85,8 +86,10 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
     where: {
       spotId: booking.spotId,
       // Op.ne means 'not equal'
+      // this block is handling "conflictingBookings"
       id: { [Op.ne]: bookingId },
       [Op.or]: [
+        // use between operator
         { startDate: { [Op.between]: [startDate, endDate] } },
         { endDate: { [Op.between]: [startDate, endDate] } },
       ],
@@ -107,6 +110,33 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
     createdAt: booking.createdAt,
     updatedAt: booking.updatedAt,
   });
+});
+
+// Delete an existing booking
+router.delete("/:bookingId", requireAuth, async (req, res) => {
+  // Plan: This one needs an extra if block, with two conditions in it, to check if the owner is either the booking owner or the spot owner
+  // because that's the only condition in which they are authorized to delete the booking
+  const { bookingId } = req.params;
+  // we need to include the Spot model here so we can check if the booking.Spot.ownerId exists
+  const booking = await Booking.findByPk(bookingId, {
+    include: { model: Spot, attributes: ["ownerId"] },
+  });
+  if (!booking) {
+    return res.status(404).json({ message: "Booking couldn't be found" });
+  }
+  // here, we have to check both if the user isn't the booking owner nor the spot owner, then they aren't authorized!
+  if (req.user.id !== booking.userId && req.user.id !== booking.Spot.ownerId) {
+    return res.status(403).json({ message: "Not authorized" });
+  }
+  // if the booking start date is before the current date, that means the booking already started, so throw a 403 error
+  // but how do we check this in postman?  since we can't create a booking that is before today, don't we have to wait at least a day to verify our code works? lol
+  if (new Date(booking.startDate) < new Date()) {
+    return res.status(403).json({
+      message: "Bookings that have been started can't be deleted",
+    });
+  }
+  await booking.destroy();
+  return res.json({ message: "Successfully deleted" });
 });
 
 module.exports = router;
