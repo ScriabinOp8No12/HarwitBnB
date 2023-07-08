@@ -13,9 +13,105 @@ const { Op } = require("sequelize");
 
 const router = express.Router();
 
-// Returns all the spots
+// Returns all the spots and return spots filtered by query parameters
 router.get("/", async (req, res) => {
-  const spots = await Spot.findAll({
+  // get all spots query parameters plan:
+  // use {page, size, minLat. maxLat, minLng, maxLng, minPrice, maxPrice} = req.query
+  // to get all the values from the url
+  // use a || condition so that if page and size are null / not defined, it returns default values
+  // of 1 for page, and size of 20
+  // use if condition to make sure min page is less than 10 and size is less than 20
+  // all other ones are optional
+  // don't forget to throw a 400 validation error if something doesn't work (use if conditions)
+  //
+  // get the query parameters
+  let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } =
+    req.query;
+
+  // set default values using || if page or size aren't set
+  page = page || 1;
+  size = size || 20;
+
+  // convert from string to number
+  page = parseInt(page);
+  size = parseInt(size);
+
+  // check if valid page and size
+  if (page < 1 || page > 10) {
+    return res.status(400).json({
+      // do I need to modify all my code to use this message + errors format?
+      message: "Bad Request",
+      errors: {
+        page: "Page must be greater than or equal to 1 or less than or equal to 10",
+      },
+    });
+  }
+  if (size < 1 || size > 20) {
+    return res.status(400).json({
+      message: "Bad Request",
+      errors: {
+        size: "Size must be greater than or equal to 1 or less than or equal to 20",
+      },
+    });
+  }
+
+  // Validate min and max price
+  if (minPrice && minPrice < 0) {
+    return res.status(400).json({
+      message: "Bad Request",
+      errors: { minPrice: "Minimum price must be greater than or equal to 0" },
+    });
+  }
+  if (maxPrice && maxPrice < 0) {
+    return res.status(400).json({
+      message: "Bad Request",
+      errors: { maxPrice: "Maximum price must be greater than or equal to 0" },
+    });
+  }
+
+  // Validate minLat and maxLat
+  if (minLat && (minLat < -90 || minLat > 90)) {
+    return res.status(400).json({
+      message: "Bad Request",
+      errors: { minLat: "Minimum latitude must be between -90 and 90" },
+    });
+  }
+  if (maxLat && (maxLat < -90 || maxLat > 90)) {
+    return res.status(400).json({
+      message: "Bad Request",
+      errors: { maxLat: "Maximum latitude must be between -90 and 90" },
+    });
+  }
+
+  // Validate minLng and maxLng
+  if (minLng && (minLng < -180 || minLng > 180)) {
+    return res.status(400).json({
+      message: "Bad Request",
+      errors: { minLng: "Minimum longitude must be between -180 and 180" },
+    });
+  }
+  if (maxLng && (maxLng < -180 || maxLng > 180)) {
+    return res.status(400).json({
+      message: "Bad Request",
+      errors: { maxLng: "Maximum longitude must be between -180 and 180" },
+    });
+  }
+
+  // Create a where object to specify conditions for filtering results in the
+  // Spot.findAll() method
+  const where = {};
+  // 1st if condition below: lat column must be greater than or equal to minLat
+  // only spots with a latitude greater than or equal to the specified minimum latitude will be returned.
+  if (minLat) where.lat = { [Op.gte]: minLat };
+  // this is confusing here...
+  if (maxLat) where.lat = { ...where.lat, [Op.lte]: maxLat };
+  if (minLng) where.lng = { [Op.gte]: minLng };
+  if (maxLng) where.lng = { ...where.lng, [Op.lte]: maxLng };
+  if (minPrice) where.price = { [Op.gte]: minPrice };
+  if (maxPrice) where.price = { ...where.price, [Op.lte]: maxPrice };
+
+  // create options object for Spot.findAll() -> that we had originally
+  const options = {
     include: [
       {
         model: SpotImage,
@@ -24,7 +120,23 @@ router.get("/", async (req, res) => {
         model: Review,
       },
     ],
-  });
+    limit: size,
+    offset: (page - 1) * size,
+    // pass where object into options object
+    where,
+  };
+  // now we don't use this below, but use the options instead
+  const spots = await Spot.findAll(options);
+  // const spots = await Spot.findAll({
+  //   include: [
+  //     {
+  //       model: SpotImage,
+  //     },
+  //     {
+  //       model: Review,
+  //     },
+  //   ],
+  // });
 
   // Calculate the average rating for each spot by looping through the spot array we queried above
   const formattedSpots = spots.map((spot) => {
