@@ -33,6 +33,8 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         // add a custom validator allowing stars to be from 1 to 5 only
         validate: {
+          // added this here because we don't want the user entering a star rating of 2.5 or 2.23456
+          isInt: true,
           min: 1,
           max: 5,
         },
