@@ -52,8 +52,8 @@ router.get("/current", requireAuth, async (req, res) => {
     return formattedBooking;
   });
   // console.log("formattedBookings:", formattedBookings);
-
-  res.json({ Bookings: formattedBookings });
+  // added return here
+  return res.json({ Bookings: formattedBookings });
 });
 
 // Update and return an existing booking.

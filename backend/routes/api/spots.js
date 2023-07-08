@@ -413,7 +413,6 @@ router.put("/:spotId", requireAuth, async (req, res) => {
 });
 
 // Deletes an existing spot
-
 router.delete("/:spotId", requireAuth, async (req, res) => {
   const { spotId } = req.params;
   const spot = await Spot.findByPk(spotId);
@@ -424,7 +423,8 @@ router.delete("/:spotId", requireAuth, async (req, res) => {
   }
   // use spot.destroy() to remove the spot from the database
   spot.destroy();
-  res.json({ message: "Successfully deleted" });
+  // added return below
+  return res.json({ message: "Successfully deleted" });
 });
 
 // Had to change the MIGRATION and the model because I didn't have the review field not allow null, so now Render needs to have the Schema changed again
@@ -490,7 +490,8 @@ router.get("/:spotId/reviews", async (req, res) => {
       { model: ReviewImage, attributes: ["id", "url"] },
     ],
   });
-  res.json({ Reviews: reviews });
+  // added return below
+  return res.json({ Reviews: reviews });
 });
 
 // Used Op.or (sequelize or operator here!)
@@ -554,8 +555,8 @@ router.post("/:spotId/bookings", requireAuth, async (req, res) => {
       startDate,
       endDate,
     });
-
-    res.json(booking);
+    // added return below
+    return res.json(booking);
   } catch (err) {
     if (err.name === "SequelizeValidationError") {
       const errors = {};

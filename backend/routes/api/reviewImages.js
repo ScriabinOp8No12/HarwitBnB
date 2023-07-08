@@ -20,7 +20,8 @@ router.delete("/:imageId", requireAuth, async (req, res) => {
   }
   // DESTROYYY
   reviewImage.destroy();
-  res.json({
+  // added return below
+  return res.json({
     message: "Successfully deleted",
   });
 });
