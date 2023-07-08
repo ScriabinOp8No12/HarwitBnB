@@ -18,7 +18,8 @@ router.delete("/:imageId", requireAuth, async (req, res) => {
     return res.status(403).json({ message: "Not Authorized!" });
   }
   spotImage.destroy();
-  res.json({
+  // added return below
+  return res.json({
     message: "Successfully deleted",
   });
 });

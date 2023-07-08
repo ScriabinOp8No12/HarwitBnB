@@ -40,8 +40,8 @@ router.post("/:reviewId/images", requireAuth, async (req, res) => {
     reviewId,
     url,
   });
-  // we only want to return the id and url, not the created/updated at and the reviewId
-  res.json({ id: reviewImage.id, url: reviewImage.url });
+  // we only want to return the id and url, not the created/updated at and the reviewId (added return below)
+  return res.json({ id: reviewImage.id, url: reviewImage.url });
 });
 
 // Get all Reviews of the Current User
@@ -86,7 +86,8 @@ router.get("/current", requireAuth, async (req, res) => {
     delete formattedReview.Spot.SpotImages;
     return formattedReview;
   });
-  res.json({ Reviews: formattedReviews });
+  // added return below
+  return res.json({ Reviews: formattedReviews });
 });
 
 // Update and return an existing review
@@ -137,7 +138,8 @@ router.delete("/:reviewId", requireAuth, async (req, res) => {
     return res.status(403).json({ message: "Not Authorized!" });
   }
   review.destroy();
-  res.json({ message: "Successfully deleted" });
+  // added return below
+  return res.json({ message: "Successfully deleted" });
 });
 
 module.exports = router;
