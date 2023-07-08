@@ -117,7 +117,7 @@ router.put("/:reviewId", requireAuth, async (req, res) => {
 
     return res.json(reviews);
     // res needs to have: id, ownerId, address, city, state, country, lat, lng, name, description, price, createdAt, and updatedAt
-    // error response 400 given when body has validation errors, this should be setup already! Nope, needs to be a 400 status code
+    // error response 400 given when body has validation errors
   } catch (err) {
     // check for validation error, if there is, change the response to 400 (otherwise it defaults to 500 status code)
     if (err instanceof Sequelize.ValidationError) {
