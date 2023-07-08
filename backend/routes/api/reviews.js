@@ -44,7 +44,7 @@ router.post("/:reviewId/images", requireAuth, async (req, res) => {
   return res.json({ id: reviewImage.id, url: reviewImage.url });
 });
 
-// Get all Reviews of the Current User
+// Get all Reviews of the Current User (if preview image is null, it won't show up as a property in the response!)
 router.get("/current", requireAuth, async (req, res) => {
   // eventually I'll remember to include the await keyword, just a few more times and I'll get it!
   const reviews = await Review.findAll({
@@ -66,6 +66,7 @@ router.get("/current", requireAuth, async (req, res) => {
           "name",
           "price",
         ],
+        // if url AKA previewImage is null, it won't show up in the response
         include: [{ model: SpotImage, attributes: ["url"], limit: 1 }],
       },
       { model: ReviewImage, attributes: ["id", "url"] },
