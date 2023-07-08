@@ -135,6 +135,7 @@ router.delete("/:bookingId", requireAuth, async (req, res) => {
       message: "Bookings that have been started can't be deleted",
     });
   }
+  // is it proper to use await keyword here?
   await booking.destroy();
   return res.json({ message: "Successfully deleted" });
 });

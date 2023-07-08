@@ -212,7 +212,8 @@ router.post("/", requireAuth, async (req, res) => {
     description,
     price,
   });
-  return res.json(spotsData);
+  // API docs want status 201, so modified here
+  return res.status(201).json(spotsData);
 });
 
 // Requires Authorization
@@ -452,7 +453,7 @@ router.post("/:spotId/reviews", requireAuth, async (req, res) => {
     });
     if (existingReview) {
       return res.status(403).json({
-        message: "A review already exists for this spot from the current user",
+        message: "User already has a review for this spot",
       });
     }
 
@@ -464,7 +465,8 @@ router.post("/:spotId/reviews", requireAuth, async (req, res) => {
       stars,
     });
 
-    return res.json({
+    // changed to status 201
+    return res.status(201).json({
       id: reviewData.id,
       userId: reviewData.userId,
       spotId: reviewData.spotId,
