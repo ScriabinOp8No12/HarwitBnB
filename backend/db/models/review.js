@@ -38,6 +38,8 @@ module.exports = (sequelize, DataTypes) => {
               throw new Error("Cannot be empty.");
             }
           },
+          // review length can't be over 500
+          len: [0, 500],
         },
       },
       stars: {
