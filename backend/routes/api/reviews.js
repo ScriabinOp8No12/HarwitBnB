@@ -87,8 +87,16 @@ router.get("/current", requireAuth, async (req, res) => {
     delete formattedReview.Spot.SpotImages;
     return formattedReview;
   });
+
+  // Convert lat, lng, and price fields to numbers
+  const updatedReviews = formattedReviews.map((review) => {
+    review.Spot.lat = Number(review.Spot.lat);
+    review.Spot.lng = Number(review.Spot.lng);
+    review.Spot.price = Number(review.Spot.price);
+    return review;
+  });
   // added return below
-  return res.json({ Reviews: formattedReviews });
+  return res.json({ Reviews: updatedReviews });
 });
 
 // Update and return an existing review
