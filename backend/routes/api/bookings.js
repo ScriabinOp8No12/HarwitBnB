@@ -50,6 +50,10 @@ router.get("/current", requireAuth, async (req, res) => {
     }
     // again, we don't want the SpotImage appearing in our output
     delete formattedBooking.Spot.SpotImages;
+    // convert teh following lat, lng, and price to numbers before returning
+    formattedBooking.Spot.lat = Number(formattedBooking.Spot.lat);
+    formattedBooking.Spot.lng = Number(formattedBooking.Spot.lng);
+    formattedBooking.Spot.price = Number(formattedBooking.Spot.price);
     return formattedBooking;
   });
   // console.log("formattedBookings:", formattedBookings);
