@@ -78,6 +78,17 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
   const booking = await Booking.findByPk(bookingId);
   // adding conditions to check if the start and enddate are even valid, this stops people from spamming a random amount of numbers,
   // and it giving a weird error
+  const minTimestamp = new Date("2000-01-01").getTime();
+  const maxTimestamp = new Date("2050-12-31").getTime();
+
+  if (startDate < minTimestamp || startDate > maxTimestamp) {
+    return res.status(400).json({ message: "Invalid startDate" });
+  }
+
+  if (endDate < minTimestamp || endDate > maxTimestamp) {
+    return res.status(400).json({ message: "Invalid endDate" });
+  }
+
   if (
     typeof startDate !== "number" ||
     isNaN(startDate) ||
