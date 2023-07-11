@@ -8,13 +8,12 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      // removed delete on cascade from below two associations!
       Booking.belongsTo(models.Spot, {
         foreignKey: "spotId",
-        onDelete: "CASCADE",
       });
       Booking.belongsTo(models.User, {
         foreignKey: "userId",
-        onDelete: "CASCADE",
       });
     }
   }
