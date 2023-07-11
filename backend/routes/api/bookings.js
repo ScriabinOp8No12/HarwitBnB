@@ -76,6 +76,27 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
   const { bookingId } = req.params;
   const { startDate, endDate } = req.body;
   const booking = await Booking.findByPk(bookingId);
+  // adding conditions to check if the start and enddate are even valid, this stops people from spamming a random amount of numbers,
+  // and it giving a weird error
+  if (
+    typeof startDate !== "number" ||
+    isNaN(startDate) ||
+    !isFinite(startDate) ||
+    isNaN(new Date(startDate))
+  ) {
+    return res.status(400).json({ message: "Invalid startDate" });
+  }
+
+  if (
+    typeof endDate !== "number" ||
+    isNaN(endDate) ||
+    !isFinite(endDate) ||
+    isNaN(new Date(endDate))
+  ) {
+    return res.status(400).json({ message: "Invalid endDate" });
+  }
+
+  // now we check if the booking exists
   if (!booking) {
     return res.status(404).json({ message: "Booking couldn't be found" });
   }
