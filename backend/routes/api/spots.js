@@ -407,11 +407,12 @@ router.put("/:spotId", requireAuth, async (req, res) => {
       city,
       state,
       country,
-      lat,
-      lng,
+      // don't think I need Number in the follow 3
+      lat: Number(lat),
+      lng: Number(lng),
       name,
       description,
-      price,
+      price: Number(price),
     });
 
     return res.json(spot);
@@ -478,6 +479,7 @@ router.post("/:spotId/reviews", requireAuth, async (req, res) => {
       userId: reviewData.userId,
       spotId: reviewData.spotId,
       review: reviewData.review,
+      // don't need to convert stars to number, cause it already is a number!
       stars: reviewData.stars,
       createdAt: reviewData.createdAt,
       updatedAt: reviewData.updatedAt,
