@@ -10,7 +10,10 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Review.belongsTo(models.User, { foreignKey: "userId" });
       Review.belongsTo(models.Spot, { foreignKey: "spotId" });
-      Review.hasMany(models.ReviewImage, { foreignKey: "reviewId" });
+      Review.hasMany(models.ReviewImage, {
+        foreignKey: "reviewId",
+        onDelete: "CASCADE",
+      });
     }
   }
   Review.init(
@@ -28,6 +31,14 @@ module.exports = (sequelize, DataTypes) => {
       review: {
         allowNull: false,
         type: DataTypes.STRING,
+        // add non empty string model validator here too!
+        validate: {
+          notEmptyString(value) {
+            if (value.length === 0) {
+              throw new Error("Cannot be empty.");
+            }
+          },
+        },
       },
       stars: {
         type: DataTypes.INTEGER,
@@ -37,6 +48,12 @@ module.exports = (sequelize, DataTypes) => {
           isInt: true,
           min: 1,
           max: 5,
+          // need non-empty string here too?!
+          notEmptyString(value) {
+            if (value.length === 0) {
+              throw new Error("Cannot be empty.");
+            }
+          },
         },
       },
     },

@@ -165,14 +165,16 @@ router.get("/", async (req, res) => {
       city: spot.city,
       state: spot.state,
       country: spot.country,
-      lat: spot.lat,
-      lng: spot.lng,
+      // convert lat from string back to number!
+      lat: Number(spot.lat),
+      lng: Number(spot.lng),
       name: spot.name,
       description: spot.description,
-      price: spot.price,
+      price: Number(spot.price),
       createdAt: spot.createdAt,
       updatedAt: spot.updatedAt,
-      avgRating,
+      // changed from avgRating,  to: avgRating: Number(avgRating)
+      avgRating: Number(avgRating),
       // Ternary -> condition ? <execute if true> : <execute if false>
       // What it does: shows previewImage unless there's no url, then the value is set to null instead
       previewImage: previewImage ? previewImage.url : null,
@@ -284,14 +286,15 @@ router.get("/current", requireAuth, async (req, res) => {
       city: spot.city,
       state: spot.state,
       country: spot.country,
-      lat: spot.lat,
-      lng: spot.lng,
+      // 4 modifications to convert from string back to number below!
+      lat: Number(spot.lat),
+      lng: Number(spot.lng),
       name: spot.name,
       description: spot.description,
-      price: spot.price,
+      price: Number(spot.price),
       createdAt: spot.createdAt,
       updatedAt: spot.updatedAt,
-      avgRating,
+      avgRating: Number(avgRating),
       // shows previewImage unless there's no url, then it's set to null instead
       previewImage: previewImage ? previewImage.url : null,
     };
@@ -345,13 +348,17 @@ router.get("/:spotId", async (req, res) => {
   // below block of code orders our response the "proper way" with spread
   // convert the "spotDetails" to json, then destructure it to get the column values we want
   // store that in an object "result" then return that as our response at the end
-  const { SpotImages, Owner, ...rest } = spotDetails.toJSON();
+  // added lat, lng, and price so we can convert them to Numbers!
+  const { SpotImages, Owner, lat, lng, price, ...rest } = spotDetails.toJSON();
   const result = {
     ...rest,
     // rest of the query result goes above this, then we put numReviews, followed by avgStarRating, then spotImages, then finally Owner last
     // as we can see in the API docs
-    numReviews: reviewData.numReviews,
-    avgStarRating: reviewData.avgStarRating,
+    lat: Number(lat),
+    lng: Number(lng),
+    price: Number(price),
+    numReviews: Number(reviewData.numReviews),
+    avgStarRating: Number(reviewData.avgStarRating),
     SpotImages,
     Owner,
   };
@@ -431,7 +438,7 @@ router.delete("/:spotId", requireAuth, async (req, res) => {
   }
   // use spot.destroy() to remove the spot from the database
   // good practice to use await keyword in front of spot.destroy()?
-  spot.destroy();
+  await spot.destroy();
   // added return below
   return res.json({ message: "Successfully deleted" });
 });

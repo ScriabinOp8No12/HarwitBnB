@@ -17,9 +17,13 @@ module.exports = (sequelize, DataTypes) => {
       });
       Spot.hasMany(models.SpotImage, {
         foreignKey: "spotId",
+        // delete the spotImage too if we delete the spot
+        onDelete: "CASCADE",
       });
       Spot.hasMany(models.Review, {
         foreignKey: "spotId",
+        // delete Review if we delete the spot too!
+        onDelete: "CASCADE",
       });
     }
   }
@@ -41,19 +45,49 @@ module.exports = (sequelize, DataTypes) => {
               throw new Error("Address must be unique");
             }
           },
+          // add non empty string model validator here too!
+          notEmptyString(value) {
+            if (value.length === 0) {
+              throw new Error("Cannot be empty.");
+            }
+          },
         },
       },
       city: {
         allowNull: false,
         type: DataTypes.STRING,
+        // add non empty string model validator here too!
+        validate: {
+          notEmptyString(value) {
+            if (value.length === 0) {
+              throw new Error("Cannot be empty.");
+            }
+          },
+        },
       },
       state: {
         allowNull: false,
         type: DataTypes.STRING,
+        // add non empty string model validator here too!
+        validate: {
+          notEmptyString(value) {
+            if (value.length === 0) {
+              throw new Error("Cannot be empty.");
+            }
+          },
+        },
       },
       country: {
         allowNull: false,
         type: DataTypes.STRING,
+        // add non empty string model validator here too!
+        validate: {
+          notEmptyString(value) {
+            if (value.length === 0) {
+              throw new Error("Cannot be empty.");
+            }
+          },
+        },
       },
       lat: {
         allowNull: false,
@@ -89,6 +123,8 @@ module.exports = (sequelize, DataTypes) => {
         // add custom validator that price has to be 0 or greater
         validate: {
           min: 0,
+          // added max to be 1 trillion!
+          max: 1000000000000,
         },
       },
     },
