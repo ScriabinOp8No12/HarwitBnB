@@ -41,6 +41,12 @@ module.exports = (sequelize, DataTypes) => {
               throw new Error("Start date must be after today!");
             }
           },
+          // start date can't be empty either
+          notEmptyString(value) {
+            if (value.length === 0) {
+              throw new Error("Cannot be empty.");
+            }
+          },
         },
       },
       endDate: {
@@ -53,6 +59,12 @@ module.exports = (sequelize, DataTypes) => {
             // use this.startDate to compare to the current Booking instance
             if (value <= this.startDate) {
               throw new Error("End date must be after start date!");
+            }
+          },
+          // end date can't be empty
+          notEmptyString(value) {
+            if (value.length === 0) {
+              throw new Error("Cannot be empty.");
             }
           },
         },

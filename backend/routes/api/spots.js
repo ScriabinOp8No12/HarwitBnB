@@ -431,7 +431,7 @@ router.delete("/:spotId", requireAuth, async (req, res) => {
   }
   // use spot.destroy() to remove the spot from the database
   // good practice to use await keyword in front of spot.destroy()?
-  spot.destroy();
+  await spot.destroy();
   // added return below
   return res.json({ message: "Successfully deleted" });
 });

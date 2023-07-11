@@ -28,6 +28,14 @@ module.exports = (sequelize, DataTypes) => {
       review: {
         allowNull: false,
         type: DataTypes.STRING,
+        // add non empty string model validator here too!
+        validate: {
+          notEmptyString(value) {
+            if (value.length === 0) {
+              throw new Error("Cannot be empty.");
+            }
+          },
+        },
       },
       stars: {
         type: DataTypes.INTEGER,
