@@ -24,15 +24,38 @@ module.exports = (sequelize, DataTypes) => {
               throw new Error("Cannot be an email.");
             }
           },
+          // added empty string model validation to username!
+
+          notEmptyString(value) {
+            if (value.length === 0) {
+              throw new Error("Cannot be empty.");
+            }
+          },
         },
       },
       firstName: {
         type: DataTypes.STRING,
         allowNull: false,
+        // added it here too
+        validate: {
+          notEmptyString(value) {
+            if (value.length === 0) {
+              throw new Error("Cannot be empty.");
+            }
+          },
+        },
       },
       lastName: {
         type: DataTypes.STRING,
         allowNull: false,
+        // and here
+        validate: {
+          notEmptyString(value) {
+            if (value.length === 0) {
+              throw new Error("Cannot be empty.");
+            }
+          },
+        },
       },
       email: {
         type: DataTypes.STRING,
