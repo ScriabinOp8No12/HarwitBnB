@@ -1,5 +1,15 @@
 Challenges / Problems
 
+Main takeaway:
+
+console.log more if I run into something that has weird behavior.
+This helps isolate the problem, which makes solving it a lot easier.
+
+Some examples of when I used console logging, or tried to isolate the problem. For example, when deploying to Render, once
+I knew it was working locally, but wasn't working on Render, I carefully read the error logs, and asked for help. The problem was the migration wasn't rerunning after I modified the migrations to include an options object for being used in production. So the Render build kept failing.
+
+Another example was when running certain get requests in postman, some of the data had a "null" value showing up for the date. I isolated the problem and realized it was only for the seeder data, but when I looked at the seeder data, there were values for the dates. So then I did some console logging in the get request, and realized that the terminal showed that the dates were invalid, since they were missing the 9-10 digit number following the day/week/month to specify the TIME. Once I added the numbers in, the null values disappeared from the query!
+
 1. Aggregate functions gave me a lot of trouble, because it would work locally using sqlite3, but fail in production mode when using the stricter Postgres. Using group by and omitting columns of associated models was allowed in sqlite3 locally, but Postgres/Render was really upset and didn't allow it. Unfortunately, if we include the associated models, we get extra data in our response which is not what we want.
    I tried using raw SQL instead, but Postgres is strict with naming and capitalization, and it couldn't find my Reviews table, regardless of my naming convention on it
 
