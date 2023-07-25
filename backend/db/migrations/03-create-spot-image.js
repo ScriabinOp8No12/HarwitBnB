@@ -23,6 +23,7 @@ module.exports = {
           type: Sequelize.INTEGER,
           // added references to the TABLE Spots with key of id
           references: { model: "Spots", key: "id" },
+          onDelete: "CASCADE",
         },
         url: {
           allowNull: false,

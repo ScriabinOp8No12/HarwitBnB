@@ -23,6 +23,7 @@ module.exports = {
           type: Sequelize.INTEGER,
           // added reference below
           references: { model: "Spots", key: "id" },
+          onDelete: "CASCADE",
         },
         userId: {
           // added allowNull
@@ -30,6 +31,7 @@ module.exports = {
           type: Sequelize.INTEGER,
           // added reference below
           references: { model: "Users", key: "id" },
+          onDelete: "CASCADE",
         },
         review: {
           allowNull: false,
