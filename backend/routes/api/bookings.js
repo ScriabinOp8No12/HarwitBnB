@@ -89,23 +89,23 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
     return res.status(400).json({ message: "Invalid endDate" });
   }
 
-  if (
-    typeof startDate !== "number" ||
-    isNaN(startDate) ||
-    !isFinite(startDate) ||
-    isNaN(new Date(startDate))
-  ) {
-    return res.status(400).json({ message: "Invalid startDate" });
-  }
+  // if (
+  //   typeof startDate !== "number" ||
+  //   isNaN(startDate) ||
+  //   !isFinite(startDate) ||
+  //   isNaN(new Date(startDate))
+  // ) {
+  //   return res.status(400).json({ message: "Invalid startDate" });
+  // }
 
-  if (
-    typeof endDate !== "number" ||
-    isNaN(endDate) ||
-    !isFinite(endDate) ||
-    isNaN(new Date(endDate))
-  ) {
-    return res.status(400).json({ message: "Invalid endDate" });
-  }
+  // if (
+  //   typeof endDate !== "number" ||
+  //   isNaN(endDate) ||
+  //   !isFinite(endDate) ||
+  //   isNaN(new Date(endDate))
+  // ) {
+  //   return res.status(400).json({ message: "Invalid endDate" });
+  // }
 
   // now we check if the booking exists
   if (!booking) {
