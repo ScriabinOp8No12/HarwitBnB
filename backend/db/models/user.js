@@ -83,6 +83,8 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING.BINARY,
         allowNull: false,
         validate: {
+          // // force password to be alphanumeric, does this actually work if we put this validator here? (NO because this is the hashedPassword)
+          // isAlphanumeric: true,
           len: [60, 60],
         },
       },
