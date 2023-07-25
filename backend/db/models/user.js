@@ -17,6 +17,8 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
+          // force username to be a combination of letters and numbers
+          isAlphanumeric: true,
           len: [4, 30],
           isNotEmail(value) {
             // use Validator.isEmail (Validator package contains isEmail())
@@ -25,7 +27,6 @@ module.exports = (sequelize, DataTypes) => {
             }
           },
           // added empty string model validation to username!
-
           notEmptyString(value) {
             if (value.length === 0) {
               throw new Error("Cannot be empty.");
@@ -36,8 +37,9 @@ module.exports = (sequelize, DataTypes) => {
       firstName: {
         type: DataTypes.STRING,
         allowNull: false,
-        // added it here too
         validate: {
+          // force firstname to only include letters
+          isAlpha: true,
           notEmptyString(value) {
             if (value.length === 0) {
               throw new Error("Cannot be empty.");
@@ -48,8 +50,9 @@ module.exports = (sequelize, DataTypes) => {
       lastName: {
         type: DataTypes.STRING,
         allowNull: false,
-        // and here
         validate: {
+          // force last name to only include letters
+          isAlpha: true,
           notEmptyString(value) {
             if (value.length === 0) {
               throw new Error("Cannot be empty.");
@@ -61,6 +64,8 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
+          // // adding validation to ensure we only allow letters and numbers, therefore we can't just entire a giant blank string
+          // isAlphanumeric: true,
           len: [3, 256],
           isEmail: true,
         },
