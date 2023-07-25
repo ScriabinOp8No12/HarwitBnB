@@ -76,6 +76,16 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
   const { bookingId } = req.params;
   const { startDate, endDate } = req.body;
   const booking = await Booking.findByPk(bookingId);
+
+  // Validate that the endDate is after the startDate
+  if (new Date(endDate) < new Date(startDate)) {
+    return res.status(400).json({
+      message: "Bad Request",
+      errors: {
+        endDate: "endDate cannot come before startDate",
+      },
+    });
+  }
   // adding conditions to check if the start and enddate are even valid, this stops people from spamming a random amount of numbers,
   // and it giving a weird error
   const minTimestamp = new Date("2000-01-01").getTime();
@@ -89,23 +99,23 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
     return res.status(400).json({ message: "Invalid endDate" });
   }
 
-  if (
-    typeof startDate !== "number" ||
-    isNaN(startDate) ||
-    !isFinite(startDate) ||
-    isNaN(new Date(startDate))
-  ) {
-    return res.status(400).json({ message: "Invalid startDate" });
-  }
+  // if (
+  //   typeof startDate !== "number" ||
+  //   isNaN(startDate) ||
+  //   !isFinite(startDate) ||
+  //   isNaN(new Date(startDate))
+  // ) {
+  //   return res.status(400).json({ message: "Invalid startDate" });
+  // }
 
-  if (
-    typeof endDate !== "number" ||
-    isNaN(endDate) ||
-    !isFinite(endDate) ||
-    isNaN(new Date(endDate))
-  ) {
-    return res.status(400).json({ message: "Invalid endDate" });
-  }
+  // if (
+  //   typeof endDate !== "number" ||
+  //   isNaN(endDate) ||
+  //   !isFinite(endDate) ||
+  //   isNaN(new Date(endDate))
+  // ) {
+  //   return res.status(400).json({ message: "Invalid endDate" });
+  // }
 
   // now we check if the booking exists
   if (!booking) {
@@ -134,6 +144,10 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
   if (conflictingBooking) {
     return res.status(403).json({
       message: "Sorry, this spot is already booked for the specified dates",
+      errors: {
+        startDate: "Start date conflicts with an existing booking",
+        endDate: "End date conflicts with an existing booking",
+      },
     });
   }
   await booking.update({ startDate, endDate });
