@@ -24,6 +24,10 @@ module.exports = (sequelize, DataTypes) => {
       url: {
         allowNull: false,
         type: DataTypes.STRING,
+        validate: {
+          // forcing url to be a url and not a string wrapping an integer
+          isUrl: true,
+        },
       },
       preview: {
         allowNull: false,
