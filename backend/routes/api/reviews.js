@@ -146,7 +146,7 @@ router.delete("/:reviewId", requireAuth, async (req, res) => {
   } else if (review.userId !== req.user.id) {
     return res.status(403).json({ message: "Not Authorized!" });
   }
-  review.destroy();
+  await review.destroy();
   // added return below
   return res.json({ message: "Successfully deleted" });
 });
