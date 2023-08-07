@@ -36,12 +36,6 @@ module.exports = (sequelize, DataTypes) => {
               throw new Error("Cannot be an email.");
             }
           },
-          // added empty string model validation to username!
-          notEmptyString(value) {
-            if (value.length === 0) {
-              throw new Error("Cannot be empty.");
-            }
-          },
         },
       },
       firstName: {
