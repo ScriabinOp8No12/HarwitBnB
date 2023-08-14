@@ -1,4 +1,5 @@
-"use strict";
+const moment = require("moment");
+("use strict");
 const { Model } = require("sequelize");
 const Validator = require("validator");
 
@@ -11,6 +12,15 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "reviewId",
         onDelete: "CASCADE",
       });
+    }
+    format() {
+      this.dataValues.createdAt = moment(this.createdAt).format(
+        "YYYY-MM-DD HH:mm:ss"
+      );
+      this.dataValues.updatedAt = moment(this.updatedAt).format(
+        "YYYY-MM-DD HH:mm:ss"
+      );
+      return this;
     }
   }
   Review.init(

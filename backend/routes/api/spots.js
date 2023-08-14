@@ -498,6 +498,7 @@ router.get("/:spotId/reviews", async (req, res) => {
   const { spotId } = req.params;
 
   const spot = await Spot.findByPk(spotId);
+
   if (!spot) {
     return res.status(404).json({ error: "Spot couldn't be found" });
   }
@@ -507,6 +508,10 @@ router.get("/:spotId/reviews", async (req, res) => {
       { model: User, attributes: ["id", "firstName", "lastName"] },
       { model: ReviewImage, attributes: ["id", "url"] },
     ],
+  });
+  // Format dates
+  reviews.forEach((review) => {
+    review.format();
   });
   // added return below
   return res.json({ Reviews: reviews });
