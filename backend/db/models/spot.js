@@ -1,6 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 const Validator = require("validator");
+const moment = require("moment");
 
 module.exports = (sequelize, DataTypes) => {
   class Spot extends Model {
@@ -28,7 +29,17 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "CASCADE",
       });
     }
+    format() {
+      this.dataValues.createdAt = moment(this.createdAt).format(
+        "YYYY-MM-DD HH:mm:ss"
+      );
+      this.dataValues.updatedAt = moment(this.updatedAt).format(
+        "YYYY-MM-DD HH:mm:ss"
+      );
+      return this;
+    }
   }
+
   Spot.init(
     // added allowNull false to everything below to match migration
     {

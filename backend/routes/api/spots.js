@@ -1,3 +1,5 @@
+const moment = require("moment");
+
 const express = require("express");
 const { requireAuth } = require("../../utils/auth");
 const {
@@ -15,15 +17,6 @@ const router = express.Router();
 
 // Returns all the spots and return spots filtered by query parameters
 router.get("/", async (req, res) => {
-  // get all spots query parameters plan:
-  // use {page, size, minLat. maxLat, minLng, maxLng, minPrice, maxPrice} = req.query
-  // to get all the values from the url
-  // use a || condition so that if page and size are null / not defined, it returns default values
-  // of 1 for page, and size of 20
-  // use if condition to make sure min page is less than 10 and size is less than 20
-  // all other ones are optional
-  // don't forget to throw a 400 validation error if something doesn't work (use if conditions)
-  //
   // get the query parameters
   let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } =
     req.query;
@@ -134,16 +127,6 @@ router.get("/", async (req, res) => {
   };
   // now we don't use this below, but use the options instead
   const spots = await Spot.findAll(options);
-  // const spots = await Spot.findAll({
-  //   include: [
-  //     {
-  //       model: SpotImage,
-  //     },
-  //     {
-  //       model: Review,
-  //     },
-  //   ],
-  // });
 
   // Calculate the average rating for each spot by looping through the spot array we queried above (we saw this example below in an AA open reading)
   const formattedSpots = spots.map((spot) => {
@@ -171,8 +154,8 @@ router.get("/", async (req, res) => {
       name: spot.name,
       description: spot.description,
       price: Number(spot.price),
-      createdAt: spot.createdAt,
-      updatedAt: spot.updatedAt,
+      createdAt: moment(spot.createdAt).format("YYYY-MM-DD HH:mm:ss"), // formatted with moment.js
+      updatedAt: moment(spot.updatedAt).format("YYYY-MM-DD HH:mm:ss"), // formatted with moment.js
       // changed from avgRating,  to: avgRating: Number(avgRating)
       avgRating: Number(avgRating),
       // Ternary -> condition ? <execute if true> : <execute if false>
@@ -181,7 +164,7 @@ router.get("/", async (req, res) => {
     };
   });
 
-  return res.json({ Spots: formattedSpots });
+  return res.json({ Spots: formattedSpots, page, size });
 });
 
 // Needs authorization, so we use 'requireAuth' in request below
@@ -214,6 +197,14 @@ router.post("/", requireAuth, async (req, res) => {
     description,
     price,
   });
+
+  spotsData.dataValues.createdAt = moment(
+    spotsData.dataValues.createdAt
+  ).format("YYYY-MM-DD HH:mm:ss");
+  spotsData.dataValues.updatedAt = moment(
+    spotsData.dataValues.updatedAt
+  ).format("YYYY-MM-DD HH:mm:ss");
+
   // API docs want status 201, so modified here
   return res.status(201).json(spotsData);
 });
@@ -292,8 +283,10 @@ router.get("/current", requireAuth, async (req, res) => {
       name: spot.name,
       description: spot.description,
       price: Number(spot.price),
-      createdAt: spot.createdAt,
-      updatedAt: spot.updatedAt,
+      // createdAt: spot.createdAt,
+      // updatedAt: spot.updatedAt,
+      createdAt: moment(spot.createdAt).format("YYYY-MM-DD HH:mm:ss"), // formatted with moment.js
+      updatedAt: moment(spot.updatedAt).format("YYYY-MM-DD HH:mm:ss"), // formatted with moment.js
       avgRating: Number(avgRating),
       // shows previewImage unless there's no url, then it's set to null instead
       previewImage: previewImage ? previewImage.url : null,
@@ -308,6 +301,7 @@ router.get("/:spotId", async (req, res) => {
   const { spotId } = req.params;
   // don't forget await keyword, otherwise we basically always get back an empty {}
   const spot = await Spot.findByPk(spotId);
+
   if (!spot) {
     return res.status(404).json({ message: "Spot couldn't be found" });
   }
@@ -331,6 +325,8 @@ router.get("/:spotId", async (req, res) => {
       },
     ],
   });
+
+  spotDetails.format(); // ADDED THIS LINE HERE TO FORMAT THE DATE based on Spot model!
 
   const reviewData = await Review.findOne({
     where: { spotId },
@@ -415,7 +411,8 @@ router.put("/:spotId", requireAuth, async (req, res) => {
       price: Number(price),
     });
 
-    return res.json(spot);
+    // call .format() within here, it works somehow
+    return res.json(spot.format());
     // res needs to have: id, ownerId, address, city, state, country, lat, lng, name, description, price, createdAt, and updatedAt
     // error response 400 given when body has validation errors, this should be setup already! Nope, needs to be a 400 status code
   } catch (err) {
@@ -481,8 +478,10 @@ router.post("/:spotId/reviews", requireAuth, async (req, res) => {
       review: reviewData.review,
       // don't need to convert stars to number, cause it already is a number!
       stars: reviewData.stars,
-      createdAt: reviewData.createdAt,
-      updatedAt: reviewData.updatedAt,
+      // createdAt: reviewData.createdAt,
+      // updatedAt: reviewData.updatedAt,
+      createdAt: moment(reviewData.createdAt).format("YYYY-MM-DD HH:mm:ss"), // formatted with moment.js
+      updatedAt: moment(reviewData.updatedAt).format("YYYY-MM-DD HH:mm:ss"), // formatted with moment.js
     });
   } catch (err) {
     if (err instanceof Sequelize.ValidationError) {
@@ -631,8 +630,10 @@ router.get("/:spotId/bookings", requireAuth, async (req, res) => {
       userId: booking.userId,
       startDate: booking.startDate,
       endDate: booking.endDate,
-      createdAt: booking.createdAt,
-      updatedAt: booking.updatedAt,
+      // createdAt: booking.createdAt,
+      // updatedAt: booking.updatedAt,
+      createdAt: moment(booking.createdAt).format("YYYY-MM-DD HH:mm:ss"), // formatted with moment.js
+      updatedAt: moment(booking.updatedAt).format("YYYY-MM-DD HH:mm:ss"), // formatted with moment.js
     }));
     return res.json({ Bookings: formattedBookings });
   }
