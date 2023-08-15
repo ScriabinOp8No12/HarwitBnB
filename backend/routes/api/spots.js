@@ -578,6 +578,9 @@ router.post("/:spotId/bookings", requireAuth, async (req, res) => {
       startDate,
       endDate,
     });
+
+    booking.format();
+
     // added return below
     return res.json(booking);
   } catch (err) {
@@ -633,10 +636,12 @@ router.get("/:spotId/bookings", requireAuth, async (req, res) => {
       id: booking.id,
       spotId: booking.spotId,
       userId: booking.userId,
-      startDate: booking.startDate,
-      endDate: booking.endDate,
+      // startDate: booking.startDate,
+      // endDate: booking.endDate,
       // createdAt: booking.createdAt,
       // updatedAt: booking.updatedAt,
+      startDate: moment(booking.startDate).format("YYYY-MM-DD"), // formatted with moment.js
+      endDate: moment(booking.endDate).format("YYYY-MM-DD"), // formatted with moment.js
       createdAt: moment(booking.createdAt).format("YYYY-MM-DD HH:mm:ss"), // formatted with moment.js
       updatedAt: moment(booking.updatedAt).format("YYYY-MM-DD HH:mm:ss"), // formatted with moment.js
     }));

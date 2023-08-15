@@ -4,6 +4,7 @@ const { Booking, Spot, SpotImage } = require("../../db/models");
 const { Sequelize } = require("sequelize");
 const { Op } = require("sequelize");
 const router = express.Router();
+const moment = require("moment");
 
 // Return all the bookings that the current user has made
 // ISSUE SOLVED -> Was giving null for start and end date ONLY for seeder data......
@@ -37,6 +38,10 @@ router.get("/current", requireAuth, async (req, res) => {
         include: [{ model: SpotImage, attributes: ["url"], limit: 1 }],
       },
     ],
+  });
+
+  bookings.map((booking) => {
+    booking.format();
   });
   // this console log saved us! our formatting for the dates in the seeder data needed a bunch of extra digits to specify the exact time, not just the day/date
   // console.log("bookings:", bookings);
@@ -99,24 +104,6 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
     return res.status(400).json({ message: "Invalid endDate" });
   }
 
-  // if (
-  //   typeof startDate !== "number" ||
-  //   isNaN(startDate) ||
-  //   !isFinite(startDate) ||
-  //   isNaN(new Date(startDate))
-  // ) {
-  //   return res.status(400).json({ message: "Invalid startDate" });
-  // }
-
-  // if (
-  //   typeof endDate !== "number" ||
-  //   isNaN(endDate) ||
-  //   !isFinite(endDate) ||
-  //   isNaN(new Date(endDate))
-  // ) {
-  //   return res.status(400).json({ message: "Invalid endDate" });
-  // }
-
   // now we check if the booking exists
   if (!booking) {
     return res.status(404).json({ message: "Booking couldn't be found" });
@@ -155,10 +142,14 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
     id: booking.id,
     spotId: booking.spotId,
     userId: booking.userId,
-    startDate: booking.startDate,
-    endDate: booking.endDate,
-    createdAt: booking.createdAt,
-    updatedAt: booking.updatedAt,
+    startDate: moment(booking.startDate).format("YYYY-MM-DD"), // formatted with moment.js
+    endDate: moment(booking.endDate).format("YYYY-MM-DD"), // formatted with moment.js
+    createdAt: moment(booking.createdAt).format("YYYY-MM-DD HH:mm:ss"), // formatted with moment.js
+    updatedAt: moment(booking.updatedAt).format("YYYY-MM-DD HH:mm:ss"), // formatted with moment.js
+    // startDate: booking.startDate,
+    // endDate: booking.endDate,
+    // createdAt: booking.createdAt,
+    // updatedAt: booking.updatedAt,
   });
 });
 
