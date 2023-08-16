@@ -17,6 +17,7 @@ router.post("/:reviewId/images", requireAuth, async (req, res) => {
   const { reviewId } = req.params;
   const { url } = req.body;
   const review = await Review.findByPk(reviewId);
+
   if (!review) {
     return res.status(404).json({ message: "Review couldn't be found" });
   }
@@ -73,6 +74,11 @@ router.get("/current", requireAuth, async (req, res) => {
     ],
   });
 
+  // Format dates
+  reviews.forEach((review) => {
+    review.format();
+  });
+
   //use .map to create an array of formatted reviews
   const formattedReviews = reviews.map((review) => {
     // convert the review object into POJO so it can be modified
@@ -95,6 +101,7 @@ router.get("/current", requireAuth, async (req, res) => {
     review.Spot.price = Number(review.Spot.price);
     return review;
   });
+
   // added return below
   return res.json({ Reviews: updatedReviews });
 });
@@ -124,7 +131,7 @@ router.put("/:reviewId", requireAuth, async (req, res) => {
       stars,
     });
 
-    return res.json(reviews);
+    return res.json(reviews.format());
     // res needs to have: id, ownerId, address, city, state, country, lat, lng, name, description, price, createdAt, and updatedAt
     // error response 400 given when body has validation errors
   } catch (err) {

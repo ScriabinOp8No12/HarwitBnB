@@ -23,14 +23,22 @@ const validateSignup = [
   check("password")
     .exists({ checkFalsy: true })
     .isLength({ min: 6 })
-    .withMessage("Password must be 6 characters or more."),
+    .withMessage("Password must be 6 characters or more.")
+    // stop password from only containing spaces
+    .custom((value) => {
+      if (!value.trim()) {
+        // If after trimming, the password is empty, that means it was only spaces.
+        throw new Error("Password cannot be only spaces.");
+      }
+      return true; // Indicates the success of this synchronous custom validator
+    }),
   handleValidationErrors,
 ];
-
 // Sign up
 router.post("/", validateSignup, async (req, res) => {
   // adding first and last name here into the req.body and in the .create method below
   const { firstName, lastName, email, password, username } = req.body;
+
   const hashedPassword = bcrypt.hashSync(password);
   const user = await User.create({
     // needed first and last name here too!

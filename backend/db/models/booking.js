@@ -1,5 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
+const moment = require("moment");
+
 module.exports = (sequelize, DataTypes) => {
   class Booking extends Model {
     /**
@@ -15,6 +17,19 @@ module.exports = (sequelize, DataTypes) => {
       Booking.belongsTo(models.User, {
         foreignKey: "userId",
       });
+    }
+    format() {
+      this.dataValues.createdAt = moment(this.createdAt).format(
+        "YYYY-MM-DD HH:mm:ss"
+      );
+      this.dataValues.updatedAt = moment(this.updatedAt).format(
+        "YYYY-MM-DD HH:mm:ss"
+      );
+
+      this.dataValues.startDate = moment(this.startDate).format("YYYY-MM-DD");
+      this.dataValues.endDate = moment(this.endDate).format("YYYY-MM-DD");
+
+      return this;
     }
   }
   Booking.init(

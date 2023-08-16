@@ -1,5 +1,8 @@
 "use strict";
 const { Model } = require("sequelize");
+const Validator = require("validator");
+const moment = require("moment");
+
 module.exports = (sequelize, DataTypes) => {
   class Spot extends Model {
     /**
@@ -26,7 +29,17 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "CASCADE",
       });
     }
+    format() {
+      this.dataValues.createdAt = moment(this.createdAt).format(
+        "YYYY-MM-DD HH:mm:ss"
+      );
+      this.dataValues.updatedAt = moment(this.updatedAt).format(
+        "YYYY-MM-DD HH:mm:ss"
+      );
+      return this;
+    }
   }
+
   Spot.init(
     // added allowNull false to everything below to match migration
     {
@@ -45,10 +58,16 @@ module.exports = (sequelize, DataTypes) => {
               throw new Error("Address must be unique");
             }
           },
-          // add non empty string model validator here too!
-          notEmptyString(value) {
-            if (value.length === 0) {
-              throw new Error("Cannot be empty.");
+          // force address to be a combination of letters, numbers, and optionally spaces
+          // can remove validation of "check if empty string" because this checks for that too
+          isAlphaNumbericWithSpaces(value) {
+            if (
+              // regex that allows only letters and numbers, it can have spaces too
+              !Validator.matches(value, /^(?=.*[a-zA-Z0-9])[a-zA-Z0-9\s]*$/)
+            ) {
+              throw new Error(
+                "Address must contain a combination of letters and numbers. White spaces are allowed too!"
+              );
             }
           },
         },
@@ -58,8 +77,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         // add non empty string model validator here too!
         validate: {
+          isValidCityName(value) {
+            if (!Validator.matches(value, /^[a-zA-Z\u00C0-\u017F\s-]+$/)) {
+              throw new Error("Invalid city name");
+            }
+          },
+          // this is how we check if it's empty (this if statement includes the "" with no spaces in between)
           notEmptyString(value) {
-            if (value.length === 0) {
+            if (value.length === 0 || value.trim().length === 0) {
               throw new Error("Cannot be empty.");
             }
           },
@@ -70,11 +95,21 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         // add non empty string model validator here too!
         validate: {
-          notEmptyString(value) {
-            if (value.length === 0) {
-              throw new Error("Cannot be empty.");
+          isAlphaWithSpaces(value) {
+            if (
+              // regex that allows only letters, it can have spaces too
+              !Validator.matches(value, /^(?=.*[a-zA-Z])[a-zA-Z\s]*$/)
+            ) {
+              throw new Error(
+                "State can only contain letters. White spaces are allowed too!"
+              );
             }
           },
+          // notEmptyString(value) {
+          //   if (value.length === 0 || value.trim().length === 0) {
+          //     throw new Error("Cannot be empty.");
+          //   }
+          // },
         },
       },
       country: {
