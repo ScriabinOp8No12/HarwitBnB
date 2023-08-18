@@ -1,0 +1,29 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+.loginText {
+  text-align: center;
+}
+
+form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ebedef;
+}
+
+.usernameField,
+.passwordField {
+  width: 94%;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.loginButton {
+  background-color: #2ea44f;
+  color: white;
+  width: 100%;
+  padding: 10px 20px;
+  border: none;
+}
