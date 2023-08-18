@@ -1,9 +1,11 @@
 body {
   font-family: Arial, sans-serif;
+  background-color: #1b262c;
 }
 
 .loginText {
   text-align: center;
+  color: white;
 }
 
 form {

@@ -50,7 +50,7 @@ function LoginFormPage() {
         </label>
         {errors.credential && <p>{errors.credential}</p>}
         <button type="submit" className="loginButton">
-          Log In
+          Login
         </button>
       </form>
     </>
