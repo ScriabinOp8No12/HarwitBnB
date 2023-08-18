@@ -1,12 +1,10 @@
 body {
   font-family: Arial, sans-serif;
   background-color: #1b262c;
-  /* background-color: white; */
 }
 
-.loginText {
+.signupText {
   text-align: center;
-  /* color: black; */
   color: white;
 }
 
@@ -17,14 +15,18 @@ form {
   background-color: #ebedef;
 }
 
+.emailField,
 .usernameField,
-.passwordField {
+.firstNameField,
+.lastNameField,
+.passwordField,
+.confirmPasswordField {
   width: 94%;
   padding: 10px;
   margin-bottom: 20px;
 }
 
-.loginButton {
+.signupButton {
   background-color: #2ea44f;
   color: white;
   width: 100%;
