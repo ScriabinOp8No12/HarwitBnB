@@ -2,7 +2,7 @@
 
 ## Database Schema Design
 
-`airbnb_project`
+`HarwitBnB_project`
 
 ## API Documentation
 
