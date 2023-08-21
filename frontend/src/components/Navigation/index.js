@@ -7,11 +7,17 @@ import "../styles/Navigation.css";
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
 
+  // frontend/public/airbnb-logo-cropped.jpg
+
   return (
     <ul>
       <li>
         <NavLink exact to="/">
-          Home
+          <img
+            src="/airbnb-logo-cropped.jpg"
+            alt="airbnb-logo"
+            className="logo"
+          />
         </NavLink>
       </li>
       {isLoaded && (

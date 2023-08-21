@@ -2,6 +2,13 @@
   display: none;
 }
 
+.logo {
+  position: fixed;
+  top: 0.5vw;
+  left: 0.5vw;
+  width: 3vw;
+}
+
 .navigation-container {
   /* Keep in top right of screen, even on scroll, use position: fixed */
   position: fixed;
