@@ -58,6 +58,25 @@
   cursor: pointer;
 }
 
+.disabledButton {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.loginButton:disabled {
+  cursor: default;
+}
+
+.loginButton:not(:disabled) {
+  cursor: pointer;
+}
+
+.errorMessage p {
+  color: red;
+  text-align: center;
+  font-size: 20px;
+}
+
 .navigation-container {
   /* Keep in top right of screen, even on scroll, use position: fixed */
   position: fixed;
