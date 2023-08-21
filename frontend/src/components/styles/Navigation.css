@@ -10,6 +10,14 @@
   width: 40px;
 }
 
+.loginText {
+  margin-top: 0px;
+}
+
+.signupText {
+  margin-top: 0px;
+}
+
 /* style the profile button and the i tag (icon) within it */
 /* make size in pixels because we want it to stay the same size even when the viewport gets smaller */
 .profile-button i {
@@ -30,10 +38,12 @@
   cursor: pointer;
 }
 
+/* when the user is loggedin, don't use the pointer clicker cursor */
 .profile-dropdown.logged-in {
   cursor: default;
 }
 
+/* only have the grey background hover effect when the user isn't logged in */
 .profile-dropdown.not-logged-in li:hover {
   background-color: lightgrey;
 }
@@ -42,6 +52,7 @@
   margin-bottom: 10px;
 }
 
+/* the logout button needs the pointer effect too */
 .profile-dropdown li:last-child button {
   cursor: pointer;
 }
@@ -58,6 +69,7 @@
   align-items: center;
 }
 
+/* the .modal and .modal-overlay create the greyed out background when the user is on the modal */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -70,6 +82,7 @@
   z-index: 999;
 }
 
+/* also move the modal to the center of the screen using transform property! */
 .modal {
   position: fixed;
   top: 50%;

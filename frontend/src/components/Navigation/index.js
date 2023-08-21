@@ -7,8 +7,6 @@ import "../styles/Navigation.css";
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
 
-  // frontend/public/airbnb-logo-cropped.jpg
-
   return (
     <ul>
       <li>

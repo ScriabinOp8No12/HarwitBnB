@@ -26,8 +26,8 @@ function LoginFormModal() {
   return (
     // add modal className to this LoginFormModal as well as the SignupFormModal
     <div className="modal">
-      <h1 className="loginText">Log In for HarwitBnB</h1>
       <form onSubmit={handleSubmit}>
+        <h1 className="loginText">Log In for HarwitBnB</h1>
         <label className="usernameLabel">
           Username or Email
           <input
