@@ -6,7 +6,35 @@
   position: fixed;
   top: 0.5vw;
   left: 0.5vw;
-  width: 3vw;
+  /* width: 3vw; */
+  width: 40px;
+}
+
+/* style the profile button and the i tag (icon) within it */
+.profile-button i {
+  /* font-size: 2vw; */
+  font-size: 40px;
+}
+
+.profile-button {
+  transform: translate(-0.5vw, 0.5vw);
+  cursor: pointer;
+}
+
+.profile-dropdown {
+  list-style: none;
+  position: relative;
+  right: 30px;
+  top: 15px;
+  cursor: pointer;
+}
+
+.profile-dropdown li:hover {
+  background-color: lightgrey;
+}
+
+.profile-dropdown li {
+  margin-bottom: 10px;
 }
 
 .navigation-container {
