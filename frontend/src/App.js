@@ -19,7 +19,7 @@ function App() {
   // Close modal when user clicks outside of it
   useEffect(() => {
     const handleOutsideClick = (e) => {
-      if (modalComponent && !e.target.closest("modal")) {
+      if (modalComponent && !e.target.closest(".modal")) {
         handleCloseModal();
       }
     };
@@ -27,7 +27,7 @@ function App() {
     document.addEventListener("click", handleOutsideClick);
 
     return () => document.removeEventListener("click", handleOutsideClick);
-  }, [modalComponent]);
+  }, [modalComponent, handleCloseModal]);
 
   // Close modal when user navigates to a different page
   useEffect(() => {
@@ -43,6 +43,7 @@ function App() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
+      {modalComponent && <div className="modal-overlay"></div>}
       {modalComponent}
       {isLoaded && <Switch></Switch>}
     </>
