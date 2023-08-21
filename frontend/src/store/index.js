@@ -3,8 +3,8 @@ import thunk from "redux-thunk";
 import sessionReducer from "./session";
 import modalReducer from "./modal";
 
+// combine all the reducers with the Redux combineReducers function
 const rootReducer = combineReducers({
-  // add reducer functions here
   session: sessionReducer,
   modal: modalReducer,
 });
