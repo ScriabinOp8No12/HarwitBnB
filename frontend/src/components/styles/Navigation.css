@@ -1,12 +1,13 @@
+/* hide the menu when we click off the menu */
 .hidden {
   display: none;
 }
 
+/* use pixel values instead of relative values because we want the logo and button to stay the same size on a resize of the viewport */
 .logo {
   position: fixed;
   top: 0.5vw;
   left: 0.5vw;
-  /* width: 3vw; */
   width: 40px;
 }
 
