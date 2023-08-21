@@ -1,0 +1,35 @@
+.hidden {
+  display: none;
+}
+
+.navigation-container {
+  /* Keep in top right of screen, even on scroll, use position: fixed */
+  position: fixed;
+  top: 0;
+  right: 0;
+  display: flex;
+  /* Put the items in the container to the right side of the container */
+  justify-content: flex-end;
+  /* align items vertically */
+  align-items: center;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  background-color: rgba(0, 0, 0, 0.5);
+
+  z-index: 999;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}

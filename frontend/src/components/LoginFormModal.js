@@ -24,8 +24,9 @@ function LoginFormModal() {
   };
 
   return (
-    <>
-      <h1 className="loginText">Log In</h1>
+    // add modal className to this LoginFormModal as well as the SignupFormModal
+    <div className="modal">
+      <h1 className="loginText">Log In for HarwitBnB</h1>
       <form onSubmit={handleSubmit}>
         <label className="usernameLabel">
           Username or Email
@@ -52,7 +53,7 @@ function LoginFormModal() {
           Login
         </button>
       </form>
-    </>
+    </div>
   );
 }
 
