@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Switch, useHistory } from "react-router-dom";
 import * as sessionActions from "./store/session";
@@ -11,10 +11,10 @@ function App() {
   const modalComponent = useSelector((state) => state.modal.modalComponent);
   const history = useHistory();
 
-  // function to close modal
-  const handleCloseModal = () => {
+  // function to close modal (wrap with useCallback to avoid rerending / warning in terminal)
+  const handleCloseModal = useCallback(() => {
     dispatch(closeModal());
-  };
+  }, [dispatch]);
 
   // Close modal when user clicks outside of it
   useEffect(() => {
@@ -34,7 +34,7 @@ function App() {
     return history.listen(() => {
       handleCloseModal();
     });
-  }, [history]);
+  }, [history, handleCloseModal]);
 
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));

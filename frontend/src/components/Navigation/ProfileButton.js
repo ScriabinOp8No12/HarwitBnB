@@ -38,7 +38,12 @@ function ProfileButton({ user }) {
     closeMenu();
   };
 
-  const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
+  // add a conditional class logged-in and not-logged-in which we can use to
+  // style the menu items differently based on whether the user is logged in or not
+  const ulClassName =
+    "profile-dropdown" +
+    (showMenu ? "" : " hidden") +
+    (user ? " logged-in" : " not-logged-in");
 
   return (
     // Container for icon + menu, we will use a flexbox to align them side by side and in the top right of the screen
@@ -50,9 +55,8 @@ function ProfileButton({ user }) {
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>{user.username}</li>
             <li>
-              {user.firstName} {user.lastName}
+              Hello {user.firstName} {user.lastName}
             </li>
             <li>{user.email}</li>
             <li>
@@ -62,14 +66,14 @@ function ProfileButton({ user }) {
         ) : (
           <>
             <OpenModalMenuItem
-              itemText="Log In"
-              onItemClick={closeMenu}
-              modalComponent={<LoginFormModal />}
-            />
-            <OpenModalMenuItem
               itemText="Sign Up"
               onItemClick={closeMenu}
               modalComponent={<SignupFormModal />}
+            />
+            <OpenModalMenuItem
+              itemText="Log In"
+              onItemClick={closeMenu}
+              modalComponent={<LoginFormModal />}
             />
           </>
         )}
