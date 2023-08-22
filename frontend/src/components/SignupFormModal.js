@@ -48,6 +48,16 @@ function SignupFormModal() {
     <div className="modal">
       <form onSubmit={handleSubmit}>
         <h1 className="signupText">Sign Up for HarwitBnB</h1>
+
+        <div className="errorMessage">
+          {errors.email && <p>{errors.email}</p>}
+          {errors.username && <p>{errors.username}</p>}
+          {errors.firstName && <p>{errors.firstName}</p>}
+          {errors.lastName && <p>{errors.lastName}</p>}
+          {errors.password && <p>{errors.password}</p>}
+          {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+        </div>
+
         <label className="emailLabel">
           Email
           <input
@@ -114,7 +124,29 @@ function SignupFormModal() {
           />
         </label>
         {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-        <button type="submit" className="signupButton">
+        <button
+          type="submit"
+          className={`signupButton ${
+            username.length < 4 ||
+            password.length < 6 ||
+            password !== confirmPassword ||
+            confirmPassword.length === 0 ||
+            email.length === 0 ||
+            firstName.length === 0 ||
+            lastName.length === 0
+              ? "disabledButton"
+              : ""
+          }`}
+          disabled={
+            username.length < 4 ||
+            password.length < 6 ||
+            password !== confirmPassword ||
+            confirmPassword.length === 0 ||
+            email.length === 0 ||
+            firstName.length === 0 ||
+            lastName.length === 0
+          }
+        >
           Sign Up
         </button>
       </form>
