@@ -10,7 +10,7 @@ export const openModal = (modalComponent) => {
   };
 };
 
-// Action creatore for closing the model, we don't need a payload (data) for this
+// Action creator for closing the model, we don't need a payload (data) for this
 export const closeModal = () => {
   return {
     type: CLOSE_MODAL,
