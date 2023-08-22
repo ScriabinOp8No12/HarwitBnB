@@ -78,6 +78,12 @@
   font-size: 20px;
 }
 
+.demoLoginButton {
+  display: block;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
 .navigation-container {
   /* Keep in top right of screen, even on scroll, use position: fixed */
   position: fixed;
