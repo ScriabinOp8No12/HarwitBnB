@@ -64,12 +64,75 @@
   cursor: not-allowed;
 }
 
+.demoLoginButton {
+  background: none;
+  border: none;
+  color: teal;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: inherit;
+  font-weight: bold;
+  padding: 0;
+}
+
 .loginButton:disabled {
   cursor: default;
+  color: black;
 }
 
 .loginButton:not(:disabled) {
   cursor: pointer;
+  color: white;
+}
+
+.loginButton {
+  font-weight: bold;
+  position: relative;
+  border: 3px solid black;
+  /* shadow on bottom-right */
+  box-shadow: 3px 3px 0px black;
+}
+
+.emailField {
+  border: 3px solid black;
+}
+
+.usernameField {
+  border: 3px solid black;
+}
+
+.firstNameField {
+  border: 3px solid black;
+}
+
+.lastNameField {
+  border: 3px solid black;
+}
+
+.passwordField {
+  border: 3px solid black;
+}
+
+.confirmPasswordField {
+  border: 3px solid black;
+}
+
+.signupButton {
+  font-weight: bold;
+  position: relative;
+  border: 3px solid black;
+  /* shadow on bottom-right */
+  box-shadow: 3px 3px 0px black;
+}
+
+.signupButton:disabled {
+  cursor: default;
+  color: black;
+}
+
+.signupButton:not(:disabled) {
+  cursor: pointer;
+  color: white;
 }
 
 .errorMessage p {
