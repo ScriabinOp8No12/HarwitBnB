@@ -5,7 +5,7 @@ import { fetchSpots } from "../store/spots"; // Import fetchSpots thunk
 
 function Spots() {
   const dispatch = useDispatch();
-  const spots = useSelector((state) => state.spots.all); // Getting all spots from store
+  const spots = useSelector((state) => state.spots.spots); // Getting all spots from store
 
   // Fetching spots when component mounts
   useEffect(() => {
@@ -23,10 +23,14 @@ function Spots() {
         >
           {/* Tooltip with name of the spot */}
           <div title={spot.name}>
-            {/* Display preview image if it exists */}
-            {spot.previewImage && (
-              <img src={spot.previewImage} alt={spot.name} />
-            )}
+            {/* Display image if it exists */}
+            {spot.SpotImages &&
+              spot.SpotImages.find((image) => image.preview) && (
+                <img
+                  src={spot.SpotImages.find((image) => image.preview).url}
+                  alt={spot.name}
+                />
+              )}
             <div>
               {/* Displaying city and state of the spot */}
               <span>
