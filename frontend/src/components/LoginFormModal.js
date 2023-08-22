@@ -47,7 +47,7 @@ function LoginFormModal() {
     // add modal className to this LoginFormModal as well as the SignupFormModal
     <div className="modal">
       <form onSubmit={handleSubmit}>
-        <h1 className="loginText">Log In for HarwitBnB</h1>
+        <h1 className="loginText">Log In</h1>
         {errors.credential && (
           <div className="errorMessage">
             <p>{errors.credential}</p>
@@ -80,10 +80,10 @@ function LoginFormModal() {
           }`}
           disabled={credential.length < 4 || password.length < 6}
         >
-          Login
+          Log In
         </button>
         <button onClick={handleDemoLogin} className="demoLoginButton">
-          Log in as Demo User
+          Demo User
         </button>
       </form>
     </div>
