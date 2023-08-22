@@ -58,6 +58,7 @@
   cursor: pointer;
 }
 
+/* Make the disabled button look ghosted out */
 .disabledButton {
   opacity: 0.5;
   cursor: not-allowed;
