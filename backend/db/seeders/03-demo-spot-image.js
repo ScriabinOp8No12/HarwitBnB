@@ -12,21 +12,21 @@ module.exports = {
       [
         {
           spotId: 1,
-          url: "https://example.com/image1.jpg",
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1692731556/10AirBnB_h6gwsd.jpg",
           preview: true,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
           spotId: 1,
-          url: "https://example.com/image2.jpg",
-          preview: false,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1692731565/11AirBnB_ilvvgs.jpg",
+          preview: true,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
           spotId: 2,
-          url: "https://example.com/image3.jpg",
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1692731553/7AirBnB_pdqgpb.jpg",
           preview: true,
           createdAt: new Date(),
           updatedAt: new Date(),
