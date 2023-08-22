@@ -11,8 +11,8 @@ export const setSpots = (spots) => ({
 export const fetchSpots = () => async (dispatch) => {
   // get the response from the get all spots endpoint, which is at /api/spots
   const response = await fetch("/api/spots");
-  const spots = await response.json();
-  dispatch(setSpots(spots));
+  const { Spots } = await response.json(); // destructure Spots from response
+  dispatch(setSpots(Spots)); // pass Spots array to the action creator
 };
 
 // Reducer
@@ -26,28 +26,3 @@ export default function spotsReducer(state = initialState, action) {
       return state;
   }
 }
-
-// ******** TO DYNAMICALLY CONSTRUCT QUERY PARAMETERS, FOR LATER? ***************
-// function fetchSpots(queryParams) {
-//   // Create a URLSearchParams object from the query parameters
-//   const queryString = new URLSearchParams(queryParams).toString();
-
-//   // Concatenate the query string to the base URL
-//   const url = `/api/spots?${queryString}`;
-
-//   // Fetch the data from the constructed URL
-//   return fetch(url)
-//     .then((response) => response.json())
-//     .then((data) => {
-//       // Handle the data here
-//     });
-// }
-
-// // Example usage
-// const queryParams = {
-//   page: 2,
-//   size: 10,
-//   minPrice: 100,
-//   maxPrice: 500,
-// };
-// fetchSpots(queryParams);

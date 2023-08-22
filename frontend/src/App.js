@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Switch, useHistory } from "react-router-dom";
+import { Route, Switch, useHistory } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import { closeModal } from "./store/modal"; // import closeModal action so we can close the modal with a click outside the modal
 import Navigation from "./components/Navigation";
+import Spots from "./components/Spots";
 
 function App() {
   // dispatch is used to send actions to the store and trigger them
@@ -60,7 +61,11 @@ function App() {
       {/* render the modalComponent if it's not null */}
       {modalComponent}
       {/* If isLoaded is true, render the Switch component from react-router-dom, which is used to render different components based on the current URL */}
-      {isLoaded && <Switch></Switch>}
+      {isLoaded && (
+        <Switch>
+          <Route exact path="/" component={Spots} />
+        </Switch>
+      )}
     </>
   );
 }

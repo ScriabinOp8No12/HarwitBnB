@@ -24,13 +24,9 @@ function Spots() {
           {/* Tooltip with name of the spot */}
           <div title={spot.name}>
             {/* Display image if it exists */}
-            {spot.SpotImages &&
-              spot.SpotImages.find((image) => image.preview) && (
-                <img
-                  src={spot.SpotImages.find((image) => image.preview).url}
-                  alt={spot.name}
-                />
-              )}
+            {spot.previewImage && (
+              <img src={spot.previewImage} alt={spot.name} />
+            )}
             <div>
               {/* Displaying city and state of the spot */}
               <span>
