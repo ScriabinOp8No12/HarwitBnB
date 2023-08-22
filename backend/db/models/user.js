@@ -43,7 +43,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           // force firstname to only include letters
-          isAlpha: true,
+          isAlpha: {
+            args: true,
+            msg: "First name must contain only letters",
+          },
           notEmptyString(value) {
             if (value.length === 0) {
               throw new Error("Cannot be empty.");
@@ -56,7 +59,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           // force last name to only include letters
-          isAlpha: true,
+          isAlpha: {
+            args: true,
+            msg: "Last name must contain only letters",
+          },
           notEmptyString(value) {
             if (value.length === 0) {
               throw new Error("Cannot be empty.");

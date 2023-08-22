@@ -19,6 +19,25 @@ function LoginFormModal() {
       })
       .catch(async (res) => {
         const data = await res.json();
+        if (data && data.errors) setErrors(data.errors);
+      });
+  };
+
+  const handleDemoLogin = () => {
+    const demoCredential = "test1@gmail.com";
+    const demoPassword = "password";
+
+    return dispatch(
+      sessionActions.login({
+        credential: demoCredential,
+        password: demoPassword,
+      })
+    )
+      .then(() => {
+        dispatch(closeModal());
+      })
+      .catch(async (res) => {
+        const data = await res.json();
         // console.log(data);
         if (data && data.errors) setErrors(data.errors);
       });
@@ -62,6 +81,9 @@ function LoginFormModal() {
           disabled={credential.length < 4 || password.length < 6}
         >
           Login
+        </button>
+        <button onClick={handleDemoLogin} className="demoLoginButton">
+          Log in as Demo User
         </button>
       </form>
     </div>

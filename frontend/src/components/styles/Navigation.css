@@ -58,6 +58,7 @@
   cursor: pointer;
 }
 
+/* Make the disabled button look ghosted out */
 .disabledButton {
   opacity: 0.5;
   cursor: not-allowed;
@@ -75,6 +76,12 @@
   color: red;
   text-align: center;
   font-size: 20px;
+}
+
+.demoLoginButton {
+  display: block;
+  margin: 0 auto;
+  margin-top: 20px;
 }
 
 .navigation-container {
