@@ -159,6 +159,12 @@
   align-items: center;
 }
 
+/* light grey line below navbar */
+.navbar {
+  border-bottom: 2px solid lightgrey;
+  padding-bottom: 10px;
+}
+
 /* the .modal and .modal-overlay create the greyed out background when the user is on the modal */
 .modal-overlay {
   position: fixed;
@@ -166,9 +172,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-
   background-color: rgba(0, 0, 0, 0.5);
-
   z-index: 999;
 }
 
