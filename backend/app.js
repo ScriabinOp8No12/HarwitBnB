@@ -11,6 +11,7 @@ const isProduction = environment === "production";
 // we are already getting all the routes from the folder, so no need to require individual routes
 const routes = require("./routes");
 const { ValidationError } = require("sequelize");
+const parser = require("./file-upload");
 
 const app = express();
 
@@ -45,6 +46,12 @@ app.use(
 );
 
 app.use(routes);
+
+// Upload route here, before the error handling middleware
+app.post("/upload", parser.single("image"), (req, res) => {
+  res.json({ file: req.file });
+});
+
 app.use((_req, _res, next) => {
   const err = new Error("The requested resource couldn't be found.");
   err.title = "Resource Not Found";
