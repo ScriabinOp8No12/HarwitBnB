@@ -14,41 +14,39 @@ function Spots() {
   }, [dispatch]);
 
   return (
-    <div>
+    <div className="containerDiv">
       {spots.map((spot) => (
         // Linking to detail page for each spot
-        <Link
-          to={`/spots/${spot.id}`}
-          key={spot.id}
-          // style={{ textDecoration: "none", color: "inherit" }}
-        >
+        <Link to={`/spots/${spot.id}`} key={spot.id} className="spotLink">
           {/* Tooltip with name of the spot */}
-          <div title={spot.name}>
+          <div title={spot.name} className="spotContainer">
             {/* Display image if it exists */}
-            {spot.previewImage && (
-              <img
-                className="previewImage"
-                src={spot.previewImage}
-                alt={spot.name}
-              />
-            )}
-            <div>
-              {/* Displaying city and state of the spot */}
-              <span>
-                {spot.city}, {spot.state}
-              </span>
-              <div>
+            <div className="previewImage">
+              {spot.previewImage && (
+                <img src={spot.previewImage} alt={spot.name} />
+              )}
+            </div>
+            <div className="textStarsContainer">
+              <div className="spotDetails">
+                {/* Displaying city and state of the spot */}
+                <span>
+                  {spot.city}, {spot.state}
+                </span>
+                <div>
+                  {/* Display price of spot */}
+                  <span className="price">${spot.price}</span>{" "}
+                  <span>night</span>
+                </div>
+              </div>
+              <div className="stars">
                 {/* Displaying average star rating if it exists, otherwise displays "New" */}
                 {spot.avgRating ? (
-                  <span>{spot.avgRating} stars</span>
+                  <span>★ {spot.avgRating}</span>
                 ) : (
                   <span>New</span>
                 )}
               </div>
-              <div>
-                {/* Display price of spot */}
-                <span>${spot.price} / night</span>
-              </div>
+              {/* textStarsContainer wraps all the text up to here */}
             </div>
           </div>
         </Link>

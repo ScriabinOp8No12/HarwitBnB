@@ -159,10 +159,19 @@
   align-items: center;
 }
 
-/* light grey line below navbar */
 .navbar {
   border-bottom: 2px solid lightgrey;
-  padding-bottom: 10px;
+  margin-bottom: 50px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: #f5f5f5;
+  z-index: 1000; /* Ensure the navigation bar is above other content */
 }
 
 /* the .modal and .modal-overlay create the greyed out background when the user is on the modal */
