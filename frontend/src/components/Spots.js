@@ -14,14 +14,10 @@ function Spots() {
   }, [dispatch]);
 
   return (
-    <div>
+    <div className="containerDiv">
       {spots.map((spot) => (
         // Linking to detail page for each spot
-        <Link
-          to={`/spots/${spot.id}`}
-          key={spot.id}
-          // style={{ textDecoration: "none", color: "inherit" }}
-        >
+        <Link to={`/spots/${spot.id}`} key={spot.id}>
           {/* Tooltip with name of the spot */}
           <div title={spot.name}>
             {/* Display image if it exists */}
@@ -47,7 +43,7 @@ function Spots() {
               </div>
               <div>
                 {/* Display price of spot */}
-                <span>${spot.price} / night</span>
+                <span>${spot.price} night</span>
               </div>
             </div>
           </div>
