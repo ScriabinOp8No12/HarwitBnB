@@ -18,14 +18,14 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          spotId: 1,
+          spotId: 2,
           url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1692731565/11AirBnB_ilvvgs.jpg",
           preview: true,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          spotId: 2,
+          spotId: 3,
           url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1692731553/7AirBnB_pdqgpb.jpg",
           preview: true,
           createdAt: new Date(),
