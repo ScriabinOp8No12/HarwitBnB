@@ -50,6 +50,8 @@ function SpotDetail() {
         {spot.ownerId &&
           `Hosted by ${spot.Owner?.firstName} ${spot.Owner?.lastName}`}
       </div>
+      {/* Description for the spot, maybe we want to make it much more text to see how it wraps? */}
+      <div className="spotDescription">{spot.description}</div>
       <div className="calloutInfoBox">
         <div className="price">
           ${spot.price} <span>night</span>
