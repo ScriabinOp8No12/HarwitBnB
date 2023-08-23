@@ -1,61 +1,114 @@
 .spotDetailContainer {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 0 30px;
 }
 
+/* Spot name */
 h1 {
   margin-left: 30px;
 }
 
+/* Location flexbox includes the city, state, country -> in that order */
 .location {
   display: flex;
   align-items: center;
-  margin-left: 30px;
+  /* margin-left: 30px; */
 }
 
+/* Includes all the images (all 5) */
 .images {
   display: flex;
   align-items: flex-start;
 }
 
+/* Styling for the large image on the left */
 .largeImage {
-  width: 50%;
-  height: auto;
-  max-width: 500px;
+  width: 32.5%;
+  padding-bottom: 10px;
+  background-size: cover;
+  background-position: center;
 }
 
+/* Flex box containing all 4 of the smaller images */
 .smallImages {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 50%;
+  flex-wrap: wrap;
+  width: 50%; /* half the width of the large image*/
 }
 
+/* Styling the individual small images */
 .smallImage {
   width: 50%;
-  height: auto;
-  max-width: 250px;
+  /* Maintain aspect ratio */
+  /* padding-bottom: 50%;  */
+  background-size: cover;
+  background-position: center;
 }
 
+.contentContainer {
+  display: flex;
+}
+
+/* total width of description and calloutInfoBox needs to be around 82% to match the images above */
+.description {
+  width: 42%;
+}
+
+/* This is the call to action / where the reserve button is located */
 .calloutInfoBox {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  width: 40%;
+  border: 2px solid black;
+  /* height: auto; */
+}
+
+.ratingPriceContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .price {
   font-size: 24px;
+  font-weight: bold;
+  flex-grow: 1; /* Making sure price takes up the remaining space */
+}
+
+/* Make the "night" text not bolded */
+.price span {
+  font-weight: normal;
+}
+
+.stars {
+  font-size: 14px;
+  font-weight: bold;
+  /* margin-right: 10px; */
+}
+
+.middleDot {
+  font-size: 30px;
+  margin: 0 10px;
+}
+
+.reviewCount {
+  font-size: 14px;
+}
+
+.hostedBy {
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .reserveButton {
   padding: 10px 20px;
   font-size: 18px;
   cursor: pointer;
-  background-color: #f0c14b;
-  border: 1px solid #a88734;
-  border-radius: 3px;
-  transition: background-color 0.2s ease;
+  background-color: #d70466;
+  color: black;
+  width: 100%;
 }
 
 .reserveButton:hover {
