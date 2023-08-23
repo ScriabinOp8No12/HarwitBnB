@@ -45,21 +45,56 @@ h1 {
   background-position: center;
 }
 
+.contentContainer {
+  display: flex;
+}
+
+/* total width of description and calloutInfoBox needs to be around 82% to match the images above */
+.description {
+  width: 42%;
+}
+
 /* This is the call to action / where the reserve button is located */
 .calloutInfoBox {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  width: 40%;
+  border: 2px solid black;
+  /* height: auto; */
+}
+
+.ratingPriceContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .price {
   font-size: 24px;
   font-weight: bold;
+  flex-grow: 1; /* Making sure price takes up the remaining space */
 }
 
 /* Make the "night" text not bolded */
 .price span {
   font-weight: normal;
+}
+
+.stars {
+  font-size: 14px;
+  font-weight: bold;
+  /* margin-right: 10px; */
+}
+
+.middleDot {
+  font-size: 30px;
+  margin: 0 10px;
+}
+
+.reviewCount {
+  font-size: 14px;
 }
 
 .hostedBy {
@@ -73,7 +108,7 @@ h1 {
   cursor: pointer;
   background-color: #d70466;
   color: black;
-  padding: 10px 20px;
+  width: 100%;
 }
 
 .reserveButton:hover {

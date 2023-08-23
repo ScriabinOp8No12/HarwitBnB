@@ -45,20 +45,34 @@ function SpotDetail() {
           ))}
         </div>
       </div>
-      <div className="hostedBy">
-        {/* Since our postman response for get spots/:id shows us the logged in Owner object info, we can access it like below */}
-        {spot.ownerId &&
-          `Hosted by ${spot.Owner?.firstName} ${spot.Owner?.lastName}`}
-      </div>
-      {/* Description for the spot, maybe we want to make it much more text to see how it wraps? */}
-      <div className="spotDescription">{spot.description}</div>
-      <div className="calloutInfoBox">
-        <div className="price">
-          ${spot.price} <span>night</span>
+      <div className="contentContainer">
+        <div className="description">
+          <div className="hostedBy">
+            {/* Since our postman response for get spots/:id shows us the logged in Owner object info, we can access it like below */}
+            {spot.ownerId &&
+              `Hosted by ${spot.Owner?.firstName} ${spot.Owner?.lastName}`}
+          </div>
+          {/* Description for the spot, maybe we want to make it much more text to see how it wraps? */}
+          <div className="spotDescription">{spot.description}</div>
         </div>
-        <button onClick={handleReservationClick} className="reserveButton">
-          Reserve
-        </button>
+        {/* reserve button info box div container below */}
+        <div className="calloutInfoBox">
+          <div className="ratingPriceContainer">
+            <div className="price">
+              ${spot.price} <span>night</span>
+            </div>
+            {spot.avgStarRating ? (
+              <span className="stars">★ {spot.avgStarRating}</span>
+            ) : (
+              <span>New</span>
+            )}
+            <span className="middleDot">·</span> {/* Adding the middle dot */}
+            <span className="reviewCount">{spot.numReviews} reviews</span>
+          </div>
+          <button onClick={handleReservationClick} className="reserveButton">
+            Reserve
+          </button>
+        </div>
       </div>
     </div>
   );
