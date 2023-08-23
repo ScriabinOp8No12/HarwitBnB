@@ -1,7 +1,6 @@
 .spotDetailContainer {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 0 30px;
 }
 
 /* Spot name */
@@ -13,7 +12,7 @@ h1 {
 .location {
   display: flex;
   align-items: center;
-  margin-left: 30px;
+  /* margin-left: 30px; */
 }
 
 /* Includes all the images (all 5) */
@@ -24,24 +23,26 @@ h1 {
 
 /* Styling for the large image on the left */
 .largeImage {
-  width: 50%;
-  height: auto;
-  max-width: 500px;
+  width: 32.5%;
+  padding-bottom: 10px;
+  background-size: cover;
+  background-position: center;
 }
 
 /* Flex box containing all 4 of the smaller images */
 .smallImages {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  /* 10px gap between smaller images */
-  grid-gap: 10px;
-  width: 50%;
+  display: flex;
+  flex-wrap: wrap;
+  width: 50%; /* half the width of the large image*/
 }
 
 /* Styling the individual small images */
 .smallImage {
-  width: 100%;
-  height: auto;
+  width: 50%;
+  /* Maintain aspect ratio */
+  /* padding-bottom: 50%;  */
+  background-size: cover;
+  background-position: center;
 }
 
 /* This is the call to action / where the reserve button is located */
@@ -62,7 +63,8 @@ h1 {
 }
 
 .hostedBy {
-  margin-left: 30px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .reserveButton {
