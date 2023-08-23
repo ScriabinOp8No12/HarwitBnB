@@ -44,7 +44,7 @@ function SpotDetail() {
           ))}
         </div>
       </div>
-      <div className="priceReviewBox">
+      <div className="calloutInfoBox">
         <div className="price">
           ${spot.price} <span>night</span>
         </div>
