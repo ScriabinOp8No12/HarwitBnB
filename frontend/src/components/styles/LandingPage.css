@@ -35,17 +35,17 @@
   font-weight: bold;
 }
 
+/* Style for the container that holds each spot */
+.spotContainer {
+  position: relative;
+}
+
 /* Style for the main container that holds all spots */
 .containerDiv {
   display: grid;
   grid-template-columns: repeat(4, 1fr); /* 4 columns, equal width */
   gap: 2%; /* Gap between grid items */
   padding: 0 2%; /* Padding on left and right */
-}
-
-/* Style for the container that holds each spot */
-.spotContainer {
-  position: relative;
 }
 
 /* Media Queries */
