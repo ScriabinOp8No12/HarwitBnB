@@ -17,6 +17,46 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        // Faroe island no preview 1
+        {
+          spotId: 1,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1692817322/FaroeIslands1_ix8isg.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Faroe island no preview 2
+        {
+          spotId: 1,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1692817320/FaroeIslands2_oghhlt.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Faroe island no preview 3
+        {
+          spotId: 1,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1692817320/FaroeIslands3_wlomee.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Faroe island no preview 4
+        {
+          spotId: 1,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1692817324/FaroeIslands4_xymmxo.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Faroe island no preview 5
+        {
+          spotId: 1,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1692817320/FaroeIslands5_x7j9co.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
         {
           spotId: 2,
           url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1692731565/11AirBnB_ilvvgs.jpg",

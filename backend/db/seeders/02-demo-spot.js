@@ -56,7 +56,7 @@ module.exports = {
         },
         {
           ownerId: 3,
-          address: "Marvaof",
+          address: "Marvao",
           city: "Marvao",
           state: "Portugal",
           country: "Portugal",
@@ -112,7 +112,7 @@ module.exports = {
         },
         {
           ownerId: 3,
-          address: "Marvaasdfasdfo",
+          address: "Marvaosdfgsdfg",
           city: "Marvao",
           state: "Portugal",
           country: "Portugal",
