@@ -5,6 +5,7 @@ import * as sessionActions from "./store/session";
 import { closeModal } from "./store/modal"; // import closeModal action so we can close the modal with a click outside the modal
 import Navigation from "./components/Navigation";
 import Spots from "./components/Spots";
+import SpotDetail from "./components/SpotDetail";
 
 function App() {
   // dispatch is used to send actions to the store and trigger them
@@ -64,6 +65,7 @@ function App() {
       {isLoaded && (
         <Switch>
           <Route exact path="/" component={Spots} />
+          <Route path="/spots/:spotId" component={SpotDetail} />
         </Switch>
       )}
     </>

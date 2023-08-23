@@ -6,13 +6,13 @@ import "./styles/SpotDetail.css";
 
 function SpotDetail() {
   const dispatch = useDispatch();
-  const { id } = useParams(); // Get spot ID from the URL
+  const { spotId } = useParams(); // Get spot ID from the URL
   const spot = useSelector((state) => state.spot.spot); // Getting specific spot from store
 
   // Fetching specific spot when component mounts
   useEffect(() => {
-    dispatch(fetchSpot(id));
-  }, [dispatch, id]);
+    dispatch(fetchSpot(spotId));
+  }, [dispatch, spotId]);
 
   // handling reservation click, need to sometimes ghost it out / disable it like the login in button
   const handleReservationClick = () => {
@@ -22,10 +22,8 @@ function SpotDetail() {
   // seleting main image and 4 other images, which will be styled to be smaller with css
   // ? is optional chaining, it won't throw an error if SpotImages doesn't exist, it'll just returned undefined instead
   const mainImage = spot.SpotImages?.find((image) => image.preview)?.url;
-  const otherImages = spot.SpotImages?.filter((image) => !image.preview).slice(
-    0,
-    4
-  );
+  const otherImages =
+    spot.SpotImages?.filter((image) => !image.preview).slice(0, 4) || [];
 
   return (
     <div className="spotDetailContainer">
@@ -46,7 +44,7 @@ function SpotDetail() {
           ))}
         </div>
       </div>
-      <div className="priceReviewBox">
+      <div className="calloutInfoBox">
         <div className="price">
           ${spot.price} <span>night</span>
         </div>

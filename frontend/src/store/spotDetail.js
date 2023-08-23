@@ -8,18 +8,20 @@ export const setSpot = (spot) => ({
 });
 
 // Thunks
-export const fetchSpot = (id) => async (dispatch) => {
+export const fetchSpot = (spotId) => async (dispatch) => {
   // get the data from the get spotId endpoint, which is at /api/spots/:id
-  try {
-    const { data } = await fetch(`/api/spots/${id}`);
-    dispatch(setSpot(data)); // pass Spots array to the action creator
-  } catch (error) {
-    console.error("Error fetching spot: ", error);
+
+  const response = await fetch(`/api/spots/${spotId}`);
+  if (!response.ok) {
+    throw new Error("Network response was not ok!");
   }
+
+  const data = await response.json();
+  dispatch(setSpot(data)); // pass Spot data to the action creator
 };
 
 // Reducer
-const initialState = { spots: {} }; // dealing with single spot, not array of spots
+const initialState = { spot: {} }; // dealing with single spot, not array of spots
 
 export default function spotDetailReducer(state = initialState, action) {
   switch (action.type) {
