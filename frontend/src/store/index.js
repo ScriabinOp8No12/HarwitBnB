@@ -3,12 +3,14 @@ import thunk from "redux-thunk";
 import sessionReducer from "./session";
 import modalReducer from "./modal";
 import spotsReducer from "./spots";
+import spotDetailReducer from "./spotDetail";
 
 // combine all the reducers with the Redux combineReducers function
 const rootReducer = combineReducers({
   session: sessionReducer,
   modal: modalReducer,
   spots: spotsReducer,
+  spot: spotDetailReducer,
 });
 
 let enhancer;
