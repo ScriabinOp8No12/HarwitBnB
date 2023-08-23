@@ -26,7 +26,11 @@ function Spots() {
           <div title={spot.name}>
             {/* Display image if it exists */}
             {spot.previewImage && (
-              <img src={spot.previewImage} alt={spot.name} />
+              <img
+                className="previewImage"
+                src={spot.previewImage}
+                alt={spot.name}
+              />
             )}
             <div>
               {/* Displaying city and state of the spot */}
