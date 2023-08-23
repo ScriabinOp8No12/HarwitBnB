@@ -4,40 +4,47 @@
   padding: 0 30px;
 }
 
+/* Spot name */
 h1 {
   margin-left: 30px;
 }
 
+/* Location flexbox includes the city, state, country -> in that order */
 .location {
   display: flex;
   align-items: center;
   margin-left: 30px;
 }
 
+/* Includes all the images (all 5) */
 .images {
   display: flex;
   align-items: flex-start;
 }
 
+/* Styling for the large image on the left */
 .largeImage {
   width: 50%;
   height: auto;
   max-width: 500px;
 }
 
+/* Flex box containing all 4 of the smaller images */
 .smallImages {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  /* 10px gap between smaller images */
+  grid-gap: 10px;
   width: 50%;
 }
 
+/* Styling the individual small images */
 .smallImage {
-  width: 50%;
+  width: 100%;
   height: auto;
-  max-width: 250px;
 }
 
+/* This is the call to action / where the reserve button is located */
 .calloutInfoBox {
   display: flex;
   flex-direction: column;
@@ -46,16 +53,25 @@ h1 {
 
 .price {
   font-size: 24px;
+  font-weight: bold;
+}
+
+/* Make the "night" text not bolded */
+.price span {
+  font-weight: normal;
+}
+
+.hostedBy {
+  margin-left: 30px;
 }
 
 .reserveButton {
   padding: 10px 20px;
   font-size: 18px;
   cursor: pointer;
-  background-color: #f0c14b;
-  border: 1px solid #a88734;
-  border-radius: 3px;
-  transition: background-color 0.2s ease;
+  background-color: #d70466;
+  color: black;
+  padding: 10px 20px;
 }
 
 .reserveButton:hover {

@@ -22,6 +22,7 @@ function SpotDetail() {
   // seleting main image and 4 other images, which will be styled to be smaller with css
   // ? is optional chaining, it won't throw an error if SpotImages doesn't exist, it'll just returned undefined instead
   const mainImage = spot.SpotImages?.find((image) => image.preview)?.url;
+  // Needed to add the || [] at the end to avoid using map on an undefined value (~line 38)
   const otherImages =
     spot.SpotImages?.filter((image) => !image.preview).slice(0, 4) || [];
 
@@ -43,6 +44,11 @@ function SpotDetail() {
             />
           ))}
         </div>
+      </div>
+      <div className="hostedBy">
+        {/* Since our postman response for get spots/:id shows us the logged in Owner object info, we can access it like below */}
+        {spot.ownerId &&
+          `Hosted by ${spot.Owner?.firstName} ${spot.Owner?.lastName}`}
       </div>
       <div className="calloutInfoBox">
         <div className="price">

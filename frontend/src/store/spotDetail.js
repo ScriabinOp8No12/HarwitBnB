@@ -8,6 +8,7 @@ export const setSpot = (spot) => ({
 });
 
 // Thunks
+// Fetch spot by Id
 export const fetchSpot = (spotId) => async (dispatch) => {
   // get the data from the get spotId endpoint, which is at /api/spots/:id
 
@@ -15,7 +16,6 @@ export const fetchSpot = (spotId) => async (dispatch) => {
   if (!response.ok) {
     throw new Error("Network response was not ok!");
   }
-
   const data = await response.json();
   dispatch(setSpot(data)); // pass Spot data to the action creator
 };
