@@ -67,6 +67,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Spots} />
           <Route path="/spots/:spotId" component={SpotDetail} />
+          {/* Path has to be /spots, not /spots/new like in wireframe, because our endpoint is to /spots for the post request in the backend route */}
           <Route path="/spots" component={CreateSpotForm} />
         </Switch>
       )}

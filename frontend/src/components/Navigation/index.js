@@ -23,7 +23,7 @@ function Navigation({ isLoaded }) {
         <div className="navigation-container">
           {/* Render "create a new spot" button if user is logged in */}
           {sessionUser && (
-            <NavLink to="/spots/new" className="spot-button">
+            <NavLink to="/spots" className="spot-button">
               Create a New Spot
             </NavLink>
           )}
