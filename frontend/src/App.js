@@ -6,6 +6,7 @@ import { closeModal } from "./store/modal"; // import closeModal action so we ca
 import Navigation from "./components/Navigation";
 import Spots from "./components/Spots";
 import SpotDetail from "./components/SpotDetail";
+import CreateSpotForm from "./components/CreateSpotForm";
 
 function App() {
   // dispatch is used to send actions to the store and trigger them
@@ -66,6 +67,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Spots} />
           <Route path="/spots/:spotId" component={SpotDetail} />
+          <Route path="/spots" component={CreateSpotForm} />
         </Switch>
       )}
     </>

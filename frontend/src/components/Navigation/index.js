@@ -20,7 +20,13 @@ function Navigation({ isLoaded }) {
         </NavLink>
       </div>
       {isLoaded && (
-        <div>
+        <div className="navigation-container">
+          {/* Render "create a new spot" button if user is logged in */}
+          {sessionUser && (
+            <NavLink to="/spots/new" className="spot-button">
+              Create a New Spot
+            </NavLink>
+          )}
           {/* Profile Button with User icon in top right of screen */}
           <ProfileButton user={sessionUser} />
         </div>
