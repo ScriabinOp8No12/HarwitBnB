@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       review: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         validate: {
           notOnlyNumbersOrWhiteSpaces(value) {
             if (!Validator.matches(value, /^(?!^\d+$)(?!^\s+$)^.*$/)) {
