@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { closeModal } from "../store/modal";
 import * as sessionActions from "../store/session";
 import "./styles/LoginForm.css";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
@@ -16,6 +18,7 @@ function LoginFormModal() {
     return dispatch(sessionActions.login({ credential, password }))
       .then(() => {
         dispatch(closeModal());
+        history.push("/"); // Redirect user to home page after successful login
       })
       .catch(async (res) => {
         const data = await res.json();
