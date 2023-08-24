@@ -94,3 +94,28 @@ function LoginFormModal() {
 }
 
 export default LoginFormModal;
+
+// The error messages from the backend are being handled in the catch block of the promise returned by the sessionActions.login dispatch. Here's how it works:
+// Dispatching the Login Action: When the form is submitted, the handleSubmit function is called, which dispatches the sessionActions.login action with the provided credentials.
+// Handling Success: If the login is successful, the .then block is executed, closing the modal and redirecting the user to the home page.
+// Handling Errors: If there's an error (e.g., incorrect credentials), the .catch block is executed. Inside this block, the response from the server is converted to JSON, and the errors are extracted.
+// Setting Errors in State: The errors are then set in the component's local state using setErrors(data.errors). This will cause the component to re-render.
+// Displaying Errors: In the JSX, there's a conditional rendering block that checks if there are any errors related to the credential field:
+
+// {errors.credential && (
+//   <div className="errorMessage">
+//     <p>{errors.credential}</p>
+//   </div>
+// )}
+
+// If there are errors for the credential field, they will be displayed inside a <div> with the class errorMessage.
+// The backend should be structured to return errors in a specific format that the frontend expects. Typically, this would be a JSON object where the keys correspond to the fields that have errors, and the values are the error messages.
+// For example, if the username or email is incorrect, the backend might return a response like this:
+
+// {
+//   "errors": {
+//     "credential": "Incorrect username or email."
+//   }
+// }
+
+// This structure allows the frontend to easily map the errors to the corresponding form fields and display the messages to the user.
