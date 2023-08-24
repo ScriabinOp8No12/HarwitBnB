@@ -105,11 +105,6 @@ module.exports = (sequelize, DataTypes) => {
               );
             }
           },
-          // notEmptyString(value) {
-          //   if (value.length === 0 || value.trim().length === 0) {
-          //     throw new Error("Cannot be empty.");
-          //   }
-          // },
         },
       },
       country: {
@@ -145,7 +140,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.STRING,
         validate: {
-          len: [0, 50],
+          len: [0, 150],
         },
       },
       description: {
