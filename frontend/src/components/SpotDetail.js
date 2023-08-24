@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchSpot } from "../store/spotDetail"; // import fetchSpot (singular) thunk
+import Reviews from "./Review";
 import "./styles/SpotDetail.css";
 
 function SpotDetail() {
@@ -77,6 +78,7 @@ function SpotDetail() {
           </div>
         </div>
       </div>
+      <Reviews spotId={spotId} />
     </div>
   );
 }

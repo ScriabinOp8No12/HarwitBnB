@@ -4,6 +4,7 @@ import sessionReducer from "./session";
 import modalReducer from "./modal";
 import spotsReducer from "./spots";
 import spotDetailReducer from "./spotDetail";
+import reviewsReducer from "./reviews";
 
 // combine all the reducers with the Redux combineReducers function
 const rootReducer = combineReducers({
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   modal: modalReducer,
   spots: spotsReducer,
   spot: spotDetailReducer,
+  reviews: reviewsReducer,
 });
 
 let enhancer;
