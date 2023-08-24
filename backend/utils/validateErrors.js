@@ -1,7 +1,7 @@
 // Define all the validation / error catching logic here
 
 const { check, query } = require("express-validator");
-const { handleValidationErrors } = require("../utils/validation");
+const { handleValidationErrors } = require("./validation");
 
 const capitalizeFirstLetter = (string) =>
   string.charAt(0).toUpperCase() + string.slice(1);
