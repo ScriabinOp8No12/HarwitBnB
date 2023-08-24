@@ -3,16 +3,11 @@
   margin: 0 auto;
 }
 
-/* Spot name */
-h1 {
-  margin-left: 30px;
-}
-
 /* Location flexbox includes the city, state, country -> in that order */
 .location {
   display: flex;
   align-items: center;
-  /* margin-left: 30px; */
+  padding-bottom: 2.5%;
 }
 
 /* Includes all the images (all 5) */
@@ -54,15 +49,21 @@ h1 {
   width: 42%;
 }
 
+.calloutInfoBoxContainer {
+  width: 36%;
+  display: flex;
+  flex-direction: column;
+  padding-left: 2%;
+}
+
 /* This is the call to action / where the reserve button is located */
 .calloutInfoBox {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  width: 36%;
+  width: 100%;
   border: 2px solid black;
-  margin-bottom: 350px;
-  padding: 2%;
+  padding: 3%;
 }
 
 .ratingPriceContainer {
