@@ -1,6 +1,8 @@
 .spotDetailContainer {
   max-width: 1000px;
+  width: 100%;
   margin: 0 auto;
+  padding-left: 10%;
 }
 
 /* Location flexbox includes the city, state, country -> in that order */
@@ -47,7 +49,7 @@
   width: 82.5%;
 }
 
-/* total width of description and calloutInfoBox needs to be around 82% to match the images above */
+/* total width of description and calloutInfoBox needs to be around 96% to match the images above */
 .description {
   width: 59.4%;
 }
@@ -90,7 +92,6 @@
 .stars {
   font-size: 14px;
   font-weight: bold;
-  /* margin-right: 10px; */
 }
 
 .middleDot {
@@ -108,6 +109,7 @@
 }
 
 .hostedBy {
+  font-size: 20px;
   font-weight: bold;
   margin-bottom: 10px;
 }
@@ -123,4 +125,41 @@
 
 .reserveButton:hover {
   background-color: #f5d078;
+}
+
+/**************** REVIEW STYLING ********************/
+
+/* Content container is 82.5% across, so we do that for review text too  */
+.reviewText {
+  max-width: 82.5%;
+  padding-bottom: 10px;
+}
+
+.reviewerName {
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+
+.reviewDate {
+  padding-bottom: 5px;
+}
+.reviewSummaryContainer {
+  display: flex;
+  align-items: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.reviewSummaryContainer .stars,
+.reviewSummaryContainer .reviewCount {
+  font-size: 18px; /* Adjust as needed */
+  font-weight: bold;
+}
+
+.reviewSummaryContainer .middleDot {
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 2px;
+  margin-right: 2px;
+  margin-top: 2.5px;
 }
