@@ -24,7 +24,7 @@
 .profile-button i {
   font-size: 40px;
 }
-/* move the profile button slightly away from the top right corner of the screen */
+/* move the STARTING POSITION of the profile button slightly away from the top right corner of the screen */
 .profile-button {
   transform: translate(-0.5vw, 0.5vw);
   cursor: pointer;
@@ -35,7 +35,7 @@
   list-style: none;
   position: relative;
   right: 30px;
-  top: 15px;
+  /* top: 15px; */
   cursor: pointer;
 }
 
@@ -167,7 +167,7 @@
   right: 0;
   left: 0;
   /* navbar was a tiny div with basically no height at the very top of the page */
-  height: 70px;
+  height: 80px;
   width: 100%;
   display: flex;
   justify-content: flex-end;
