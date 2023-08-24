@@ -624,8 +624,8 @@ router.get("/:spotId/bookings", requireAuth, async (req, res) => {
     // use .map to iterate through all the bookings and save the results in an array!
     const filteredBookings = bookings.map((booking) => ({
       spotId: booking.spotId,
-      startDate: booking.startDate,
-      endDate: booking.endDate,
+      startDate: moment(booking.startDate).format("YYYY-MM-DD"), // formatted with moment.js
+      endDate: moment(booking.endDate).format("YYYY-MM-DD"), // formatted with moment.js
     }));
     return res.json({ Bookings: filteredBookings });
   }
