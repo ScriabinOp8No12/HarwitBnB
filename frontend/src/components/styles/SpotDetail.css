@@ -42,11 +42,14 @@
 
 .contentContainer {
   display: flex;
+  padding-bottom: 25px;
+  border-bottom: 2px solid lightgrey;
+  width: 82.5%;
 }
 
 /* total width of description and calloutInfoBox needs to be around 82% to match the images above */
 .description {
-  width: 42%;
+  width: 59.4%;
 }
 
 .calloutInfoBoxContainer {
@@ -91,14 +94,17 @@
 }
 
 .middleDot {
-  font-size: 30px;
+  font-size: 20px;
   font-weight: bold;
-  margin: 0 5px;
+  /* margin: 0 5px; */
+  margin-left: 2px;
+  margin-right: 2px;
+  margin-top: 2.5px;
 }
 
 .reviewCount {
   font-size: 14px;
-  font-weight: bold;
+  margin-top: 1px;
 }
 
 .hostedBy {
