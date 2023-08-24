@@ -12,22 +12,18 @@ function Reviews({ spotId }) {
 
   return (
     <div className="reviewsContainer">
-      {reviews.length > 0 ? (
-        reviews.map((review) => (
-          <div key={review.id} className="review">
-            <div className="reviewerName">{review.User.firstName}</div>
-            <div className="reviewDate">
-              {new Date(review.createdAt).toLocaleString("default", {
-                month: "long",
-                year: "numeric",
-              })}
-            </div>
-            <div className="reviewText">{review.review}</div>
+      {reviews.map((review) => (
+        <div key={review.id} className="review">
+          <div className="reviewerName">{review.User.firstName}</div>
+          <div className="reviewDate">
+            {new Date(review.createdAt).toLocaleString("default", {
+              month: "long",
+              year: "numeric",
+            })}
           </div>
-        ))
-      ) : (
-        <div className="noReviews">Be the first to post a review!</div>
-      )}
+          <div className="reviewText">{review.review}</div>
+        </div>
+      ))}
     </div>
   );
 }

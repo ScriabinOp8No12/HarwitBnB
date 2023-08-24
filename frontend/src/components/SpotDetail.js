@@ -18,6 +18,10 @@ function SpotDetail() {
   const { spotId } = useParams(); // Get spot ID from the URL
   const spot = useSelector((state) => state.spot.spot); // Getting specific spot from store
 
+  // Get the current user from the session slice of the Redux store
+  const currentUser = useSelector((state) => state.session.user);
+  console.log("LOGGED IN USER: ", currentUser);
+  console.log("Spot: ", spot);
   // Fetching specific spot when component mounts
   useEffect(() => {
     dispatch(fetchSpot(spotId));
@@ -67,6 +71,7 @@ function SpotDetail() {
             {spot.ownerId &&
               `Hosted by ${spot.Owner?.firstName} ${spot.Owner?.lastName}`}
           </div>
+
           <div className="spotDescription">{spot.description}</div>
         </div>
         <div className="calloutInfoBoxContainer">
@@ -119,7 +124,19 @@ function SpotDetail() {
           <span className="stars">★ New</span>
         )}
       </div>
-      <Reviews spotId={spotId} />
+
+      {/* Logic for if the message "Be the first to post a review!" should be displayed
+      Only display it if these 3 conditions are both satisfied:
+      1. There are no reviews for this spot
+      2. There is a logged in user
+      3. The logged in user is NOT the owner of the spot */}
+      {spot.numReviews === 0 &&
+      currentUser &&
+      currentUser.id != spot.ownerId ? (
+        <div>Be the first to post a review!</div>
+      ) : (
+        <Reviews spotId={spotId} />
+      )}
     </div>
   );
 }
