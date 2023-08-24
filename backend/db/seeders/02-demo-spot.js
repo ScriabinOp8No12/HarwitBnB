@@ -35,7 +35,7 @@ module.exports = {
           country: "France",
           lat: 48.07,
           lng: 7.36,
-          name: "Colmar is renowned for its well preserved old town, and numerous landmarks and museums",
+          name: "Town in Colmar",
           description: "A house near a river at dusk",
           price: 195,
           createdAt: new Date(),

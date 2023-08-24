@@ -59,28 +59,34 @@ function SpotDetail() {
       <div className="contentContainer">
         <div className="description">
           <div className="hostedBy">
-            {/* Since our postman response for get spots/:id shows us the logged in Owner object info, we can access it like below */}
             {spot.ownerId &&
               `Hosted by ${spot.Owner?.firstName} ${spot.Owner?.lastName}`}
           </div>
-          {/* Description for the spot, maybe we want to make it much more text to see how it wraps? */}
           <div className="spotDescription">{spot.description}</div>
         </div>
-        {/* Extra outer blank div to move container to top of flex box */}
         <div className="calloutInfoBoxContainer">
-          {/* reserve button info box div container below */}
           <div className="calloutInfoBox">
             <div className="ratingPriceContainer">
               <div className="price">
                 ${spot.price} <span>night</span>
               </div>
-              {spot.avgStarRating ? (
-                <span className="stars">★ {formattedRating}</span>
+              {/* If there are more than 1 review, then we put a star, a dot, and the number of reviews */}
+              {spot.numReviews > 1 ? (
+                <>
+                  <span className="stars">★ {formattedRating}</span>
+                  <span className="middleDot">·</span>
+                  <span className="reviewCount">{spot.numReviews} reviews</span>
+                </>
+              ) : // If there's exactly one review, we will show review instead of reviews as the text
+              spot.numReviews === 1 ? (
+                <>
+                  <span className="stars">★ {formattedRating}</span>
+                  <span className="middleDot">·</span>
+                  <span className="reviewCount">{spot.numReviews} review</span>
+                </>
               ) : (
-                <span>New</span>
+                <span className="stars">★ New</span>
               )}
-              <span className="middleDot">·</span> {/* Adding the middle dot */}
-              <span className="reviewCount">{spot.numReviews} reviews</span>
             </div>
             <button onClick={handleReservationClick} className="reserveButton">
               Reserve
