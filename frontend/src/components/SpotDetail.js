@@ -55,23 +55,26 @@ function SpotDetail() {
           {/* Description for the spot, maybe we want to make it much more text to see how it wraps? */}
           <div className="spotDescription">{spot.description}</div>
         </div>
-        {/* reserve button info box div container below */}
-        <div className="calloutInfoBox">
-          <div className="ratingPriceContainer">
-            <div className="price">
-              ${spot.price} <span>night</span>
+        {/* Extra outer blank div to move container to top of flex box */}
+        <div className="calloutInfoBoxContainer">
+          {/* reserve button info box div container below */}
+          <div className="calloutInfoBox">
+            <div className="ratingPriceContainer">
+              <div className="price">
+                ${spot.price} <span>night</span>
+              </div>
+              {spot.avgStarRating ? (
+                <span className="stars">★ {spot.avgStarRating}</span>
+              ) : (
+                <span>New</span>
+              )}
+              <span className="middleDot">·</span> {/* Adding the middle dot */}
+              <span className="reviewCount">{spot.numReviews} reviews</span>
             </div>
-            {spot.avgStarRating ? (
-              <span className="stars">★ {spot.avgStarRating}</span>
-            ) : (
-              <span>New</span>
-            )}
-            <span className="middleDot">·</span> {/* Adding the middle dot */}
-            <span className="reviewCount">{spot.numReviews} reviews</span>
+            <button onClick={handleReservationClick} className="reserveButton">
+              Reserve
+            </button>
           </div>
-          <button onClick={handleReservationClick} className="reserveButton">
-            Reserve
-          </button>
         </div>
       </div>
     </div>
