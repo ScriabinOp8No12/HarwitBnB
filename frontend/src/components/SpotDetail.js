@@ -5,6 +5,14 @@ import { fetchSpot } from "../store/spotDetail"; // import fetchSpot (singular) 
 import Reviews from "./Review";
 import "./styles/SpotDetail.css";
 
+// Function to format the star rating / round it properly
+function formatRating(rating) {
+  const formattedRating = parseFloat(rating).toFixed(2);
+  return formattedRating.endsWith("0")
+    ? formattedRating.slice(0, -1)
+    : formattedRating;
+}
+
 function SpotDetail() {
   const dispatch = useDispatch();
   const { spotId } = useParams(); // Get spot ID from the URL
@@ -26,6 +34,8 @@ function SpotDetail() {
   // Needed to add the || [] at the end to avoid using map on an undefined value (~line 38)
   const otherImages =
     spot.SpotImages?.filter((image) => !image.preview).slice(0, 4) || [];
+
+  const formattedRating = formatRating(spot.avgStarRating);
 
   return (
     <div className="spotDetailContainer">
@@ -65,7 +75,7 @@ function SpotDetail() {
                 ${spot.price} <span>night</span>
               </div>
               {spot.avgStarRating ? (
-                <span className="stars">★ {spot.avgStarRating}</span>
+                <span className="stars">★ {formattedRating}</span>
               ) : (
                 <span>New</span>
               )}
