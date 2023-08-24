@@ -50,14 +50,10 @@ module.exports = (sequelize, DataTypes) => {
             }
           },
           len(value) {
-            if (value.length < 30 || value.length > 3000) {
-              throw new Error(
-                "Review must be at least 30 characters and no more than 3000 characters long"
-              );
+            if (value.length > 3000) {
+              throw new Error("Review must no more than 3000 characters long");
             }
           },
-          // review length can't be over 3000, or less than 30
-          // len: [30, 3000],
         },
       },
       stars: {

@@ -146,6 +146,13 @@ module.exports = (sequelize, DataTypes) => {
       description: {
         allowNull: false,
         type: DataTypes.TEXT,
+        validate: {
+          len(value) {
+            if (value.length < 30) {
+              throw new Error("Description needs a minimum of 30 characters");
+            }
+          },
+        },
       },
       price: {
         allowNull: false,

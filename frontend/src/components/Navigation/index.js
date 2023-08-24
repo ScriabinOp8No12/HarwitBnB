@@ -11,6 +11,7 @@ function Navigation({ isLoaded }) {
     <div className="navbar">
       <div>
         <NavLink exact to="/">
+          {/* Airbnb logo going to home page */}
           <img
             src="/airbnb-logo-cropped.jpg"
             alt="airbnb-logo"
@@ -20,6 +21,7 @@ function Navigation({ isLoaded }) {
       </div>
       {isLoaded && (
         <div>
+          {/* Profile Button with User icon in top right of screen */}
           <ProfileButton user={sessionUser} />
         </div>
       )}

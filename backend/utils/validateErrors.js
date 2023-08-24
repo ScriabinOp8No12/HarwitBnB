@@ -63,6 +63,7 @@ const validateSpot = [
   check("city")
     .not()
     .isNumeric()
+    // Ensure city and state contain only letters (upper and lowercase) and whitespacecharacters
     .matches(/^[a-z\s]*$/i),
   ...requiredField("state"),
   check("state")
@@ -78,8 +79,13 @@ const validateSpot = [
   ...requiredField("name"),
   check("name")
     .isLength({ max: 50 })
+    // Ensure name contains only word characters (letters, digits, underscores, hyphens and whitespace characters)
     .matches(/^[\w\-\s]+$/),
   ...requiredField("description"),
+  // Need to also force description to be at least 30 characters long here!
+  check("description")
+    .isLength({ min: 30 })
+    .withMessage("Description needs 30 or more characters"),
   ...requiredField("price", "Int"),
   check("price").isNumeric().isInt({ min: 0 }).not().isString(),
   handleValidationErrors,
