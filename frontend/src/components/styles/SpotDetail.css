@@ -129,7 +129,6 @@
 
 /**************** REVIEW STYLING ********************/
 
-/* Content container is 82.5% across, so we do that for review text too  */
 .reviewText {
   padding-bottom: 10px;
 }

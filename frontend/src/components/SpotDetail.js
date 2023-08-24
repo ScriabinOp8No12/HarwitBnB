@@ -20,8 +20,6 @@ function SpotDetail() {
 
   // Get the current user from the session slice of the Redux store
   const currentUser = useSelector((state) => state.session.user);
-  console.log("LOGGED IN USER: ", currentUser);
-  console.log("Spot: ", spot);
   // Fetching specific spot when component mounts
   useEffect(() => {
     dispatch(fetchSpot(spotId));
@@ -132,7 +130,7 @@ function SpotDetail() {
       3. The logged in user is NOT the owner of the spot */}
       {spot.numReviews === 0 &&
       currentUser &&
-      currentUser.id != spot.ownerId ? (
+      currentUser.id !== spot.ownerId ? (
         <div>Be the first to post a review!</div>
       ) : (
         <Reviews spotId={spotId} />
