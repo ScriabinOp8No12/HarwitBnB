@@ -6,8 +6,8 @@
 /* use pixel values instead of relative values because we want the logo and button to stay the same size on a resize of the viewport */
 .logo {
   position: fixed;
-  top: 0.5vw;
-  left: 0.5vw;
+  top: 20px;
+  left: 30px;
   width: 40px;
 }
 
@@ -26,7 +26,8 @@
 }
 /* move the STARTING POSITION of the profile button slightly away from the top right corner of the screen */
 .profile-button {
-  transform: translate(-0.5vw, 0.5vw);
+  transform: translate(-45px, 20px);
+
   cursor: pointer;
   /* align the profile icon to the top of the login and signup buttons on the right of it */
   align-self: flex-start;
@@ -36,7 +37,7 @@
 .profile-dropdown {
   list-style: none;
   position: relative;
-  right: 30px;
+  right: 40px;
   /* top: 15px; */
   cursor: pointer;
 }
