@@ -23,6 +23,8 @@ function Navigation({ isLoaded }) {
       </div>
       {isLoaded && (
         <div className="navigation-container">
+          {/* Wrap button with profile icon */}
+          {/* <div className="button-and-profile-wrapper"> */}
           {/* Render "create a new spot" button if user is logged in */}
           {sessionUser && (
             <NavLink
@@ -39,6 +41,7 @@ function Navigation({ isLoaded }) {
             setShowMenu={setShowMenu}
           />
         </div>
+        // </div>
       )}
     </div>
   );
