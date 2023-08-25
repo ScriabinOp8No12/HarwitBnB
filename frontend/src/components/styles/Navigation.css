@@ -92,8 +92,6 @@
   font-weight: bold;
   position: relative;
   border: 3px solid black;
-  /* shadow on bottom-right */
-  box-shadow: 3px 3px 0px black;
 }
 
 .emailField {
@@ -124,8 +122,6 @@
   font-weight: bold;
   position: relative;
   border: 3px solid black;
-  /* shadow on bottom-right */
-  box-shadow: 3px 3px 0px black;
 }
 
 .signupButton:disabled {
