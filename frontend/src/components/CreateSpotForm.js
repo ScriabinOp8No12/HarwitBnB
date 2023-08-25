@@ -18,8 +18,9 @@ function CreateSpotForm() {
     title: "",
     price: "",
     previewImage: "",
-    images: ["", "", "", ""],
+    images: Array(5).fill(""), // Five image URLs
   });
+
   const [imageError, setImageError] = useState(false);
   // Handle errors as an array
   const [errors, setErrors] = useState([]);
@@ -59,15 +60,8 @@ function CreateSpotForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle image extension errors on form submission
-    const imageFields = [
-      spotDetails.previewImage,
-      spotDetails.image1,
-      spotDetails.image2,
-      spotDetails.image3,
-      spotDetails.image4,
-    ];
     // Regex for ending with .jpg, .jpeg, and .png
-    const invalidImage = imageFields.some(
+    const invalidImage = spotDetails.images.some(
       (url) => url && !url.match(/\.(jpg|jpeg|png)$/)
     );
 
@@ -78,17 +72,30 @@ function CreateSpotForm() {
 
     const validationErrors = validateForm();
     if (validationErrors.length === 0) {
-      dispatch(createSpot(spotDetails)).then((newSpot) => {
-        history.push(`/spots/${newSpot.id}`); // Redirect to the new spot's detail page
-      });
+      const newSpot = dispatch(createSpot(spotDetails));
+      if (newSpot.errors) {
+        // ********** This might be wrong: handling server side validation here
+        setErrors(newSpot.errors);
+      } else {
+        history.push(`/spots/${newSpot.id}`); // Redirect to the newSpot's id after successful form submission
+      }
     } else {
       setErrors(validationErrors);
     }
   };
-
   return (
     <div>
       <h1>Create a New Spot</h1>
+      {/* Display validation errors at the top of the form */}
+      {errors.length > 0 && (
+        <div className="errorMessages">
+          {errors.map((error, index) => (
+            <p key={index} className="errorMessage">
+              {error}
+            </p>
+          ))}
+        </div>
+      )}
       <form onSubmit={handleSubmit}>
         <section>
           <h2>Where's your place located?</h2>
@@ -110,9 +117,9 @@ function CreateSpotForm() {
             Street Address:
             <input
               type="text"
-              name="address"
+              name="streetAddress"
               placeholder="Street Address"
-              value={spotDetails.address}
+              value={spotDetails.streetAddress}
               onChange={handleChange}
             />
           </label>
@@ -201,41 +208,16 @@ function CreateSpotForm() {
         <section>
           <h2>Liven up your spot with photos</h2>
           <p>Submit a link to at least one photo to publish your spot.</p>
-          <input
-            type="text"
-            name="previewImage"
-            placeholder="Preview Image URL"
-            value={spotDetails.previewImage}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="image1"
-            placeholder="Image URL"
-            value={spotDetails.image1}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="image2"
-            placeholder="Image URL"
-            value={spotDetails.image2}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="image3"
-            placeholder="Image URL"
-            value={spotDetails.image3}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="image4"
-            placeholder="Image URL"
-            value={spotDetails.image4}
-            onChange={handleChange}
-          />
+          {spotDetails.images.map((image, index) => (
+            <input
+              key={index}
+              type="text"
+              name={`image-${index}`}
+              placeholder={index === 0 ? "Preview Image URL" : "Image URL"}
+              value={image}
+              onChange={handleChange}
+            />
+          ))}
           {imageError && (
             <p className="errorMessage">
               Image URL needs to end in png, jpg, or jpeg.
