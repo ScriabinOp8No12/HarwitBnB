@@ -31,6 +31,10 @@ function CreateSpotForm() {
       const index = Number(name.split("-")[1]);
       spotDetails.images[index] = value;
       setSpotDetails({ ...spotDetails });
+      // Check if the URL is valid and reset the image error if it is
+      if (value.match(/\.(jpg|jpeg|png)$/)) {
+        setImageError(false);
+      }
     } else {
       setSpotDetails((prevDetails) => ({
         ...prevDetails,
@@ -51,7 +55,8 @@ function CreateSpotForm() {
     if (spotDetails.description.length < 30) {
       newErrors.push("Description needs 30 or more characters");
     }
-    if (!spotDetails.previewImage) {
+    // Only the first image is required, use index 0
+    if (!spotDetails.images[0]) {
       newErrors.push("Preview Image URL is required");
     }
     return newErrors;
