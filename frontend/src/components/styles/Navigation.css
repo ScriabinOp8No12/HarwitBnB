@@ -201,9 +201,14 @@
 
 /****** Create a new spot button styling below *****************/
 
-.spot-button {
+.spot-button-menu {
   margin-right: 80px;
   padding-top: 22px;
   color: teal;
   text-decoration: none;
+}
+
+/* Adjust this value to move the button to the desired position when the profile dropdown is opened */
+.spot-button-menu.extra-margin {
+  margin-right: 250px;
 }

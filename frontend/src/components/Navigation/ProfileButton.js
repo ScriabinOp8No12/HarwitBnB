@@ -6,9 +6,9 @@ import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import "../styles/Navigation.css";
 
-function ProfileButton({ user }) {
+function ProfileButton({ user, showMenu, setShowMenu }) {
   const dispatch = useDispatch();
-  const [showMenu, setShowMenu] = useState(false);
+  // const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
 
   const openMenu = () => {
