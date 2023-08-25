@@ -16,7 +16,7 @@ export const createSpotAction = (spot) => ({
 });
 
 // Thunks
-// Fetch spots for home page
+// Fetch spots for HOME PAGE
 export const fetchSpots = () => async (dispatch) => {
   // get the response from the get all spots endpoint, which is at /api/spots
   const response = await fetch("/api/spots");
@@ -24,9 +24,9 @@ export const fetchSpots = () => async (dispatch) => {
   dispatch(setSpots(Spots)); // pass Spots array to the action creator
 };
 
-// Create spot form thunk (NEED TWO DIFFERENT FETCH REQUESTS b/c backend endpoint is at /spots and at /spots/:id/images)
+// Create SPOT FORM THUNK (NEED TWO DIFFERENT FETCH REQUESTS b/c backend endpoint is at /spots and at /spots/:id/images)
 export const createSpot = (spotDetails) => async (dispatch) => {
-  console.log("Sending spot details to server:", spotDetails);
+  // console.log("Sending spot details to server:", spotDetails);
 
   // Read CSRF token from cookie
   const csrfToken = document.cookie
@@ -56,7 +56,7 @@ export const createSpot = (spotDetails) => async (dispatch) => {
   });
   const newSpot = await response.json();
 
-  console.log("Received new spot from server:", newSpot);
+  // console.log("Received new spot from server:", newSpot);
 
   // If the spot was created successfully, add the image
   // Basically if newSpot.id exists and there's a previewImage on the spot, then we
@@ -67,7 +67,7 @@ export const createSpot = (spotDetails) => async (dispatch) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "X-CSRF-TOKEN": csrfToken, // Include CSRF token here
+        "X-CSRF-TOKEN": csrfToken, // Include CSRF token here!
       },
       body: JSON.stringify({
         url: spotDetails.previewImage,
@@ -78,9 +78,10 @@ export const createSpot = (spotDetails) => async (dispatch) => {
     newSpot.images = [image]; // Add the image to the newSpot object
   }
   dispatch(createSpotAction(newSpot));
-  // Return a promise here? huh
+  // Return a promise here
+  // By structuring the code this way, you ensure that the Promise returned by the thunk resolves with the newSpot object, including the image if one was added. This allows the calling code to handle the result of both operations in a single .then() block, as shown in the previous snippet.
+  // This pattern provides a clean way to handle complex asynchronous operations that involve multiple steps, ensuring that the calling code can respond to the complete result of the operation.
   return Promise.resolve(newSpot);
-  // return newSpot;
 };
 
 // Reducer
