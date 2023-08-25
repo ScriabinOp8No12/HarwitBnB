@@ -49,8 +49,11 @@ module.exports = (sequelize, DataTypes) => {
               throw new Error("Cannot be empty.");
             }
           },
-          // review length can't be over 3000
-          len: [0, 3000],
+          len(value) {
+            if (value.length > 3000) {
+              throw new Error("Review must no more than 3000 characters long");
+            }
+          },
         },
       },
       stars: {
