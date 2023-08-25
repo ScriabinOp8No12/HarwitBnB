@@ -83,9 +83,9 @@ const validateSpot = [
     .matches(/^[\w\-\s]+$/),
   ...requiredField("description"),
   // Need to also force description to be at least 30 characters long here!
-  check("description")
-    .isLength({ min: 30 })
-    .withMessage("Description needs 30 or more characters"),
+  // check("description")
+  //   .isLength({ min: 30 })
+  //   .withMessage("Description needs 30 or more characters"),
   ...requiredField("price", "Int"),
   check("price").isNumeric().isInt({ min: 0 }).not().isString(),
   handleValidationErrors,

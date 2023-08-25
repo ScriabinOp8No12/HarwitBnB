@@ -1,7 +1,7 @@
 const { validationResult } = require("express-validator");
 
 // middleware for formatting errors from express-validator middleware
-// (to customize, see express-validator's documentation)
+// some thing ChatGPT wanted me to use for grouping all errors together, and there are docs online regarding this
 const handleValidationErrors = (req, _res, next) => {
   const validationErrors = validationResult(req);
 
