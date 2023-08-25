@@ -1,5 +1,10 @@
-// Action type
+// import { csrfFetch } from "./csrf";
+
+// Action types
+// Set / grab reviews from backend to load on the page
 const SET_REVIEWS = "SET_REVIEWS";
+// Add a review
+// const ADD_REVIEW = "ADD_REVIEW";
 
 // Action creators
 export const setReviews = (spotId, reviews) => ({
@@ -7,6 +12,12 @@ export const setReviews = (spotId, reviews) => ({
   spotId,
   reviews,
 });
+
+// export const addReview = (spotId, review) => ({
+//   type: ADD_REVIEW,
+//   spotId,
+//   review,
+// });
 
 // Thunks
 // Fetch reviews by Spot Id
