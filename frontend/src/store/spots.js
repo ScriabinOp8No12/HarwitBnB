@@ -61,11 +61,13 @@ export const createSpot = (spotDetails) => async (dispatch) => {
   // If the spot was created successfully, add the image
   // Basically if newSpot.id exists and there's a previewImage on the spot, then we
   // Make another post request to /spots/:id/images to add the image(s) to that spot
+
   if (newSpot.id && spotDetails.previewImage) {
     const imageResponse = await fetch(`/api/spots/${newSpot.id}/images`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "X-CSRF-TOKEN": csrfToken, // Include CSRF token here
       },
       body: JSON.stringify({
         url: spotDetails.previewImage,
@@ -75,10 +77,10 @@ export const createSpot = (spotDetails) => async (dispatch) => {
     const image = await imageResponse.json();
     newSpot.images = [image]; // Add the image to the newSpot object
   }
-
   dispatch(createSpotAction(newSpot));
   // Return a promise here? huh
   return Promise.resolve(newSpot);
+  // return newSpot;
 };
 
 // Reducer

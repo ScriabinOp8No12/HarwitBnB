@@ -27,7 +27,6 @@ function CreateSpotForm() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log("Form field changed:", name, value);
 
     if (name.startsWith("image")) {
       const index = Number(name.split("-")[1]);
