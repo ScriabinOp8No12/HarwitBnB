@@ -184,7 +184,7 @@ router.post("/", requireAuth, async (req, res) => {
     price,
   } = req.body;
 
-  console.log("Received request to create spot:", req.body);
+  // console.log("Received request to create spot:", req.body);
 
   const spotsData = await Spot.create({
     // add req.user.id here, not in the body above
@@ -207,7 +207,7 @@ router.post("/", requireAuth, async (req, res) => {
     spotsData.dataValues.updatedAt
   ).format("YYYY-MM-DD HH:mm:ss");
 
-  console.log("Created new spot:", spotsData);
+  // console.log("Created new spot:", spotsData);
   // API docs want status 201, so modified here
   return res.status(201).json(spotsData);
 });
@@ -218,11 +218,11 @@ router.post("/:spotId/images", requireAuth, async (req, res) => {
   const { spotId } = req.params;
   const { url, preview } = req.body;
 
-  console.log(
-    "Received request to add image to spot:",
-    req.params.id,
-    req.body
-  );
+  // console.log(
+  //   "Received request to add image to spot:",
+  //   req.params.id,
+  //   req.body
+  // );
 
   // find the spot by primary key, if that spot doesn't exist, then throw a 404 error
   const spot = await Spot.findByPk(spotId);

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createSpot } from "../store/spots";
+import "./styles/SpotForm.css";
 
 function CreateSpotForm() {
   const dispatch = useDispatch();
@@ -52,20 +53,27 @@ function CreateSpotForm() {
 
   const validateForm = () => {
     const newErrors = [];
+
     for (const [key, value] of Object.entries(spotDetails)) {
-      if (!value && key !== "images") {
+      if (!value && key !== "images" && key !== "previewImage") {
         newErrors.push(
           `${key.charAt(0).toUpperCase() + key.slice(1)} is required`
         );
       }
     }
-    if (spotDetails.description.length < 30) {
+    // Of the description length is less than 30 and isn't 0,
+    // then show the special message, otherwise it will show description is required
+    if (
+      spotDetails.description.length < 30 &&
+      spotDetails.description.length !== 0
+    ) {
       newErrors.push("Description needs 30 or more characters");
     }
-    // Only the first image is required, use index 0
+
     if (!spotDetails.previewImage) {
       newErrors.push("Preview Image URL is required");
     }
+
     return newErrors;
   };
 
@@ -84,7 +92,7 @@ function CreateSpotForm() {
 
     const validationErrors = validateForm();
 
-    console.log("Submitting form with spot details:", spotDetails);
+    // console.log("Submitting form with spot details:", spotDetails);
 
     if (validationErrors.length === 0) {
       dispatch(createSpot(spotDetails)).then((newSpot) => {
@@ -103,24 +111,27 @@ function CreateSpotForm() {
 
   return (
     <div>
-      <h1>Create a New Spot</h1>
-      {/* Display validation errors at the top of the form */}
-      {errors.length > 0 && (
-        <div className="errorMessages">
-          {errors.map((error, index) => (
-            <p key={index} className="errorMessage">
-              {error}
-            </p>
-          ))}
-        </div>
-      )}
       <form onSubmit={handleSubmit}>
         <section>
+          <div className="headerContainer">
+            <h1>Create a New Spot</h1>
+            {/* Display validation errors at the top of the form */}
+            {errors.length > 0 && (
+              <div className="errorMessages">
+                {errors.map((error, index) => (
+                  <p key={index} className="errorMessage">
+                    {error}
+                  </p>
+                ))}
+              </div>
+            )}
+          </div>
           <h2>Where's your place located?</h2>
           <p>
             Guests will only get your exact address once they booked a
             reservation.
           </p>
+
           <label>
             Country:
             <input
@@ -131,6 +142,7 @@ function CreateSpotForm() {
               onChange={handleChange}
             />
           </label>
+
           <label>
             Address:
             <input
@@ -141,7 +153,8 @@ function CreateSpotForm() {
               onChange={handleChange}
             />
           </label>
-          <label>
+
+          <label className="city">
             City:
             <input
               type="text"
@@ -151,7 +164,9 @@ function CreateSpotForm() {
               onChange={handleChange}
             />
           </label>
-          <label>
+          <span className="separator"></span>
+
+          <label className="state">
             State:
             <input
               type="text"
@@ -161,7 +176,8 @@ function CreateSpotForm() {
               onChange={handleChange}
             />
           </label>
-          <label>
+
+          <label className="side-by-side">
             Latitude:
             <input
               type="number"
@@ -171,7 +187,8 @@ function CreateSpotForm() {
               onChange={handleChange}
             />
           </label>
-          <label>
+          <span className="separator"></span>
+          <label className="side-by-side">
             Longitude:
             <input
               type="number"
@@ -215,19 +232,21 @@ function CreateSpotForm() {
             Competitive pricing can help your listing stand out and rank higher
             in search results.
           </p>
-          <input
-            type="number"
-            name="price"
-            placeholder="Price per night (USD)"
-            value={spotDetails.price}
-            onChange={handleChange}
-          />
+          <label className="price">
+            <input
+              type="number"
+              name="price"
+              placeholder="Price per night (USD)"
+              value={spotDetails.price}
+              onChange={handleChange}
+            />
+          </label>
         </section>
         <section>
           <h2>Liven up your spot with photos</h2>
           <p>Submit a link to at least one photo to publish your spot.</p>
           {spotDetails.images.map((image, index) => (
-            <div key={index}>
+            <div className="image-input" key={index}>
               <input
                 type="text"
                 name={`image-${index}`}
@@ -243,7 +262,9 @@ function CreateSpotForm() {
             </div>
           ))}
         </section>
-        <button type="submit">Create Spot</button>
+        <button type="submit" className="create-spot-button">
+          Create Spot
+        </button>
       </form>
     </div>
   );
