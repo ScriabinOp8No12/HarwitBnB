@@ -10,7 +10,7 @@ function Navigation({ isLoaded }) {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
-    <div className="navbar">
+    <div className={`navbar ${showMenu ? "navbar-expanded" : ""}`}>
       <div>
         <NavLink exact to="/">
           {/* Airbnb logo going to home page */}

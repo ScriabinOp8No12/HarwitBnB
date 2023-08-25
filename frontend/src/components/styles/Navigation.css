@@ -175,6 +175,10 @@
   z-index: 1000; /* Ensure the navigation bar is above other content */
 }
 
+.navbar-expanded {
+  height: 130px;
+}
+
 /* the .modal and .modal-overlay create the greyed out background when the user is on the modal */
 .modal-overlay {
   position: fixed;
