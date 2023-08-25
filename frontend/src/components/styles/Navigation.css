@@ -166,7 +166,8 @@
   right: 0;
   left: 0;
   /* navbar was a tiny div with basically no height at the very top of the page */
-  height: 80px;
+  height: 130px;
+  /* height: 80px; */
   width: 100%;
   display: flex;
   justify-content: flex-end;
@@ -175,9 +176,9 @@
   z-index: 1000; /* Ensure the navigation bar is above other content */
 }
 
-.navbar-expanded {
+/* .navbar-expanded {
   height: 130px;
-}
+} */
 
 /* the .modal and .modal-overlay create the greyed out background when the user is on the modal */
 .modal-overlay {

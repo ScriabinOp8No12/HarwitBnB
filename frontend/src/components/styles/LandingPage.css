@@ -42,6 +42,8 @@
 
 /* Style for the main container that holds all spots */
 .containerDiv {
+  /* Move container div 150px from the top of the screen */
+  margin-top: 200px;
   display: grid;
   grid-template-columns: repeat(4, 1fr); /* 4 columns, equal width */
   gap: 2%; /* Gap between grid items */
