@@ -1,3 +1,5 @@
+// import { csrfFetch } from "./csrf";
+
 // Action type
 const SET_SPOTS = "spots/SET_SPOTS";
 // Create spot form action type

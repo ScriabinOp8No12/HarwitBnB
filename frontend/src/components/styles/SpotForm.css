@@ -8,6 +8,10 @@
   color: red;
 }
 
+.errorMessage {
+  color: red;
+}
+
 section {
   display: flex;
   flex-wrap: wrap;
