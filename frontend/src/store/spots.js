@@ -1,4 +1,4 @@
-// import { csrfFetch } from "./csrf";
+import { csrfFetch } from "./csrf";
 
 // Action type
 const SET_SPOTS = "spots/SET_SPOTS";
@@ -21,29 +21,20 @@ export const createSpotAction = (spot) => ({
 // Fetch spots for HOME PAGE
 export const fetchSpots = () => async (dispatch) => {
   // get the response from the get all spots endpoint, which is at /api/spots
-  const response = await fetch("/api/spots");
+  const response = await csrfFetch("/api/spots"); // use csrf fetch instead
   const { Spots } = await response.json(); // destructure Spots from response
   dispatch(setSpots(Spots)); // pass Spots array to the action creator
 };
 
 // Create SPOT FORM THUNK (NEED TWO DIFFERENT FETCH REQUESTS b/c backend endpoint is at /spots and at /spots/:id/images)
+
 export const createSpot = (spotDetails) => async (dispatch) => {
-  // console.log("Sending spot details to server:", spotDetails);
-
-  // Read CSRF token from cookie
-  const csrfToken = document.cookie
-    .split("; ")
-    .find((row) => row.startsWith("XSRF-TOKEN"))
-    .split("=")[1];
-
-  // Create the spot
-  const response = await fetch("/api/spots", {
+  // Use csrfFetch
+  const response = await csrfFetch("/api/spots", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "X-CSRF-TOKEN": csrfToken, // Include CSRF token here
     },
-    credentials: "include", // Include credentials to send cookies
     body: JSON.stringify({
       address: spotDetails.address,
       city: spotDetails.city,
@@ -65,11 +56,11 @@ export const createSpot = (spotDetails) => async (dispatch) => {
   // Make another post request to /spots/:id/images to add the image(s) to that spot
 
   if (newSpot.id && spotDetails.previewImage) {
-    const imageResponse = await fetch(`/api/spots/${newSpot.id}/images`, {
+    const imageResponse = await csrfFetch(`/api/spots/${newSpot.id}/images`, {
+      // Use csrfFetch
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "X-CSRF-TOKEN": csrfToken, // Include CSRF token here!
       },
       body: JSON.stringify({
         url: spotDetails.previewImage,
