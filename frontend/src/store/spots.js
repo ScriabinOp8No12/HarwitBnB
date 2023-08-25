@@ -24,19 +24,63 @@ export const fetchSpots = () => async (dispatch) => {
   dispatch(setSpots(Spots)); // pass Spots array to the action creator
 };
 
-// Create spot form thunk
-
+// Create spot form thunk (NEED TWO DIFFERENT FETCH REQUESTS b/c backend endpoint is at /spots and at /spots/:id/images)
 export const createSpot = (spotDetails) => async (dispatch) => {
+  console.log("Sending spot details to server:", spotDetails);
+
+  // Read CSRF token from cookie
+  const csrfToken = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("XSRF-TOKEN"))
+    .split("=")[1];
+
+  // Create the spot
   const response = await fetch("/api/spots", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "X-CSRF-TOKEN": csrfToken, // Include CSRF token here
     },
-    body: JSON.stringify(spotDetails),
+    credentials: "include", // Include credentials to send cookies
+    body: JSON.stringify({
+      address: spotDetails.address,
+      city: spotDetails.city,
+      state: spotDetails.state,
+      country: spotDetails.country,
+      lat: spotDetails.lat,
+      lng: spotDetails.lng,
+      name: spotDetails.name,
+      description: spotDetails.description,
+      price: spotDetails.price,
+    }),
   });
   const newSpot = await response.json();
+
+  console.log("Received new spot from server:", newSpot);
+
+  // If the spot was created successfully, add the image
+  // Basically if newSpot.id exists and there's a previewImage on the spot, then we
+  // Make another post request to /spots/:id/images to add the image(s) to that spot
+
+  if (newSpot.id && spotDetails.previewImage) {
+    const imageResponse = await fetch(`/api/spots/${newSpot.id}/images`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-TOKEN": csrfToken, // Include CSRF token here
+      },
+      body: JSON.stringify({
+        url: spotDetails.previewImage,
+        preview: true,
+      }),
+    });
+    const image = await imageResponse.json();
+    newSpot.images = [image]; // Add the image to the newSpot object
+  }
   dispatch(createSpotAction(newSpot));
-  return newSpot;
+  // Return a promise here? huh
+  return Promise.resolve(newSpot);
+  // return newSpot;
 };
 
 // Reducer

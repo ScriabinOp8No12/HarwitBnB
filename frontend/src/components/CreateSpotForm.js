@@ -9,27 +9,39 @@ function CreateSpotForm() {
   const [spotDetails, setSpotDetails] = useState({
     // All the form input fields
     country: "",
-    streetAddress: "",
+    address: "",
     city: "",
     state: "",
+    lat: "",
+    lng: "",
     description: "",
-    latitude: "",
-    longitude: "",
-    title: "",
+    name: "",
     price: "",
     previewImage: "",
-    images: ["", "", "", ""],
+    images: Array(5).fill(""), // Five image URLs
   });
-  const [imageError, setImageError] = useState(false);
+
+  const [imageErrors, setImageErrors] = useState(Array(5).fill(false));
   // Handle errors as an array
   const [errors, setErrors] = useState([]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
     if (name.startsWith("image")) {
       const index = Number(name.split("-")[1]);
-      spotDetails.images[index] = value;
-      setSpotDetails({ ...spotDetails });
+      const newImages = [...spotDetails.images];
+      newImages[index] = value;
+      setSpotDetails((prevDetails) => ({
+        ...prevDetails,
+        previewImage: index === 0 ? value : prevDetails.previewImage,
+        images: newImages,
+      }));
+      setImageErrors((prevErrors) => {
+        const newErrors = [...prevErrors];
+        newErrors[index] = !value.match(/\.(jpg|jpeg|png)$/);
+        return newErrors;
+      });
     } else {
       setSpotDetails((prevDetails) => ({
         ...prevDetails,
@@ -50,36 +62,39 @@ function CreateSpotForm() {
     if (spotDetails.description.length < 30) {
       newErrors.push("Description needs 30 or more characters");
     }
+    // Only the first image is required, use index 0
     if (!spotDetails.previewImage) {
       newErrors.push("Preview Image URL is required");
     }
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle image extension errors on form submission
-    const imageFields = [
-      spotDetails.previewImage,
-      spotDetails.image1,
-      spotDetails.image2,
-      spotDetails.image3,
-      spotDetails.image4,
-    ];
     // Regex for ending with .jpg, .jpeg, and .png
-    const invalidImage = imageFields.some(
+    const invalidImage = spotDetails.images.some(
       (url) => url && !url.match(/\.(jpg|jpeg|png)$/)
     );
 
     if (invalidImage) {
-      setImageError(true);
+      setImageErrors(true);
       return;
     }
 
     const validationErrors = validateForm();
+
+    console.log("Submitting form with spot details:", spotDetails);
+
     if (validationErrors.length === 0) {
       dispatch(createSpot(spotDetails)).then((newSpot) => {
-        history.push(`/spots/${newSpot.id}`); // Redirect to the new spot's detail page
+        // Use then() to handle the result
+        if (newSpot.errors) {
+          // ********** This might be wrong: handling server side validation here
+          setErrors(newSpot.errors);
+        } else {
+          history.push(`/spots/${newSpot.id}`); // Redirect to the newSpot's id after successful form submission
+        }
       });
     } else {
       setErrors(validationErrors);
@@ -89,6 +104,16 @@ function CreateSpotForm() {
   return (
     <div>
       <h1>Create a New Spot</h1>
+      {/* Display validation errors at the top of the form */}
+      {errors.length > 0 && (
+        <div className="errorMessages">
+          {errors.map((error, index) => (
+            <p key={index} className="errorMessage">
+              {error}
+            </p>
+          ))}
+        </div>
+      )}
       <form onSubmit={handleSubmit}>
         <section>
           <h2>Where's your place located?</h2>
@@ -107,7 +132,7 @@ function CreateSpotForm() {
             />
           </label>
           <label>
-            Street Address:
+            Address:
             <input
               type="text"
               name="address"
@@ -139,20 +164,20 @@ function CreateSpotForm() {
           <label>
             Latitude:
             <input
-              type="text"
-              name="latitude"
+              type="number"
+              name="lat"
               placeholder="Latitude"
-              value={spotDetails.latitude}
+              value={spotDetails.lat}
               onChange={handleChange}
             />
           </label>
           <label>
             Longitude:
             <input
-              type="text"
-              name="longitude"
+              type="number"
+              name="lng"
               placeholder="Longitude"
-              value={spotDetails.longitude}
+              value={spotDetails.lng}
               onChange={handleChange}
             />
           </label>
@@ -178,9 +203,9 @@ function CreateSpotForm() {
           </p>
           <input
             type="text"
-            name="title"
+            name="name"
             placeholder="Name of your spot"
-            value={spotDetails.title}
+            value={spotDetails.name}
             onChange={handleChange}
           />
         </section>
@@ -201,46 +226,22 @@ function CreateSpotForm() {
         <section>
           <h2>Liven up your spot with photos</h2>
           <p>Submit a link to at least one photo to publish your spot.</p>
-          <input
-            type="text"
-            name="previewImage"
-            placeholder="Preview Image URL"
-            value={spotDetails.previewImage}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="image1"
-            placeholder="Image URL"
-            value={spotDetails.image1}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="image2"
-            placeholder="Image URL"
-            value={spotDetails.image2}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="image3"
-            placeholder="Image URL"
-            value={spotDetails.image3}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="image4"
-            placeholder="Image URL"
-            value={spotDetails.image4}
-            onChange={handleChange}
-          />
-          {imageError && (
-            <p className="errorMessage">
-              Image URL needs to end in png, jpg, or jpeg.
-            </p>
-          )}
+          {spotDetails.images.map((image, index) => (
+            <div key={index}>
+              <input
+                type="text"
+                name={`image-${index}`}
+                placeholder={index === 0 ? "Preview Image URL" : "Image URL"}
+                value={image}
+                onChange={handleChange}
+              />
+              {imageErrors[index] && ( // Use imageErrors array
+                <p className="errorMessage">
+                  Image URL needs to end in png, jpg, or jpeg.
+                </p>
+              )}
+            </div>
+          ))}
         </section>
         <button type="submit">Create Spot</button>
       </form>

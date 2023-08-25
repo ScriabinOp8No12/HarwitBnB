@@ -68,7 +68,7 @@ function SignupFormModal() {
             className="emailField"
           />
         </label>
-        {errors.email && <p>{errors.email}</p>}
+        {/* {errors.email && <p>{errors.email}</p>} */}
         <label className="userNameLabel">
           Username
           <input
