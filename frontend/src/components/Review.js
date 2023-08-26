@@ -6,15 +6,23 @@ function Reviews({ spotId }) {
   const dispatch = useDispatch();
   const reviews = useSelector((state) => state.reviews[spotId] || []);
 
+  console.log("REVIEWS STATE? ", reviews);
   useEffect(() => {
     dispatch(fetchReviews(spotId));
   }, [dispatch, spotId]);
 
+  // Sort reviews by most recent first
+  const sortedReviews = reviews.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
+
   return (
     <div className="reviewsContainer">
-      {reviews.map((review) => (
+      {sortedReviews.map((review) => (
         <div key={review.id} className="review">
-          <div className="reviewerName">{review.User.firstName}</div>
+          <div className="reviewerName">
+            {review.User ? review.User.firstName : "Anonymous"}
+          </div>
           <div className="reviewDate">
             {new Date(review.createdAt).toLocaleString("default", {
               month: "long",

@@ -111,7 +111,7 @@ function CreateSpotForm() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form className="spotForm" onSubmit={handleSubmit}>
         <section>
           <div className="headerContainer">
             <h1>Create a New Spot</h1>

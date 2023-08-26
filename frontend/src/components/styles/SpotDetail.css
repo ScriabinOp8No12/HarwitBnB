@@ -3,6 +3,7 @@
   width: 100%;
   margin: 0 auto;
   padding-left: 1%;
+  padding-top: 50px;
 }
 
 /* Location flexbox includes the city, state, country -> in that order */

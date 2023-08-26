@@ -6,8 +6,8 @@
 /* use pixel values instead of relative values because we want the logo and button to stay the same size on a resize of the viewport */
 .logo {
   position: fixed;
-  top: 0.5vw;
-  left: 0.5vw;
+  top: 20px;
+  left: 30px;
   width: 40px;
 }
 
@@ -26,7 +26,8 @@
 }
 /* move the STARTING POSITION of the profile button slightly away from the top right corner of the screen */
 .profile-button {
-  transform: translate(-0.5vw, 0.5vw);
+  transform: translate(-45px, 20px);
+
   cursor: pointer;
   /* align the profile icon to the top of the login and signup buttons on the right of it */
   align-self: flex-start;
@@ -36,7 +37,7 @@
 .profile-dropdown {
   list-style: none;
   position: relative;
-  right: 30px;
+  right: 40px;
   /* top: 15px; */
   cursor: pointer;
 }
@@ -92,8 +93,6 @@
   font-weight: bold;
   position: relative;
   border: 3px solid black;
-  /* shadow on bottom-right */
-  box-shadow: 3px 3px 0px black;
 }
 
 .emailField {
@@ -124,8 +123,6 @@
   font-weight: bold;
   position: relative;
   border: 3px solid black;
-  /* shadow on bottom-right */
-  box-shadow: 3px 3px 0px black;
 }
 
 .signupButton:disabled {
@@ -170,7 +167,8 @@
   right: 0;
   left: 0;
   /* navbar was a tiny div with basically no height at the very top of the page */
-  height: 80px;
+  height: 130px;
+  /* height: 80px; */
   width: 100%;
   display: flex;
   justify-content: flex-end;
@@ -178,6 +176,10 @@
   background-color: white;
   z-index: 1000; /* Ensure the navigation bar is above other content */
 }
+
+/* .navbar-expanded {
+  height: 130px;
+} */
 
 /* the .modal and .modal-overlay create the greyed out background when the user is on the modal */
 .modal-overlay {
@@ -201,9 +203,14 @@
 
 /****** Create a new spot button styling below *****************/
 
-.spot-button {
-  margin-right: 80px;
-  padding-top: 22px;
+.spot-button-menu {
+  margin-right: 130px;
+  padding-top: 35px;
   color: teal;
   text-decoration: none;
+}
+
+/* Adjust this value to move the button to the desired position when the profile dropdown is opened */
+.spot-button-menu.extra-margin {
+  margin-right: 300px;
 }
