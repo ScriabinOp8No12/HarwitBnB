@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchSpot } from "../store/spotDetail"; // import fetchSpot (singular) thunk
 import Reviews from "./Review";
 import ReviewFormModal from "./ReviewFormModal";
+import { fetchReviews } from "../store/reviews";
 import "./styles/SpotDetail.css";
 
 // Function to format the star rating / round it properly
@@ -15,12 +16,20 @@ function formatRating(rating) {
 }
 
 function SpotDetail() {
+  // const [errors, setErrors] = useState(null);
+
+  // modal states for review modal
+  const [showModal, setShowModal] = useState(false);
+  const openModal = () => setShowModal(true);
+  const closeModal = () => setShowModal(false);
+
   const dispatch = useDispatch();
   const { spotId } = useParams(); // Get spot ID from the URL
   const spot = useSelector((state) => state.spot.spot); // Getting specific spot from store
 
   // Get the current user from the session slice of the Redux store
   const currentUser = useSelector((state) => state.session.user);
+
   // Fetching specific spot when component mounts
   useEffect(() => {
     dispatch(fetchSpot(spotId));
@@ -40,10 +49,30 @@ function SpotDetail() {
 
   const formattedRating = formatRating(spot.avgStarRating);
 
+  /**********   Add Reviews **************/
+
+  // Fetch reviews when component mounts
+  useEffect(() => {
+    dispatch(fetchReviews(spotId));
+  }, [dispatch, spotId]);
+
+  // Fetch the reviews for this spot from the Redux store
+  const reviews = useSelector((state) => state.reviews[spotId] || []);
+
+  // Check if the current user has posted a review for this spot
+  // The .some() method returns true if at least one thing is true, in this example, if at least one review has the same userId as the currentUser
+  const userHasPostedReview = reviews.some(
+    (review) => currentUser && review.userId === currentUser.id
+  );
+
+  // Check if the current user is the owner of the spot
+  const isOwner = currentUser && currentUser.id === spot.ownerId;
+
   return (
     <div className="spotDetailContainer">
       {/* Display spot's name */}
       <h1>{spot.name}</h1>
+      {/* {errors && <div className="error">{errors}</div>} */}
       <div className="location">
         {/* Display spot's location in city, state, country format */}
         {spot.city}, {spot.state}, {spot.country}
@@ -123,6 +152,18 @@ function SpotDetail() {
           <span className="stars">★ New</span>
         )}
       </div>
+      {/* Conditionally render the ReviewFormModal */}
+      {/* It will only render if there's a logged-in user, who hasn't posted a review, and isn't the owner */}
+      {currentUser && !userHasPostedReview && !isOwner && (
+        <button onClick={openModal}>Post Your Review</button>
+      )}
+      {showModal && (
+        <ReviewFormModal
+          spotId={spotId}
+          showModal={showModal}
+          closeModal={closeModal}
+        />
+      )}
 
       {/* Logic for if the message "Be the first to post a review!" should be displayed
       Only display it if these 3 conditions are both satisfied:
