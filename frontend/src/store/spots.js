@@ -5,7 +5,10 @@ const SET_SPOTS = "spots/SET_SPOTS";
 // Create spot form action type
 const CREATE_SPOT = "spots/CREATE_SPOT";
 
-// Action create to set the spot for home page
+// Get spots of current user action type
+const GET_CURRENT_USER_SPOTS = "spots/GET_CURRENT_USER_SPOTS";
+
+// Action creator to set the spot for home page
 export const setSpots = (spots) => ({
   type: SET_SPOTS,
   spots,
@@ -15,6 +18,12 @@ export const setSpots = (spots) => ({
 export const createSpotAction = (spot) => ({
   type: CREATE_SPOT,
   spot,
+});
+
+// Action creator for getting current user's spots
+export const getCurrentUserSpots = (currentSpots) => ({
+  type: GET_CURRENT_USER_SPOTS,
+  currentSpots,
 });
 
 // Thunks
@@ -77,8 +86,17 @@ export const createSpot = (spotDetails) => async (dispatch) => {
   return Promise.resolve(newSpot);
 };
 
+// Thunk to get the current user's spots from the backend
+
+export const fetchCurrentUserSpots = () => async (dispatch) => {
+  const response = await csrfFetch("/api/spots/current");
+  // console.log("User Spots Response: ", response);
+  const { Spots } = await response.json();
+  dispatch(getCurrentUserSpots(Spots));
+};
+
 // Reducer
-const initialState = { spots: [] };
+const initialState = { spots: [], currentSpots: [] };
 
 export default function spotsReducer(state = initialState, action) {
   switch (action.type) {
@@ -86,6 +104,8 @@ export default function spotsReducer(state = initialState, action) {
       return { ...state, spots: action.spots };
     case CREATE_SPOT:
       return { ...state, spots: [...state.spots, action.spot] };
+    case GET_CURRENT_USER_SPOTS:
+      return { ...state, currentSpots: action.currentSpots };
     default:
       return state;
   }

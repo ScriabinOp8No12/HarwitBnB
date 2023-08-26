@@ -57,6 +57,9 @@ function ProfileButton({ user, showMenu, setShowMenu }) {
           <>
             <li>Hello {user.firstName}</li>
             <li>{user.email}</li>
+            {/* <li> */}
+            {/* <button onClick={manageSpots}>Manage Spots</button> */}
+            {/* </li> */}
             <li>
               <button onClick={logout}>Log Out</button>
             </li>
