@@ -25,7 +25,7 @@ function SpotDetail() {
 
   const dispatch = useDispatch();
   const { spotId } = useParams(); // Get spot ID from the URL
-  const spot = useSelector((state) => state.spot.spot); // Getting specific spot from store
+  const spot = useSelector((state) => state.spot.spot); // Getting specific spot slice of state from store
 
   // Get the current user from the session slice of the Redux store
   const currentUser = useSelector((state) => state.session.user);
