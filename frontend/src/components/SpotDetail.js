@@ -59,6 +59,12 @@ function SpotDetail() {
   // Fetch the reviews for this spot from the Redux store
   const reviews = useSelector((state) => state.reviews[spotId] || []);
 
+  // New useEffect to listen for changes in reviews
+  useEffect(() => {
+    // Refetch the spot details when reviews change
+    dispatch(fetchSpot(spotId));
+  }, [dispatch, spotId, reviews]);
+
   // Check if the current user has posted a review for this spot
   // The .some() method returns true if at least one thing is true, in this example, if at least one review has the same userId as the currentUser
   const userHasPostedReview = reviews.some(
