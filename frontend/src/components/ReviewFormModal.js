@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { addReviewThunk } from "../store/reviews"; // Import the thunk
 import StarRating from "./StarRating";
+import "./styles/ReviewForm.css";
 
 // showModal and closeModal are being passed into the ReviewFormModal as props, so we don't need to define those within the function anymore
 export default function ReviewFormModal({ spotId, showModal, closeModal }) {
@@ -29,11 +30,29 @@ export default function ReviewFormModal({ spotId, showModal, closeModal }) {
       setErrors("An error occurred. Please try again.");
     }
   };
+  // useEffect code for closing ReviewFormModal when we click outside of it
+  const modalRef = useRef();
+  useEffect(() => {
+    // When click outside
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        closeModal();
+      }
+    };
+
+    // Add event listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Cleanup: Remove event listener
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [closeModal]);
 
   return (
-    <div className={`modal ${showModal ? "is-active" : ""}`}>
-      <div className="modal-background"></div>
-      <div className="modal-content">
+    <div className={`modal-review-overlay ${showModal ? "is-active" : ""}`}>
+      <div className="modal-review"></div>
+      {/* Attach ref below */}
+      <div className="modal-review-content" ref={modalRef}>
         <h1>How was your stay?</h1>
         {errors && <div className="error">{errors}</div>}
         <form onSubmit={handleSubmit}>
@@ -48,7 +67,6 @@ export default function ReviewFormModal({ spotId, showModal, closeModal }) {
           </button>
         </form>
       </div>
-      <button className="modal-close is-large" onClick={closeModal}></button>
     </div>
   );
 }
