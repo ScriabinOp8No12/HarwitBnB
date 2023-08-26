@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchSpot } from "../store/spotDetail"; // import fetchSpot (singular) thunk
 import Reviews from "./Review";
+import ReviewFormModal from "./ReviewFormModal";
 import "./styles/SpotDetail.css";
 
 // Function to format the star rating / round it properly
