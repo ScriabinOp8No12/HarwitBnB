@@ -61,10 +61,9 @@ export const addReviewThunk = (spotId, reviewDetails) => async (dispatch) => {
 
   // Fetch updated spot details
   const updatedDataResponse = await csrfFetch(`/api/spots/${spotId}`);
-  // console.log("updatedDataResponse", updatedDataResponse);
   const updatedData = await updatedDataResponse.json();
 
-  console.log("Updated Data: ", updatedData);
+  // console.log("Updated Data: ", updatedData);
   // console.log(updatedData.avgStarRating);
   // console.log(updatedData.numReviews);
 
