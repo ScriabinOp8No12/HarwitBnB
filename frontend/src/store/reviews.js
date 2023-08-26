@@ -62,7 +62,7 @@ export default function reviewsReducer(state = initialState, action) {
     case ADD_REVIEW:
       return {
         ...state,
-        [action.spotId]: [...(state[action.spotId] || []), action.review], // add the new review to the list of reviews for the given spotId
+        [action.spotId]: [action.review, ...(state[action.spotId] || [])], // add the new review to the list of reviews for the given spotId AT THE TOP of the reviews
       };
     default:
       return state;

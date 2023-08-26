@@ -6,6 +6,7 @@ import StarRating from "./StarRating";
 // showModal and closeModal are being passed into the ReviewFormModal as props, so we don't need to define those within the function anymore
 export default function ReviewFormModal({ spotId, showModal, closeModal }) {
   const [review, setReview] = useState("");
+  // This state holds the selected stars
   const [stars, setStars] = useState(0);
   const [errors, setErrors] = useState(null);
   const dispatch = useDispatch();
@@ -41,7 +42,7 @@ export default function ReviewFormModal({ spotId, showModal, closeModal }) {
             value={review}
             onChange={(e) => setReview(e.target.value)}
           />
-          <StarRating setStars={setStars} />
+          <StarRating setStars={setStars} selectedStars={stars} />
           <button type="submit" disabled={review.length < 10 || stars === 0}>
             Submit Your Review
           </button>

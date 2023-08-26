@@ -10,9 +10,14 @@ function Reviews({ spotId }) {
     dispatch(fetchReviews(spotId));
   }, [dispatch, spotId]);
 
+  // Sort reviews by most recent first
+  const sortedReviews = reviews.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
+
   return (
     <div className="reviewsContainer">
-      {reviews.map((review) => (
+      {sortedReviews.map((review) => (
         <div key={review.id} className="review">
           <div className="reviewerName">{review.User.firstName}</div>
           <div className="reviewDate">

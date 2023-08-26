@@ -1,10 +1,12 @@
 import { useState } from "react";
 
-function StarRating({ setStars }) {
+function StarRating({ setStars, selectedStars }) {
   const [hoverRating, setHoverRating] = useState(0);
 
   const renderStar = (i) => {
     if (hoverRating >= i) {
+      return "★";
+    } else if (selectedStars >= i) {
       return "★";
     }
     return "☆";
