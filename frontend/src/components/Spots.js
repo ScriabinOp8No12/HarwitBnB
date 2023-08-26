@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { fetchSpots } from "../store/spots"; // Import fetchSpots thunk
 import "./styles/LandingPage.css";
 
+/****************** LANDING PAGE SPOTS COMPONENT ****************/
+
 // Function to format the star rating / round it properly
 function formatRating(rating) {
   const formattedRating = parseFloat(rating).toFixed(2);

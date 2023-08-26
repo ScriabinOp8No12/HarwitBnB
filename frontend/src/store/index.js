@@ -14,6 +14,18 @@ const rootReducer = combineReducers({
   spot: spotDetailReducer,
   reviews: reviewsReducer,
 });
+// ***************** ABOVE, how to use the STATE in our components with useSelector function! **************** //
+// The left is the object property we need to use to key into the initial property within the object
+// For example, if we wanted to get into the spots object, we would have to do "state.spots" first
+// Then now we are inside the spots object, then we have different states, like spots: [] and current_spots: [],
+// so we need to key into that with dot notation
+// {
+//   spots: {
+//     spots: [],
+//     current_spots: []
+//   },
+//   // state from other reducers would go here
+// }
 
 let enhancer;
 
