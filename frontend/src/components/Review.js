@@ -6,7 +6,6 @@ function Reviews({ spotId }) {
   const dispatch = useDispatch();
   const reviews = useSelector((state) => state.reviews[spotId] || []);
 
-  console.log("REVIEWS STATE? ", reviews);
   useEffect(() => {
     dispatch(fetchReviews(spotId));
   }, [dispatch, spotId]);

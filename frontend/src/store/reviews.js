@@ -1,12 +1,16 @@
 import { csrfFetch } from "./csrf";
 
-// Action types
-// Set / grab reviews from backend to load on the page
+/******* Action types ******/
+
+// Set / get reviews from backend to load on the page
 const SET_REVIEWS = "SET_REVIEWS";
-// Add a review
+// "post" review
 const ADD_REVIEW = "ADD_REVIEW";
 
-// Action creators
+const UPDATE_SPOT_DETAILS = "UPDATE_SPOT_DETAILS";
+
+/********* Action creators ******/
+
 export const setReviews = (spotId, reviews) => ({
   type: SET_REVIEWS,
   spotId,
@@ -17,6 +21,12 @@ export const addReview = (spotId, review) => ({
   type: ADD_REVIEW,
   spotId,
   review,
+});
+
+export const updateSpotDetails = (spotId, details) => ({
+  type: UPDATE_SPOT_DETAILS,
+  spotId,
+  details,
 });
 
 // Thunks
@@ -48,6 +58,22 @@ export const addReviewThunk = (spotId, reviewDetails) => async (dispatch) => {
 
   const review = await response.json();
   dispatch(addReview(spotId, review)); // Dispatch the action to add the review
+
+  // Fetch updated spot details
+  const updatedDataResponse = await csrfFetch(`/api/spots/${spotId}`);
+  // console.log("updatedDataResponse", updatedDataResponse);
+  const updatedData = await updatedDataResponse.json();
+
+  console.log("Updated Data: ", updatedData);
+  // console.log(updatedData.avgStarRating);
+  // console.log(updatedData.numReviews);
+
+  dispatch(
+    updateSpotDetails(spotId, {
+      avgStarRating: updatedData.avgStarRating,
+      numReviews: updatedData.numReviews,
+    })
+  );
 };
 
 // Reducer
@@ -63,6 +89,17 @@ export default function reviewsReducer(state = initialState, action) {
       return {
         ...state,
         [action.spotId]: [action.review, ...(state[action.spotId] || [])], // add the new review to the list of reviews for the given spotId AT THE TOP of the reviews
+      };
+    case UPDATE_SPOT_DETAILS:
+      return {
+        ...state,
+        spotDetails: {
+          ...state.spotDetails,
+          [action.spotId]: {
+            avgStarRating: action.details.avgStarRating,
+            numReviews: action.details.numReviews,
+          },
+        },
       };
     default:
       return state;
