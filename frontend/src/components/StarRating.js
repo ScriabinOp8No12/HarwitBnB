@@ -19,7 +19,10 @@ function StarRating({ setStars, selectedStars }) {
           key={i}
           onMouseEnter={() => setHoverRating(i + 1)}
           onMouseLeave={() => setHoverRating(0)}
-          onClick={() => setStars(i + 1)}
+          onClick={() => {
+            setHoverRating(i + 1);
+            setStars(i + 1);
+          }}
         >
           {renderStar(i + 1)}
         </span>
