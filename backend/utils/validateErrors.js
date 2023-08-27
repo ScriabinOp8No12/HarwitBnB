@@ -42,7 +42,7 @@ const validateSignup = [
   ...requiredField("username"),
   check("username")
     .isAlphanumeric()
-    .withMessage("Username is required")
+    .withMessage("Username is required/invalid")
     .not()
     .isEmail()
     .withMessage("Username cannot be an email."),

@@ -68,7 +68,6 @@ function SignupFormModal() {
             className="emailField"
           />
         </label>
-        {/* {errors.email && <p>{errors.email}</p>} */}
         <label className="userNameLabel">
           Username
           <input
@@ -79,7 +78,6 @@ function SignupFormModal() {
             className="usernameField"
           />
         </label>
-        {errors.username && <p>{errors.username}</p>}
         <label className="firstNameLabel">
           First Name
           <input
@@ -90,7 +88,6 @@ function SignupFormModal() {
             className="firstNameField"
           />
         </label>
-        {errors.firstName && <p>{errors.firstName}</p>}
         <label className="lastNameLabel">
           Last Name
           <input
@@ -101,7 +98,6 @@ function SignupFormModal() {
             className="lastNameField"
           />
         </label>
-        {errors.lastName && <p>{errors.lastName}</p>}
         <label className="passwordLabel">
           Password
           <input
@@ -112,7 +108,6 @@ function SignupFormModal() {
             className="passwordField"
           />
         </label>
-        {errors.password && <p>{errors.password}</p>}
         <label className="confirmPasswordLabel">
           Confirm Password
           <input
@@ -123,7 +118,6 @@ function SignupFormModal() {
             className="confirmPasswordField"
           />
         </label>
-        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
         <button
           type="submit"
           className={`signupButton ${
