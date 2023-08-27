@@ -3,11 +3,12 @@ h1.manageSpots {
   margin-top: -50px;
   margin-bottom: 30px;
 }
-/*
+
 .createNewSpotButton {
-  margin-left: 2%;
-  margin-bottom: 20px;
-} */
+  margin-top: -10px;
+  margin-left: 2.2%;
+  color: teal;
+}
 
 /* Page is styled the same as the home page, we use the SAME
 class names and values, go to LandingPage.css to change styling on both pages!*/

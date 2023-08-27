@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { fetchCurrentUserSpots } from "../store/spots";
+
 import "./styles/ManageSpots.css";
 
 // Function to format the star rating / round it properly
@@ -22,10 +23,21 @@ function CurrentUserSpots() {
     dispatch(fetchCurrentUserSpots());
   }, [dispatch]);
 
+  const history = useHistory();
+
+  const redirectToNewSpotForm = () => {
+    history.push("/spots");
+  };
+
   return (
     <>
       <h1 className="manageSpots">Manage Spots</h1>
       {/* <button className="createNewSpotButton">Create a New Spot</button> */}
+      {spots && spots.length === 0 ? (
+        <button className="createNewSpotButton" onClick={redirectToNewSpotForm}>
+          Create a New Spot
+        </button>
+      ) : null}
 
       <div className="containerDiv">
         {spots &&
