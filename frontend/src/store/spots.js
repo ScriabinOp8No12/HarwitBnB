@@ -1,15 +1,15 @@
 import { csrfFetch } from "./csrf";
 
-// Action type
+// Action type for getting all spots for the landing page
 const SET_SPOTS = "spots/SET_SPOTS";
-// Create spot form action type
+// Action type for creating one spot
 const CREATE_SPOT = "spots/CREATE_SPOT";
-
-// Get spots of current user action type
+// Action type for getting spots of current user
 const GET_CURRENT_USER_SPOTS = "spots/GET_CURRENT_USER_SPOTS";
-
 // Action type for updating a spot
 const UPDATE_SPOT = "spots/UPDATE_SPOT";
+// Action type for delete a spot
+const DELETE_SPOT = "spots/DELETE_SPOT";
 
 // Action creator to set the spot for home page
 export const setSpots = (spots) => ({
@@ -33,6 +33,12 @@ export const getCurrentUserSpots = (currentSpots) => ({
 export const updateSpotAction = (updatedSpot) => ({
   type: UPDATE_SPOT,
   updatedSpot,
+});
+
+// Action creator for deleting a spot
+export const deleteSpot = (spot) => ({
+  type: DELETE_SPOT,
+  spot,
 });
 
 // Thunks
@@ -127,7 +133,18 @@ export const fetchSpotById = (spotId) => async (dispatch) => {
   return existingSpot;
 };
 
+// Thunk to fetch a single spot by its ID then delete it
+export const deleteSpotById = (spotId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spotId}`, {
+    method: "DELETE",
+  });
+  if (response.ok) {
+    dispatch(deleteSpot(spotId));
+  }
+};
+
 // Reducer
+// ***** Maybe we should add more properties to the initial state? *****
 const initialState = { spots: [], currentSpots: [] };
 
 export default function spotsReducer(state = initialState, action) {
@@ -145,6 +162,18 @@ export default function spotsReducer(state = initialState, action) {
           spot.id === action.updatedSpot.id ? action.updatedSpot : spot
         ),
       };
+    case DELETE_SPOT:
+      return {
+        // State after deleting is the old state, and then we filter the spot to see if it matches the deleted spot
+        // we just deleted, if it matches, we keep it in the spots and currentSpots arrays, otherwise, we add those to the state
+        // this effectively removes the deleted spot from the state
+        ...state,
+        spots: state.spots.filter((spot) => spot.id !== action.spot),
+        currentSpots: state.currentSpots.filter(
+          (spot) => spot.id !== action.spot
+        ),
+      };
+
     default:
       return state;
   }

@@ -36,7 +36,7 @@ export default function ReviewFormModal({ spotId, showModal, closeModal }) {
     // When click outside
     const handleClickOutside = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
-        closeModal();
+        dispatch(closeModal());
       }
     };
 
@@ -46,7 +46,7 @@ export default function ReviewFormModal({ spotId, showModal, closeModal }) {
       // Cleanup: Remove event listener
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [closeModal]);
+  }, [dispatch]);
 
   return (
     <div className={`modal-review-overlay ${showModal ? "is-active" : ""}`}>
