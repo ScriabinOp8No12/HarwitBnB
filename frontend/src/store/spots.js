@@ -8,6 +8,9 @@ const CREATE_SPOT = "spots/CREATE_SPOT";
 // Get spots of current user action type
 const GET_CURRENT_USER_SPOTS = "spots/GET_CURRENT_USER_SPOTS";
 
+// Action type for updating a spot
+const UPDATE_SPOT = "spots/UPDATE_SPOT";
+
 // Action creator to set the spot for home page
 export const setSpots = (spots) => ({
   type: SET_SPOTS,
@@ -24,6 +27,12 @@ export const createSpotAction = (spot) => ({
 export const getCurrentUserSpots = (currentSpots) => ({
   type: GET_CURRENT_USER_SPOTS,
   currentSpots,
+});
+
+// Action creator for updating a spot
+export const updateSpotAction = (updatedSpot) => ({
+  type: UPDATE_SPOT,
+  updatedSpot,
 });
 
 // Thunks
@@ -93,6 +102,31 @@ export const fetchCurrentUserSpots = () => async (dispatch) => {
   // console.log("User Spots Response: ", response);
   const { Spots } = await response.json();
   dispatch(getCurrentUserSpots(Spots));
+};
+
+// Thunk for updating a spot
+export const updateSpot = (spotId, spotDetails) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spotId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      address: spotDetails.address,
+      city: spotDetails.city,
+      state: spotDetails.state,
+      country: spotDetails.country,
+      lat: spotDetails.lat,
+      lng: spotDetails.lng,
+      name: spotDetails.name,
+      description: spotDetails.description,
+      price: spotDetails.price,
+    }),
+  });
+
+  const updatedSpot = await response.json();
+  dispatch(updateSpotAction(updatedSpot));
+  return updatedSpot;
 };
 
 // Reducer
