@@ -25,7 +25,7 @@ function CurrentUserSpots() {
   return (
     <>
       <h1 className="manageSpots">Manage Spots</h1>
-      <button className="createNewSpotButton">Create a New Spot</button>
+      {/* <button className="createNewSpotButton">Create a New Spot</button> */}
 
       <div className="containerDiv">
         {spots &&

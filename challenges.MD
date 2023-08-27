@@ -51,3 +51,15 @@ updatedAt: new Date(),
 },
 
 4. I was using the alias on the wrong model, needed to make the alias on the Spot model to change it to "Owner" from "User", but I was making the alias on the User model, trying to make it "Owner"
+
+--------------- FRONTEND PROBLEMS ---------------------
+
+1. Spent 2.5 hours on a media query to realize I needed an extra line in my index.html for the media queries to apply, the problem was tricky because it seemed like the media query was half working because it would reduce the images from 4 to 3 at a certain breakpoint
+
+2. Spent 2.5 hours not getting the data from the backend, realized I forgot to use CSRF, even though the copy paste class code used the csrf function
+
+3. Spent 2 hours not being able to update the state of the page, it was largely because it would sometimes throw a "can't read properites of undefined, reading "firstName" which was causing a cascading problem. Needed to add a small || [] to the end of a conditional
+
+4. Spent 45 minutes on an infinite loop in the browser, with a very undescriptive error says can't get data / object something something, turns out my route order was wrong, needed to put /spots/current above /spots
+
+5. Spent 30 minutes on css not styling something, it was tricky because I was using the same css classnames for the home page spots and the /spots/current manage spots page so that it was consistent, I commented out the import css statement in my code to try to isolate a problem regarding not fetching /spots/current properly, but the page was still styled like the main page, so I thought the css was working. It turns out because of the same class names, it was styling them properly, but the h1 wasn't affected because I commented out the import statement in my css.
