@@ -214,3 +214,14 @@
 .spot-button-menu.extra-margin {
   margin-right: 300px;
 }
+
+/*****************  Manage Spots button styling below *******************/
+
+.redirectCurrentSpotsButton {
+  text-decoration: none;
+  color: teal;
+  border: none;
+  background: none;
+  padding: 0;
+  font-size: 16px;
+}
