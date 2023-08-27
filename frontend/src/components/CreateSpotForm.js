@@ -23,7 +23,6 @@ function CreateSpotForm() {
   });
 
   const [imageErrors, setImageErrors] = useState(Array(5).fill(false));
-  // Handle errors as an array
   const [errors, setErrors] = useState([]);
 
   const handleChange = (e) => {
@@ -61,7 +60,7 @@ function CreateSpotForm() {
         );
       }
     }
-    // Of the description length is less than 30 and isn't 0,
+    // If the description length is less than 30 and isn't 0,
     // then show the special message, otherwise it will show description is required
     if (
       spotDetails.description.length < 30 &&
@@ -79,8 +78,8 @@ function CreateSpotForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle image extension errors on form submission
-    // Regex for ending with .jpg, .jpeg, and .png
+
+    // Handle image extension errors on form submission, regex for ending with .jpg, .jpeg, and .png
     const invalidImage = spotDetails.images.some(
       (url) => url && !url.match(/\.(jpg|jpeg|png)$/)
     );
@@ -90,22 +89,27 @@ function CreateSpotForm() {
       return;
     }
 
+    // Show all validation errors from the backend, we need a try catch block to avoid the screen getting covered by a red message
     const validationErrors = validateForm();
 
-    // console.log("Submitting form with spot details:", spotDetails);
-
     if (validationErrors.length === 0) {
-      dispatch(createSpot(spotDetails)).then((newSpot) => {
-        // Use then() to handle the result
-        if (newSpot.errors) {
-          // ********** This might be wrong: handling server side validation here
-          setErrors(newSpot.errors);
-        } else {
-          history.push(`/spots/${newSpot.id}`); // Redirect to the newSpot's id after successful form submission
-        }
-      });
+      dispatch(createSpot(spotDetails))
+        .then((newSpot) => {
+          history.push(`/spots/${newSpot.id}`);
+        })
+        .catch(async (res) => {
+          const data = await res.json();
+          if (data && data.errors) {
+            setErrors(data.errors); // Assuming errors is an object
+          }
+        });
     } else {
-      setErrors(validationErrors);
+      const errorObj = {};
+      validationErrors.forEach((error) => {
+        const field = error.split(" ")[0].toLowerCase();
+        errorObj[field] = error;
+      });
+      setErrors(errorObj);
     }
   };
 
@@ -116,15 +120,26 @@ function CreateSpotForm() {
           <div className="headerContainer">
             <h1>Create a New Spot</h1>
             {/* Display validation errors at the top of the form */}
-            {errors.length > 0 && (
-              <div className="errorMessages">
-                {errors.map((error, index) => (
-                  <p key={index} className="errorMessage">
-                    {error}
-                  </p>
-                ))}
-              </div>
-            )}
+            <div className="errorMessages">
+              {errors.country && (
+                <p className="errorMessage">{errors.country}</p>
+              )}
+              {errors.address && (
+                <p className="errorMessage">{errors.address}</p>
+              )}
+              {errors.city && <p className="errorMessage">{errors.city}</p>}
+              {errors.state && <p className="errorMessage">{errors.state}</p>}
+              {errors.lat && <p className="errorMessage">{errors.lat}</p>}
+              {errors.lng && <p className="errorMessage">{errors.lng}</p>}
+              {errors.description && (
+                <p className="errorMessage">{errors.description}</p>
+              )}
+              {errors.name && <p className="errorMessage">{errors.name}</p>}
+              {errors.price && <p className="errorMessage">{errors.price}</p>}
+              {errors.previewImage && (
+                <p className="errorMessage">{errors.previewImage}</p>
+              )}
+            </div>
           </div>
           <h2>Where's your place located?</h2>
           <p>
