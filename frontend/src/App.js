@@ -8,6 +8,7 @@ import Spots from "./components/Spots";
 import SpotDetail from "./components/SpotDetail";
 import CreateSpotForm from "./components/CreateSpotForm";
 import CurrentUserSpots from "./components/CurrentUserSpots";
+import UpdateSpotForm from "./components/UpdateSpotForm";
 
 function App() {
   // dispatch is used to send actions to the store and trigger them
@@ -68,7 +69,18 @@ function App() {
         <Switch>
           <Route exact path="/" component={Spots} />
           <Route path="/spots/current" component={CurrentUserSpots} />
-          <Route path="/spots/:spotId" component={SpotDetail} />
+          {/* Add update to the end, doesn't have to match backend route */}
+          <Route
+            path="/spots/:spotId/update"
+            render={(props) => {
+              const spotId = props.match.params.spotId;
+              // console.log("Extracted spotId:", spotId);
+              return (
+                <UpdateSpotForm {...props} spotId={spotId} mode="update" />
+              );
+            }}
+          />
+          <Route exact path="/spots/:spotId" component={SpotDetail} />
           {/* Path has to be /spots, not /spots/new like in wireframe, because our endpoint is to /spots for the post request in the backend route */}
           <Route path="/spots" component={CreateSpotForm} />
         </Switch>

@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { createSpot } from "../store/spots";
+import { updateSpot, fetchSpotById } from "../store/spots";
 import "./styles/SpotForm.css";
 
-function CreateSpotForm() {
+function UpdateSpotForm({ spotId }) {
+  console.log("Received spotId:", spotId);
   const dispatch = useDispatch();
   const history = useHistory();
+
   const [spotDetails, setSpotDetails] = useState({
-    // All the form input fields
+    // All the form input fields, omit pictures for now
     country: "",
     address: "",
     city: "",
@@ -18,37 +20,29 @@ function CreateSpotForm() {
     description: "",
     name: "",
     price: "",
-    previewImage: "",
-    images: Array(5).fill(""), // Five image URLs
   });
 
-  const [imageErrors, setImageErrors] = useState(Array(5).fill(false));
+  // ******** Fetch existing spot data when in "update" mode
+  useEffect(() => {
+    // console.log("Fetching existing spot");
+    dispatch(fetchSpotById(spotId)).then((existingSpot) => {
+      // console.log("Received existing spot:", existingSpot);
+      if (existingSpot) {
+        setSpotDetails(existingSpot);
+        // console.log("Updated spotDetails state:", spotDetails);
+      }
+    });
+  }, [dispatch, spotId]);
+
   // Handle errors as an array
   const [errors, setErrors] = useState([]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    if (name.startsWith("image")) {
-      const index = Number(name.split("-")[1]);
-      const newImages = [...spotDetails.images];
-      newImages[index] = value;
-      setSpotDetails((prevDetails) => ({
-        ...prevDetails,
-        previewImage: index === 0 ? value : prevDetails.previewImage,
-        images: newImages,
-      }));
-      setImageErrors((prevErrors) => {
-        const newErrors = [...prevErrors];
-        newErrors[index] = !value.match(/\.(jpg|jpeg|png)$/);
-        return newErrors;
-      });
-    } else {
-      setSpotDetails((prevDetails) => ({
-        ...prevDetails,
-        [name]: value,
-      }));
-    }
+    setSpotDetails((prevDetails) => ({
+      ...prevDetails,
+      [name]: value,
+    }));
   };
 
   const validateForm = () => {
@@ -70,38 +64,18 @@ function CreateSpotForm() {
       newErrors.push("Description needs 30 or more characters");
     }
 
-    if (!spotDetails.previewImage) {
-      newErrors.push("Preview Image URL is required");
-    }
-
     return newErrors;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle image extension errors on form submission
-    // Regex for ending with .jpg, .jpeg, and .png
-    const invalidImage = spotDetails.images.some(
-      (url) => url && !url.match(/\.(jpg|jpeg|png)$/)
-    );
-
-    if (invalidImage) {
-      setImageErrors(true);
-      return;
-    }
-
     const validationErrors = validateForm();
-
-    // console.log("Submitting form with spot details:", spotDetails);
-
     if (validationErrors.length === 0) {
-      dispatch(createSpot(spotDetails)).then((newSpot) => {
-        // Use then() to handle the result
-        if (newSpot.errors) {
-          // ********** This might be wrong: handling server side validation here
-          setErrors(newSpot.errors);
+      dispatch(updateSpot(spotId, spotDetails)).then((result) => {
+        if (result.errors) {
+          setErrors(result.errors);
         } else {
-          history.push(`/spots/${newSpot.id}`); // Redirect to the newSpot's id after successful form submission
+          history.push(`/spots/${result.id}`);
         }
       });
     } else {
@@ -114,7 +88,8 @@ function CreateSpotForm() {
       <form className="spotForm" onSubmit={handleSubmit}>
         <section>
           <div className="headerContainer">
-            <h1>Create a New Spot</h1>
+            {/* Dynamically render Update your spot text or create a new spot text based on if mode is update or not */}
+            <h1>Update your Spot</h1>
             {/* Display validation errors at the top of the form */}
             {errors.length > 0 && (
               <div className="errorMessages">
@@ -242,31 +217,12 @@ function CreateSpotForm() {
             />
           </label>
         </section>
-        <section>
-          <h2>Liven up your spot with photos</h2>
-          <p>Submit a link to at least one photo to publish your spot.</p>
-          {spotDetails.images.map((image, index) => (
-            <div className="image-input" key={index}>
-              <input
-                type="text"
-                name={`image-${index}`}
-                placeholder={index === 0 ? "Preview Image URL" : "Image URL"}
-                value={image}
-                onChange={handleChange}
-              />
-              {imageErrors[index] && ( // Use imageErrors array
-                <p className="errorMessage">
-                  Image URL needs to end in png, jpg, or jpeg.
-                </p>
-              )}
-            </div>
-          ))}
-        </section>
         <button type="submit" className="create-spot-button">
-          Create Spot
+          Update Spot
         </button>
       </form>
     </div>
   );
 }
-export default CreateSpotForm;
+
+export default UpdateSpotForm;
