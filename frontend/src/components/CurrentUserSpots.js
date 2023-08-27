@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { fetchCurrentUserSpots } from "../store/spots";
 
-import "./styles/ManageSpots.css";
+import "./styles/CurrentUserSpots.css";
 
 // Function to format the star rating / round it properly
 function formatRating(rating) {
