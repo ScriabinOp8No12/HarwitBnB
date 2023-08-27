@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { fetchCurrentUserSpots } from "../store/spots";
+import { openModal } from "../store/modal";
+import DeleteSpotModal from "./DeleteSpotModal";
 
 import "./styles/CurrentUserSpots.css";
 
@@ -33,6 +35,10 @@ function CurrentUserSpots() {
   const redirectToUpdateForm = (spotId) => {
     // Add the 2nd arg, with the state object specifying the method type
     history.push(`/spots/${spotId}/update`, { method: "PUT" });
+  };
+
+  const openDeleteModal = (spotId) => {
+    dispatch(openModal(<DeleteSpotModal spotId={spotId} />));
   };
 
   return (
@@ -102,6 +108,7 @@ function CurrentUserSpots() {
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
+                        openDeleteModal(spot.id);
                       }}
                     >
                       Delete

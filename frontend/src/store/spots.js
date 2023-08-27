@@ -135,7 +135,7 @@ export const fetchSpotById = (spotId) => async (dispatch) => {
 
 // Thunk to fetch a single spot by its ID then delete it
 export const deleteSpotById = (spotId) => async (dispatch) => {
-  const response = await csrfFetch(`api/spots/${spotId}`, {
+  const response = await csrfFetch(`/api/spots/${spotId}`, {
     method: "DELETE",
   });
   if (response.ok) {

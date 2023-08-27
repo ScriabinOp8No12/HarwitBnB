@@ -1,0 +1,29 @@
+.deleteModal {
+  background-color: #ebedef;
+  padding: 20px;
+  max-width: 400px;
+  z-index: 1001;
+}
+
+.deleteText {
+  text-align: center;
+  color: black;
+}
+
+.deleteButton,
+.cancelButton {
+  width: 100%;
+  padding: 10px 20px;
+  margin-top: 10px;
+  border: none;
+}
+
+.deleteButton {
+  background-color: #d70466;
+  color: black;
+}
+
+.cancelButton {
+  background-color: #ccc;
+  color: black;
+}
