@@ -79,7 +79,7 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           isValidCityName(value) {
             if (!Validator.matches(value, /^[a-zA-Z\u00C0-\u017F\s-]+$/)) {
-              throw new Error("Invalid city name");
+              throw new Error("City is invalid.");
             }
           },
           // this is how we check if it's empty (this if statement includes the "" with no spaces in between)
