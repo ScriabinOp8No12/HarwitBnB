@@ -29,6 +29,11 @@ function CurrentUserSpots() {
     history.push("/spots");
   };
 
+  // Verify that spotId passed in is actually correct syntax
+  const redirectToUpdateForm = (spotId) => {
+    history.push(`/spots/${spotId}`);
+  };
+
   return (
     <>
       <h1 className="manageSpots">Manage Spots</h1>
@@ -47,44 +52,62 @@ function CurrentUserSpots() {
 
             return (
               // Linking to detail page for each spot
-              <Link to={`/spots/${spot.id}`} key={spot.id} className="spotLink">
-                {/* Tooltip with name of the spot */}
-                <div title={spot.name} className="spotContainer">
-                  {/* Display image if it exists */}
-                  <div className="previewImage">
-                    {spot.previewImage && (
-                      <img src={spot.previewImage} alt={spot.name} />
-                    )}
-                  </div>
-                  <div className="textStarsContainer">
-                    <div className="spotDetails">
-                      {/* Displaying city and state of the spot */}
-                      <span>
-                        {spot.city}, {spot.state}
-                      </span>
-                      <div>
-                        {/* Display price of spot */}
-                        <span className="price">${spot.price}</span>{" "}
-                        <span>night</span>
-                      </div>
-                    </div>
-                    <div className="stars">
-                      {/* Displaying average star rating if it exists, otherwise displays "New" */}
-                      {spot.avgRating ? (
-                        <span>★ {formattedRating}</span>
-                      ) : (
-                        <span>New</span>
+              // <Link to={`/spots/${spot.id}`} key={spot.id} className="spotLink">
+              <div className="spotWrapper" key={spot.id}>
+                <div
+                  onClick={() => history.push(`/spots/${spot.id}`)}
+                  className="spotLink"
+                >
+                  <div title={spot.name} className="spotContainer">
+                    {/* Display image if it exists */}
+                    <div className="previewImage">
+                      {spot.previewImage && (
+                        <img src={spot.previewImage} alt={spot.name} />
                       )}
                     </div>
-                    {/* textStarsContainer wraps all the text up to here */}
+                    <div className="textStarsContainer">
+                      <div className="spotDetails">
+                        {/* Displaying city and state of the spot */}
+                        <span>
+                          {spot.city}, {spot.state}
+                        </span>
+                        <div>
+                          {/* Display price of spot */}
+                          <span className="price">${spot.price}</span>{" "}
+                          <span>night</span>
+                        </div>
+                      </div>
+                      <div className="stars">
+                        {/* Displaying average star rating if it exists, otherwise displays "New" */}
+                        {spot.avgRating ? (
+                          <span>★ {formattedRating}</span>
+                        ) : (
+                          <span>New</span>
+                        )}
+                      </div>
+                      {/* textStarsContainer wraps all the text up to here */}
+                    </div>
+                  </div>
+                  <div className="updateDeleteButtons">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        redirectToUpdateForm(spot.id);
+                      }}
+                    >
+                      Update
+                    </button>
+                    <span className="separateUpdateDelete"></span>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }}
+                    >
+                      Delete
+                    </button>
                   </div>
                 </div>
-                <div className="updateDeleteButtons">
-                  <button>Update</button>
-                  <span className="separateUpdateDelete"></span>
-                  <button>Delete</button>
-                </div>
-              </Link>
+              </div>
             );
           })}
       </div>
