@@ -57,6 +57,7 @@ export const addReviewThunk = (spotId, reviewDetails) => async (dispatch) => {
   }
 
   const review = await response.json();
+  // console.log("review: ", review);
   dispatch(addReview(spotId, review)); // Dispatch the action to add the review
 
   // Fetch updated spot details
