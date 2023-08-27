@@ -19,7 +19,7 @@ function CreateSpotForm() {
     name: "",
     price: "",
     previewImage: "",
-    images: Array(5).fill(""), // Five image URLs
+    images: Array(5).fill(""), // Four additional optional image URLs (5)
   });
 
   const [imageErrors, setImageErrors] = useState(Array(5).fill(false));
@@ -39,7 +39,9 @@ function CreateSpotForm() {
       }));
       setImageErrors((prevErrors) => {
         const newErrors = [...prevErrors];
-        newErrors[index] = !value.match(/\.(jpg|jpeg|png)$/);
+        if (value === "") {
+          newErrors[index] = false;
+        } else newErrors[index] = !value.match(/\.(jpg|jpeg|png)$/);
         return newErrors;
       });
     } else {
@@ -85,7 +87,7 @@ function CreateSpotForm() {
     );
 
     if (invalidImage) {
-      setImageErrors(true);
+      setImageErrors(Array(5).fill(true));
       return;
     }
 
@@ -271,7 +273,8 @@ function CreateSpotForm() {
               />
               {imageErrors[index] && ( // Use imageErrors array
                 <p className="errorMessage">
-                  Image URL needs to end in png, jpg, or jpeg.
+                  Image URL needs to be a valid url and end in png, jpg, or
+                  jpeg.
                 </p>
               )}
             </div>
