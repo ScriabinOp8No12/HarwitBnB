@@ -111,22 +111,20 @@ export const updateSpot = (spotId, spotDetails) => async (dispatch) => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      address: spotDetails.address,
-      city: spotDetails.city,
-      state: spotDetails.state,
-      country: spotDetails.country,
-      lat: spotDetails.lat,
-      lng: spotDetails.lng,
-      name: spotDetails.name,
-      description: spotDetails.description,
-      price: spotDetails.price,
-    }),
+    body: JSON.stringify(spotDetails),
   });
 
   const updatedSpot = await response.json();
+
   dispatch(updateSpotAction(updatedSpot));
   return updatedSpot;
+};
+
+// Thunk to fetch a single spot by its ID
+export const fetchSpotById = (spotId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spotId}`);
+  const existingSpot = await response.json();
+  return existingSpot;
 };
 
 // Reducer
@@ -140,6 +138,13 @@ export default function spotsReducer(state = initialState, action) {
       return { ...state, spots: [...state.spots, action.spot] };
     case GET_CURRENT_USER_SPOTS:
       return { ...state, currentSpots: action.currentSpots };
+    case UPDATE_SPOT:
+      return {
+        ...state,
+        spots: state.spots.map((spot) =>
+          spot.id === action.updatedSpot.id ? action.updatedSpot : spot
+        ),
+      };
     default:
       return state;
   }

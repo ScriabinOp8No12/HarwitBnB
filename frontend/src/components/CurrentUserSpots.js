@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { fetchCurrentUserSpots } from "../store/spots";
 
 import "./styles/ManageSpots.css";
@@ -32,7 +32,7 @@ function CurrentUserSpots() {
   // Verify that spotId passed in is actually correct syntax
   const redirectToUpdateForm = (spotId) => {
     // Add the 2nd arg, with the state object specifying the method type
-    history.push(`/spots/${spotId}`, { method: "PUT" });
+    history.push(`/spots/${spotId}/update`, { method: "PUT" });
   };
 
   return (
