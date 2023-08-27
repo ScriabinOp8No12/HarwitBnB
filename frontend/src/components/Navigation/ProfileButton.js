@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import * as sessionActions from "../../store/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
@@ -9,6 +10,7 @@ import "../styles/Navigation.css";
 function ProfileButton({ user, showMenu, setShowMenu }) {
   const dispatch = useDispatch();
   // const [showMenu, setShowMenu] = useState(false);
+  const history = useHistory();
   const ulRef = useRef();
 
   const openMenu = () => {
@@ -45,6 +47,11 @@ function ProfileButton({ user, showMenu, setShowMenu }) {
     (showMenu ? "" : " hidden") +
     (user ? " logged-in" : " not-logged-in");
 
+  // Redirecting user to current spots function
+  const redirectToCurrentSpots = () => {
+    history.push("/spots/current");
+  };
+
   return (
     // Container for icon + menu, we will use a flexbox to align them side by side and in the top right of the screen
     <div className="navigation-container">
@@ -57,9 +64,14 @@ function ProfileButton({ user, showMenu, setShowMenu }) {
           <>
             <li>Hello {user.firstName}</li>
             <li>{user.email}</li>
-            {/* <li> */}
-            {/* <button onClick={manageSpots}>Manage Spots</button> */}
-            {/* </li> */}
+            <li>
+              <button
+                className="redirectCurrentSpotsButton"
+                onClick={redirectToCurrentSpots}
+              >
+                Manage Spots
+              </button>
+            </li>
             <li>
               <button onClick={logout}>Log Out</button>
             </li>

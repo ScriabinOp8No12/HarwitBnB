@@ -42,12 +42,13 @@
 
 /* Style for the main container that holds all spots */
 .containerDiv {
-  /* Move container div 150px from the top of the screen */
-  margin-top: 200px;
+  /* DON'T DO THIS! Move container div 150px from the top of the screen */
+  /* margin-top: 200px; */
   display: grid;
   grid-template-columns: repeat(4, 1fr); /* 4 columns, equal width */
   gap: 2%; /* Gap between grid items */
   padding: 0 2%; /* Padding on left and right */
+  /* padding-left: 2%; */
 }
 
 /* Media Queries */
