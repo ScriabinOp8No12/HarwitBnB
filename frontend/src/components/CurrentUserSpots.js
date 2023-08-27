@@ -78,6 +78,11 @@ function CurrentUserSpots() {
                     </div>
                     {/* textStarsContainer wraps all the text up to here */}
                   </div>
+                  <div className="updateDeleteButtons">
+                    <button>Update</button>
+                    <span className="separateUpdateDelete"></span>
+                    <button>Delete</button>
+                  </div>
                 </div>
               </Link>
             );

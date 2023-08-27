@@ -1,3 +1,6 @@
+/* Page is styled the same as the home page, we use the SAME
+class names and values, go to LandingPage.css to change styling on both pages!*/
+
 h1.manageSpots {
   padding-left: 2%;
   margin-top: -50px;
@@ -10,5 +13,7 @@ h1.manageSpots {
   color: teal;
 }
 
-/* Page is styled the same as the home page, we use the SAME
-class names and values, go to LandingPage.css to change styling on both pages!*/
+.separateUpdateDelete {
+  display: inline-block;
+  width: 10px;
+}
