@@ -31,7 +31,8 @@ function CurrentUserSpots() {
 
   // Verify that spotId passed in is actually correct syntax
   const redirectToUpdateForm = (spotId) => {
-    history.push(`/spots/${spotId}`);
+    // Add the 2nd arg, with the state object specifying the method type
+    history.push(`/spots/${spotId}`, { method: "PUT" });
   };
 
   return (
