@@ -11,7 +11,7 @@ body {
 
 form {
   max-width: 400px;
-  max-height: 580px;
+  max-height: 400px;
   overflow-y: auto;
   margin: 0 auto;
   padding: 20px;
