@@ -38,6 +38,7 @@ function ProfileButton({ user, showMenu, setShowMenu }) {
     e.preventDefault();
     dispatch(sessionActions.logout());
     closeMenu();
+    history.push("/");
   };
 
   // add a conditional class logged-in and not-logged-in which we can use to

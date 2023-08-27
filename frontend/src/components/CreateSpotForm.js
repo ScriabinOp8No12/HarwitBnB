@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { createSpot } from "../store/spots";
 import "./styles/SpotForm.css";
 
 function CreateSpotForm() {
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation();
+
   const [spotDetails, setSpotDetails] = useState({
     // All the form input fields
     country: "",
@@ -114,6 +116,27 @@ function CreateSpotForm() {
       setErrors(errorObj);
     }
   };
+
+  const resetForm = () => {
+    setSpotDetails({
+      country: "",
+      address: "",
+      city: "",
+      state: "",
+      lat: "",
+      lng: "",
+      description: "",
+      name: "",
+      price: "",
+      previewImage: "",
+      images: Array(5).fill(""),
+    });
+    setErrors([]);
+  };
+
+  useEffect(() => {
+    if (location.pathname === "/spots") resetForm();
+  }, [location]);
 
   return (
     <div>
