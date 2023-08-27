@@ -8,7 +8,7 @@ function Reviews({ spotId }) {
 
   useEffect(() => {
     dispatch(fetchReviews(spotId));
-  }, [dispatch, spotId]);
+  }, [dispatch, spotId, reviews]);
 
   // Sort reviews by most recent first
   const sortedReviews = reviews.sort(
