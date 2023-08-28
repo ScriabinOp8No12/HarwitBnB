@@ -32,3 +32,8 @@ We just translate this to the center and we are good */
   background-color: #ccc;
   color: black;
 }
+
+.deleteReviewButton {
+  padding-bottom: 10px;
+  padding-top: 10px;
+}

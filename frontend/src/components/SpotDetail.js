@@ -165,9 +165,11 @@ function SpotDetail() {
       </div>
       {/* Conditionally render the ReviewFormModal */}
       {/* It will only render if there's a logged-in user, who hasn't posted a review, and isn't the owner */}
-      {currentUser && !userHasPostedReview && !isOwner && (
-        <button onClick={openModal}>Post Your Review</button>
-      )}
+      <div className="postReviewButton">
+        {currentUser && !userHasPostedReview && !isOwner && (
+          <button onClick={openModal}>Post Your Review</button>
+        )}
+      </div>
       {showModal && (
         <ReviewFormModal
           spotId={spotId}
@@ -194,10 +196,6 @@ function SpotDetail() {
           onReviewPosted={handleReviewPosted}
         />
       )}
-      {/* Add delete review modal here */}
-      {/* <div>
-        <DeleteReviewModal />
-      </div> */}
     </div>
   );
 }
