@@ -4,3 +4,14 @@
   margin-top: 200px;
   min-width: 300px;
 }
+
+button {
+  background-color: black;
+  color: white;
+}
+
+/* Exclude the profile button to have a black background color and text color of white */
+.profile-button {
+  background-color: inherit;
+  color: inherit;
+}
