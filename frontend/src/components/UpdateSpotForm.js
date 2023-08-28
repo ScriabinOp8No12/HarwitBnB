@@ -85,6 +85,7 @@ function UpdateSpotForm({ spotId }) {
     price: parseFloat(spotDetails.price),
     // *********** NEED TO CHECK IF numReviews and avgStarRating are NOT 0
     // Because those are what it's set to initially before we dispatch, NOT NULL or Undefined
+    // **** LOGIC: We don't include numReviews and avgStarRating in the dispatch object if these start at 0
     ...(spotDetails.numReviews !== 0 && { numReviews: spotDetails.numReviews }),
     ...(spotDetails.avgStarRating !== 0 && {
       avgStarRating: spotDetails.avgStarRating,
