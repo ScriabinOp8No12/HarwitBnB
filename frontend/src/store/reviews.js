@@ -95,7 +95,9 @@ export const deleteReviewThunk = (reviewId) => async (dispatch) => {
 // Reducer
 // dealing with an object where keys are spotIds
 // reviews are now stored by spotId, so there's no overwritting
-const initialState = {};
+const initialState = {
+  spotDetails: {},
+};
 
 export default function reviewsReducer(state = initialState, action) {
   switch (action.type) {

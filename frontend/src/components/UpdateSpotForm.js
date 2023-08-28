@@ -5,7 +5,6 @@ import { updateSpot, fetchSpotById } from "../store/spots";
 import "./styles/SpotForm.css";
 
 function UpdateSpotForm({ spotId }) {
-
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -47,9 +46,13 @@ function UpdateSpotForm({ spotId }) {
 
   const validateForm = () => {
     const newErrors = [];
-
     for (const [key, value] of Object.entries(spotDetails)) {
-      if (!value && key !== "images" && key !== "previewImage") {
+      if (
+        // Bug here too, had to also check if value is undefined or null, otherwise update form just doesn't work!
+        value === undefined ||
+        value === null ||
+        (value === "" && key !== "images" && key !== "previewImage")
+      ) {
         newErrors.push(
           `${key.charAt(0).toUpperCase() + key.slice(1)} is required`
         );
@@ -67,11 +70,33 @@ function UpdateSpotForm({ spotId }) {
     return newErrors;
   };
 
+  // ***** FUN BUG, if NO reviews exist, it throws an error that seems unrelated
+  // "avgStarRating is required" and "numReviews is required"
+
+  const simplifiedSpotDetails = {
+    address: spotDetails.address,
+    city: spotDetails.city,
+    state: spotDetails.state,
+    country: spotDetails.country,
+    lat: parseFloat(spotDetails.lat),
+    lng: parseFloat(spotDetails.lng),
+    name: spotDetails.name,
+    description: spotDetails.description,
+    price: parseFloat(spotDetails.price),
+    // *********** NEED TO CHECK IF numReviews and avgStarRating are NOT 0
+    // Because those are what it's set to initially before we dispatch, NOT NULL or Undefined
+    ...(spotDetails.numReviews !== 0 && { numReviews: spotDetails.numReviews }),
+    ...(spotDetails.avgStarRating !== 0 && {
+      avgStarRating: spotDetails.avgStarRating,
+    }),
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
     if (validationErrors.length === 0) {
-      dispatch(updateSpot(spotId, spotDetails)).then((result) => {
+      // console.log("Dispatching update with:", spotDetails);
+      dispatch(updateSpot(spotId, simplifiedSpotDetails)).then((result) => {
         if (result.errors) {
           setErrors(result.errors);
         } else {

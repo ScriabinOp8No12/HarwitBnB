@@ -122,6 +122,8 @@ export const updateSpot = (spotId, spotDetails) => async (dispatch) => {
 
   const updatedSpot = await response.json();
 
+  // console.log("updatedSpot: ", updatedSpot);
+
   dispatch(updateSpotAction(updatedSpot));
   return updatedSpot;
 };
