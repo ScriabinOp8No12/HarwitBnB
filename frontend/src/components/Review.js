@@ -1,14 +1,21 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchReviews } from "../store/reviews";
+import DeleteReviewModal from "./DeleteReviewModal";
 
-function Reviews({ spotId }) {
+// Added currentUser props, and originally added userHasPostedReview props
+function Reviews({ spotId, currentUser }) {
   const dispatch = useDispatch();
   const reviews = useSelector((state) => state.reviews[spotId] || []);
 
   useEffect(() => {
     dispatch(fetchReviews(spotId));
-  }, [dispatch, spotId, reviews]);
+  }, [dispatch, spotId]);
+
+  // ******* WITH REVIEWS in dependency array, the firstName of reviewer shows up properly when we post the review, but otherwise we get an infinite loop
+  // useEffect(() => {
+  //   dispatch(fetchReviews(spotId));
+  // }, [dispatch, spotId, reviews]);
 
   // Sort reviews by most recent first
   const sortedReviews = reviews.sort(
@@ -29,6 +36,10 @@ function Reviews({ spotId }) {
             })}
           </div>
           <div className="reviewText">{review.review}</div>
+          {/* ONLY RENDER DELETE REVIEW MODAL if userId of the review matches the id of the logged in user (currentUser) */}
+          {currentUser && review.userId === currentUser.id && (
+            <DeleteReviewModal reviewId={review.id} />
+          )}
         </div>
       ))}
     </div>
