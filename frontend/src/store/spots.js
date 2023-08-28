@@ -121,11 +121,12 @@ export const updateSpot = (spotId, spotDetails) => async (dispatch) => {
   });
 
   const updatedSpot = await response.json();
-
-  // console.log("updatedSpot: ", updatedSpot);
-
-  dispatch(updateSpotAction(updatedSpot));
-  return updatedSpot;
+  if (response.ok) {
+    dispatch(updateSpotAction(updatedSpot));
+    return updatedSpot;
+  } else {
+    throw updatedSpot;
+  }
 };
 
 // Thunk to fetch a single spot by its ID

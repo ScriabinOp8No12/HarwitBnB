@@ -33,8 +33,8 @@ function UpdateSpotForm({ spotId }) {
     });
   }, [dispatch, spotId]);
 
-  // Handle errors as an array
-  const [errors, setErrors] = useState([]);
+  // Handle errors as an OBJECT instead of an array
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -96,16 +96,23 @@ function UpdateSpotForm({ spotId }) {
     e.preventDefault();
     const validationErrors = validateForm();
     if (validationErrors.length === 0) {
-      // console.log("Dispatching update with:", spotDetails);
-      dispatch(updateSpot(spotId, simplifiedSpotDetails)).then((result) => {
-        if (result.errors) {
-          setErrors(result.errors);
-        } else {
+      dispatch(updateSpot(spotId, simplifiedSpotDetails))
+        .then((result) => {
           history.push(`/spots/${result.id}`);
-        }
-      });
+        })
+        .catch(async (res) => {
+          const data = await res.json();
+          if (data && data.errors) {
+            setErrors(data.errors); // Assuming errors is an object
+          }
+        });
     } else {
-      setErrors(validationErrors);
+      const errorObj = {};
+      validationErrors.forEach((error) => {
+        const field = error.split(" ")[0].toLowerCase();
+        errorObj[field] = error;
+      });
+      setErrors(errorObj);
     }
   };
 
@@ -117,13 +124,23 @@ function UpdateSpotForm({ spotId }) {
             {/* Dynamically render Update your spot text or create a new spot text based on if mode is update or not */}
             <h1>Update your Spot</h1>
             {/* Display validation errors at the top of the form */}
-            {errors.length > 0 && (
+            {Object.keys(errors).length > 0 && (
               <div className="errorMessages">
-                {errors.map((error, index) => (
-                  <p key={index} className="errorMessage">
-                    {error}
-                  </p>
-                ))}
+                {errors.country && (
+                  <p className="errorMessage">{errors.country}</p>
+                )}
+                {errors.address && (
+                  <p className="errorMessage">{errors.address}</p>
+                )}
+                {errors.city && <p className="errorMessage">{errors.city}</p>}
+                {errors.state && <p className="errorMessage">{errors.state}</p>}
+                {errors.lat && <p className="errorMessage">{errors.lat}</p>}
+                {errors.lng && <p className="errorMessage">{errors.lng}</p>}
+                {errors.description && (
+                  <p className="errorMessage">{errors.description}</p>
+                )}
+                {errors.name && <p className="errorMessage">{errors.name}</p>}
+                {errors.price && <p className="errorMessage">{errors.price}</p>}
               </div>
             )}
           </div>
