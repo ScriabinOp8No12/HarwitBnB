@@ -138,6 +138,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.STRING,
         validate: {
+          notEmptyString(value) {
+            if (value.length === 0 || value.trim().length === 0) {
+              throw new Error("Name cannot be empty.");
+            }
+          },
           len: [0, 150],
         },
       },
