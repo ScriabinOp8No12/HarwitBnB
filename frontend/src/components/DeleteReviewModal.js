@@ -33,7 +33,9 @@ const DeleteReviewModal = ({ reviewId }) => {
 
   return (
     <>
-      <button onClick={() => setShowModal(true)}>Delete Review</button>
+      <div className="deleteReviewButton">
+        <button onClick={() => setShowModal(true)}>Delete Review</button>
+      </div>
       {showModal && (
         <div className={`modal-overlay ${showModal ? "activeOverlay" : ""}`}>
           <div className="deleteModal" ref={modalRef}>

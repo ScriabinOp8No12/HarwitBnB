@@ -5,7 +5,12 @@ import StarRating from "./StarRating";
 import "./styles/ReviewForm.css";
 
 // showModal and closeModal are being passed into the ReviewFormModal as props, so we don't need to define those within the function anymore
-export default function ReviewFormModal({ spotId, showModal, closeModal }) {
+export default function ReviewFormModal({
+  spotId,
+  showModal,
+  closeModal,
+  onReviewPosted,
+}) {
   const [review, setReview] = useState("");
   // This state holds the selected stars
   const [stars, setStars] = useState(0);
@@ -23,12 +28,20 @@ export default function ReviewFormModal({ spotId, showModal, closeModal }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const reviewDetails = { review, stars };
-    try {
-      await dispatch(addReviewThunk(spotId, reviewDetails));
-      closeModal(); // Close the modal on successful submission
-    } catch (err) {
-      setErrors("An error occurred. Please try again.");
-    }
+
+    dispatch(addReviewThunk(spotId, reviewDetails))
+      .then(() => {
+        closeModal();
+        // Add this here to refresh the reviews list with all the data
+        if (onReviewPosted) {
+          onReviewPosted();
+        }
+      })
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.message) setErrors(data.message);
+        else setErrors("An error occurred. Please try again.");
+      });
   };
   // useEffect code for closing ReviewFormModal when we click outside of it
   const modalRef = useRef();
@@ -53,9 +66,9 @@ export default function ReviewFormModal({ spotId, showModal, closeModal }) {
       <div className="modal-review"></div>
       {/* Attach ref below */}
       <div className="modal-review-content" ref={modalRef}>
-        <h1>How was your stay?</h1>
-        {errors && <div className="error">{errors}</div>}
         <form onSubmit={handleSubmit}>
+          <h1>How was your stay?</h1>
+          {errors && <div className="error-message">{errors}</div>}
           <textarea
             placeholder="Leave your review here..."
             value={review}

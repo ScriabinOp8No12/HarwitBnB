@@ -381,57 +381,32 @@ router.put("/:spotId", requireAuth, async (req, res) => {
   // otherwise throw an error with status code 403
   // also check the spotId against the Spot.findByPK() if it doesn't exist, throw a 404 error, spot not found
 
-  try {
-    const { spotId } = req.params;
-    const spot = await Spot.findByPk(spotId);
-    if (!spot) {
-      return res.status(404).json({ message: "Spot couldn't be found" });
-    } else if (spot.ownerId !== req.user.id) {
-      return res.status(403).json({ message: "Not Authorized!" });
-    }
+  const { spotId } = req.params;
+  const spot = await Spot.findByPk(spotId);
 
-    const {
-      // ownerId,
-      address,
-      city,
-      state,
-      country,
-      lat,
-      lng,
-      name,
-      description,
-      price,
-    } = req.body;
-
-    // use .update() instead of .create() in a put/patch to update record.  .create() is for post requests
-    // it's interesting how sqlite3 lets us create a new record in a put request as if it's a post request... (I see the record in my database if I use .create())
-    await spot.update({
-      // did the same fix here as in the post request
-      ownerId: req.user.id,
-      address,
-      city,
-      state,
-      country,
-      // don't think I need Number in the follow 3
-      lat: Number(lat),
-      lng: Number(lng),
-      name,
-      description,
-      price: Number(price),
-    });
-
-    // call .format() within here, it works somehow
-    return res.json(spot.format());
-    // res needs to have: id, ownerId, address, city, state, country, lat, lng, name, description, price, createdAt, and updatedAt
-    // error response 400 given when body has validation errors, this should be setup already! Nope, needs to be a 400 status code
-  } catch (err) {
-    // check for validation error, if there is, change the response to 400 (otherwise it defaults to 500 status code)
-    if (err instanceof Sequelize.ValidationError) {
-      return res.status(400).json({ message: err.message });
-    }
-    console.error(err);
-    res.status(500).json({ message: "Internal server error" });
+  if (!spot) {
+    return res.status(404).json({ message: "Spot couldn't be found" });
+  } else if (spot.ownerId !== req.user.id) {
+    return res.status(403).json({ message: "Not Authorized!" });
   }
+
+  const { address, city, state, country, lat, lng, name, description, price } =
+    req.body;
+
+  await spot.update({
+    ownerId: req.user.id,
+    address,
+    city,
+    state,
+    country,
+    lat: Number(lat),
+    lng: Number(lng),
+    name,
+    description,
+    price: Number(price),
+  });
+
+  return res.json(spot.format());
 });
 
 // Deletes an existing spot

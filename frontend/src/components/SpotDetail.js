@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Reviews from "./Review";
 import ReviewFormModal from "./ReviewFormModal";
-import DeleteReviewModal from "./DeleteReviewModal";
 import { fetchSpot } from "../store/spotDetail"; // import fetchSpot (singular) thunk
 import { fetchReviews } from "../store/reviews";
 import "./styles/SpotDetail.css";
@@ -65,6 +64,11 @@ function SpotDetail() {
     // Refetch the spot details when reviews change
     dispatch(fetchSpot(spotId));
   }, [dispatch, spotId, reviews]);
+
+  // Adding this to retrigger / dispatch the fetchReviews thunk to trigger us to grab all review info from the backend again
+  const handleReviewPosted = () => {
+    dispatch(fetchReviews(spotId));
+  };
 
   // Check if the current user has posted a review for this spot
   // The .some() method returns true if at least one thing is true, in this example, if at least one review has the same userId as the currentUser
@@ -161,14 +165,17 @@ function SpotDetail() {
       </div>
       {/* Conditionally render the ReviewFormModal */}
       {/* It will only render if there's a logged-in user, who hasn't posted a review, and isn't the owner */}
-      {currentUser && !userHasPostedReview && !isOwner && (
-        <button onClick={openModal}>Post Your Review</button>
-      )}
+      <div className="postReviewButton">
+        {currentUser && !userHasPostedReview && !isOwner && (
+          <button onClick={openModal}>Post Your Review</button>
+        )}
+      </div>
       {showModal && (
         <ReviewFormModal
           spotId={spotId}
           showModal={showModal}
           closeModal={closeModal}
+          onReviewPosted={handleReviewPosted}
         />
       )}
 
@@ -186,13 +193,9 @@ function SpotDetail() {
         <Reviews
           spotId={spotId}
           currentUser={currentUser}
-          userHasPostedReview={userHasPostedReview}
+          onReviewPosted={handleReviewPosted}
         />
       )}
-      {/* Add delete review modal here */}
-      {/* <div>
-        <DeleteReviewModal />
-      </div> */}
     </div>
   );
 }

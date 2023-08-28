@@ -17,3 +17,8 @@
   transform: translate(-50%, -50%);
   z-index: 1000;
 }
+
+.error-message {
+  color: red;
+  margin-bottom: 10px;
+}

@@ -22,6 +22,13 @@ function Reviews({ spotId, currentUser }) {
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
 
+  // Call this function when a review is successfully posted
+  // const handleReviewPosted = () => {
+  //   if (onReviewPosted) {
+  //     onReviewPosted();
+  //   }
+  // };
+
   return (
     <div className="reviewsContainer">
       {sortedReviews.map((review) => (
