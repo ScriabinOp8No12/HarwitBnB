@@ -182,12 +182,17 @@ function SpotDetail() {
       currentUser.id !== spot.ownerId ? (
         <div>Be the first to post a review!</div>
       ) : (
-        <Reviews spotId={spotId} />
+        // Added additional props to Reviews component that gets rendered here
+        <Reviews
+          spotId={spotId}
+          currentUser={currentUser}
+          userHasPostedReview={userHasPostedReview}
+        />
       )}
       {/* Add delete review modal here */}
-      <div>
+      {/* <div>
         <DeleteReviewModal />
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -122,9 +122,13 @@ export default function reviewsReducer(state = initialState, action) {
       const { reviewId } = action.payload; // Destructure from payload
       const newState = { ...state };
       for (const spotId in newState) {
-        newState[spotId] = newState[spotId].filter(
-          (review) => review.id !== reviewId
-        );
+        // We initate reviews to empty object, so we need to only call filter if
+        if (Array.isArray(newState[spotId])) {
+          // Check if it's an array
+          newState[spotId] = newState[spotId].filter(
+            (review) => review.id !== reviewId
+          );
+        }
       }
       return newState;
     default:

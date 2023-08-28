@@ -1,8 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchReviews } from "../store/reviews";
+import DeleteReviewModal from "./DeleteReviewModal";
 
-function Reviews({ spotId }) {
+// Added currentUser props, and originally added userHasPostedReview props
+function Reviews({ spotId, currentUser }) {
   const dispatch = useDispatch();
   const reviews = useSelector((state) => state.reviews[spotId] || []);
 
@@ -34,6 +36,10 @@ function Reviews({ spotId }) {
             })}
           </div>
           <div className="reviewText">{review.review}</div>
+          {/* ONLY RENDER DELETE REVIEW MODAL if userId of the review matches the id of the logged in user (currentUser) */}
+          {currentUser && review.userId === currentUser.id && (
+            <DeleteReviewModal reviewId={review.id} />
+          )}
         </div>
       ))}
     </div>
