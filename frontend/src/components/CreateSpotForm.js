@@ -55,13 +55,14 @@ function CreateSpotForm() {
   };
 
   const validateForm = () => {
-    const newErrors = [];
+    // Changed to object from array
+    const newErrors = {};
 
     for (const [key, value] of Object.entries(spotDetails)) {
       if (!value && key !== "images" && key !== "previewImage") {
-        newErrors.push(
-          `${key.charAt(0).toUpperCase() + key.slice(1)} is required`
-        );
+        newErrors[key] = `${
+          key.charAt(0).toUpperCase() + key.slice(1)
+        } is required`;
       }
     }
     // If the description length is less than 30 and isn't 0,
@@ -70,11 +71,11 @@ function CreateSpotForm() {
       spotDetails.description.length < 30 &&
       spotDetails.description.length !== 0
     ) {
-      newErrors.push("Description needs 30 or more characters");
+      newErrors.description = "Description needs 30 or more characters";
     }
 
     if (!spotDetails.previewImage) {
-      newErrors.push("Preview Image URL is required");
+      newErrors.previewImage = "Preview Image URL is required";
     }
 
     return newErrors;
@@ -82,21 +83,27 @@ function CreateSpotForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Reset error state at the beginning of form submission to avoid seeing errors
+    // left over from incorrect form submission earlier, especially good for if we
+    // start with empty fields, then enter invalid image urls at the bottom, the top errors wouldn't reset initially
+    setErrors([]);
 
     // Handle image extension errors on form submission, regex for ending with .jpg, .jpeg, and .png
-    const invalidImage = spotDetails.images.some(
+    const newImageErrors = spotDetails.images.map(
       (url) => url && !url.match(/\.(jpg|jpeg|png)$/)
     );
 
+    const invalidImage = newImageErrors.some((error) => error === true);
+
     if (invalidImage) {
-      setImageErrors(Array(5).fill(true));
+      setImageErrors(newImageErrors);
       return;
     }
 
     // Show all validation errors from the backend, we need a try catch block to avoid the screen getting covered by a red message
     const validationErrors = validateForm();
 
-    if (validationErrors.length === 0) {
+    if (Object.keys(validationErrors).length === 0) {
       dispatch(createSpot(spotDetails))
         .then((newSpot) => {
           history.push(`/spots/${newSpot.id}`);
@@ -108,12 +115,7 @@ function CreateSpotForm() {
           }
         });
     } else {
-      const errorObj = {};
-      validationErrors.forEach((error) => {
-        const field = error.split(" ")[0].toLowerCase();
-        errorObj[field] = error;
-      });
-      setErrors(errorObj);
+      setErrors(validationErrors);
     }
   };
 
