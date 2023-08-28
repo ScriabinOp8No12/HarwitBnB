@@ -5,7 +5,7 @@ import { updateSpot, fetchSpotById } from "../store/spots";
 import "./styles/SpotForm.css";
 
 function UpdateSpotForm({ spotId }) {
-  console.log("Received spotId:", spotId);
+
   const dispatch = useDispatch();
   const history = useHistory();
 

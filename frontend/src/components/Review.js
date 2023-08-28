@@ -4,7 +4,7 @@ import { fetchReviews } from "../store/reviews";
 import DeleteReviewModal from "./DeleteReviewModal";
 
 // Added currentUser props, and originally added userHasPostedReview props
-function Reviews({ spotId, currentUser, onReviewPosted }) {
+function Reviews({ spotId, currentUser }) {
   const dispatch = useDispatch();
   const reviews = useSelector((state) => state.reviews[spotId] || []);
 
@@ -23,11 +23,11 @@ function Reviews({ spotId, currentUser, onReviewPosted }) {
   );
 
   // Call this function when a review is successfully posted
-  const handleReviewPosted = () => {
-    if (onReviewPosted) {
-      onReviewPosted();
-    }
-  };
+  // const handleReviewPosted = () => {
+  //   if (onReviewPosted) {
+  //     onReviewPosted();
+  //   }
+  // };
 
   return (
     <div className="reviewsContainer">

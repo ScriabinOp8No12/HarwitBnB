@@ -1,13 +1,14 @@
 /* This is equivalent to the .modal we have in the Navigation.css,
 We just translate this to the center and we are good */
-.deleteModal {
+/*.deleteModal {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #ebedef;
-  /* z-index: 100; */
+  /* z-index: 100;
 }
+*/
 
 .deleteText {
   text-align: center;
