@@ -65,6 +65,11 @@ function SpotDetail() {
     dispatch(fetchSpot(spotId));
   }, [dispatch, spotId, reviews]);
 
+  // Adding this to retrigger / dispatch the fetchReviews thunk to trigger us to grab all review info from the backend again
+  const handleReviewPosted = () => {
+    dispatch(fetchReviews(spotId));
+  };
+
   // Check if the current user has posted a review for this spot
   // The .some() method returns true if at least one thing is true, in this example, if at least one review has the same userId as the currentUser
   const userHasPostedReview = reviews.some(
@@ -168,6 +173,7 @@ function SpotDetail() {
           spotId={spotId}
           showModal={showModal}
           closeModal={closeModal}
+          onReviewPosted={handleReviewPosted}
         />
       )}
 
@@ -185,7 +191,7 @@ function SpotDetail() {
         <Reviews
           spotId={spotId}
           currentUser={currentUser}
-          userHasPostedReview={userHasPostedReview}
+          onReviewPosted={handleReviewPosted}
         />
       )}
       {/* Add delete review modal here */}

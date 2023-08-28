@@ -5,7 +5,12 @@ import StarRating from "./StarRating";
 import "./styles/ReviewForm.css";
 
 // showModal and closeModal are being passed into the ReviewFormModal as props, so we don't need to define those within the function anymore
-export default function ReviewFormModal({ spotId, showModal, closeModal }) {
+export default function ReviewFormModal({
+  spotId,
+  showModal,
+  closeModal,
+  onReviewPosted,
+}) {
   const [review, setReview] = useState("");
   // This state holds the selected stars
   const [stars, setStars] = useState(0);
@@ -27,6 +32,10 @@ export default function ReviewFormModal({ spotId, showModal, closeModal }) {
     dispatch(addReviewThunk(spotId, reviewDetails))
       .then(() => {
         closeModal();
+        // Add this here to refresh the reviews list with all the data
+        if (onReviewPosted) {
+          onReviewPosted();
+        }
       })
       .catch(async (res) => {
         const data = await res.json();
