@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 require("express-async-errors");
 const morgan = require("morgan");
@@ -5,20 +6,26 @@ const cors = require("cors");
 const csurf = require("csurf");
 const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
-const { ValidationError } = require("sequelize");
+
 const { environment } = require("./config");
 const isProduction = environment === "production";
-
+// we are already getting all the routes from the folder, so no need to require individual routes
 const routes = require("./routes");
+const { ValidationError } = require("sequelize");
+const parser = require("./file-upload");
+
 const app = express();
 
+// ...
+
 app.use(morgan("dev"));
+
 app.use(cookieParser());
 app.use(express.json());
 
-// Security Middleware
 if (!isProduction) {
-  app.use(cors()); // enable cors only in development
+  // enable cors only in development
+  app.use(cors());
 }
 
 // helmet helps set a variety of headers to better secure your app
@@ -39,7 +46,12 @@ app.use(
   })
 );
 
-app.use(routes); // Connect all the routes
+app.use(routes);
+
+// Upload route here, before the error handling middleware
+app.post("/upload", parser.single("image"), (req, res) => {
+  res.json({ file: req.file });
+});
 
 app.use((_req, _res, next) => {
   const err = new Error("The requested resource couldn't be found.");
@@ -48,6 +60,8 @@ app.use((_req, _res, next) => {
   err.status = 404;
   next(err);
 });
+
+// ...
 
 // Process sequelize errors
 app.use((err, _req, _res, next) => {
@@ -63,15 +77,14 @@ app.use((err, _req, _res, next) => {
   next(err);
 });
 
-// Error formatter
 app.use((err, _req, res, _next) => {
   res.status(err.status || 500);
   console.error(err);
   res.json({
-    // title: err.title || 'Server Error',
+    title: err.title || "Server Error",
     message: err.message,
     errors: err.errors,
-    // stack: isProduction ? null : err.stack
+    stack: isProduction ? null : err.stack,
   });
 });
 

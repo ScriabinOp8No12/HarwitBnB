@@ -83,39 +83,34 @@ function CreateSpotForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Reset error state at the beginning of form submission to avoid seeing errors
-    // left over from incorrect form submission earlier, especially good for if we
-    // start with empty fields, then enter invalid image urls at the bottom, the top errors wouldn't reset initially
-    setErrors([]);
 
-    // Handle image extension errors on form submission, regex for ending with .jpg, .jpeg, and .png
+    // Frontend validation
+    const frontendErrors = validateForm();
+
+    // Handle image extension errors
     const newImageErrors = spotDetails.images.map(
       (url) => url && !url.match(/\.(jpg|jpeg|png)$/)
     );
-
     const invalidImage = newImageErrors.some((error) => error === true);
 
     if (invalidImage) {
       setImageErrors(newImageErrors);
-      return;
+      frontendErrors.images =
+        "Image URL needs to be a valid url and end in png, jpg, or jpeg.";
     }
 
-    // Show all validation errors from the backend, we need a try catch block to avoid the screen getting covered by a red message
-    const validationErrors = validateForm();
-
-    if (Object.keys(validationErrors).length === 0) {
-      dispatch(createSpot(spotDetails))
-        .then((newSpot) => {
-          history.push(`/spots/${newSpot.id}`);
-        })
-        .catch(async (res) => {
-          const data = await res.json();
-          if (data && data.errors) {
-            setErrors(data.errors); // Assuming errors is an object
-          }
-        });
-    } else {
-      setErrors(validationErrors);
+    try {
+      const newSpot = await dispatch(createSpot(spotDetails));
+      if (Object.keys(frontendErrors).length === 0 && newSpot) {
+        history.push(`/spots/${newSpot.id}`);
+      }
+    } catch (res) {
+      const data = await res.json();
+      if (data && data.errors) {
+        // Merge frontend and backend errors
+        const mergedErrors = { ...frontendErrors, ...data.errors };
+        setErrors(mergedErrors);
+      }
     }
   };
 
@@ -148,24 +143,11 @@ function CreateSpotForm() {
             <h1>Create a New Spot</h1>
             {/* Display validation errors at the top of the form */}
             <div className="errorMessages">
-              {errors.country && (
-                <p className="errorMessage">{errors.country}</p>
-              )}
-              {errors.address && (
-                <p className="errorMessage">{errors.address}</p>
-              )}
-              {errors.city && <p className="errorMessage">{errors.city}</p>}
-              {errors.state && <p className="errorMessage">{errors.state}</p>}
-              {errors.lat && <p className="errorMessage">{errors.lat}</p>}
-              {errors.lng && <p className="errorMessage">{errors.lng}</p>}
-              {errors.description && (
-                <p className="errorMessage">{errors.description}</p>
-              )}
-              {errors.name && <p className="errorMessage">{errors.name}</p>}
-              {errors.price && <p className="errorMessage">{errors.price}</p>}
-              {errors.previewImage && (
-                <p className="errorMessage">{errors.previewImage}</p>
-              )}
+              {Object.keys(errors).map((key, index) => (
+                <p className="errorMessage" key={index}>
+                  {errors[key]}
+                </p>
+              ))}
             </div>
           </div>
           <h2>Where's your place located?</h2>

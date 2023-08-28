@@ -50,12 +50,9 @@ function SignupFormModal() {
         <h1 className="signupText">Sign Up</h1>
 
         <div className="errorMessage">
-          {errors.email && <p>{errors.email}</p>}
-          {errors.username && <p>{errors.username}</p>}
-          {errors.firstName && <p>{errors.firstName}</p>}
-          {errors.lastName && <p>{errors.lastName}</p>}
-          {errors.password && <p>{errors.password}</p>}
-          {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+          {Object.keys(errors).map((key, index) => (
+            <p key={index}>{errors[key]}</p>
+          ))}
         </div>
 
         <label className="emailLabel">
