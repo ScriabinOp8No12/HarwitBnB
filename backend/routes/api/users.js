@@ -7,33 +7,40 @@ const router = express.Router();
 
 // Sign up
 router.post("/", validateSignup, async (req, res) => {
-  const { firstName, lastName, email, username, password } = req.body;
+  const {
+    firstName,
+    lastName,
+    email,
+    username,
+    password,
+    errors: validationErrors,
+  } = req.body;
+
+  console.log("Validation Errors:", validationErrors); // Debugging line
+
   const hashedPassword = bcrypt.hashSync(password);
-
   const nullUserDefaultScopt = User.scope(null);
-
   const allUsers = await nullUserDefaultScopt.findAll();
 
-  const usersList = [];
+  const errors = { ...validationErrors };
 
-  allUsers.forEach((users) => {
-    usersList.push(users.toJSON());
+  allUsers.forEach((user) => {
+    const { username: existingUsername, email: existingEmail } = user.toJSON();
+
+    if (existingUsername === username && !errors.username) {
+      errors.username = "User with that username already exists";
+    }
+
+    if (existingEmail === email && !errors.email) {
+      errors.email = "User with that email already exists";
+    }
   });
-  usersList.forEach((user) => {
-    const { username, email } = user;
 
-    if (username === req.body.username)
-      res.status(500).json({
-        message: "User already exists",
-        errors: { username: "User with that username already exists" },
-      });
+  console.log("Merged Errors:", errors); // Debugging line
 
-    if (email === req.body.email)
-      res.status(500).json({
-        message: "User already exists",
-        errors: { email: "User with that email already exists" },
-      });
-  });
+  if (Object.keys(errors).length > 0) {
+    return res.status(400).json({ message: "User already exists", errors });
+  }
 
   const user = await User.create({
     firstName,
