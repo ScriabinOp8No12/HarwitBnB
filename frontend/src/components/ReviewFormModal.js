@@ -59,7 +59,7 @@ export default function ReviewFormModal({ spotId, showModal, closeModal }) {
       <div className="modal-review-content" ref={modalRef}>
         <form onSubmit={handleSubmit}>
           <h1>How was your stay?</h1>
-          {errors && <div className="error">{errors}</div>}
+          {errors && <div className="error-message">{errors}</div>}
           <textarea
             placeholder="Leave your review here..."
             value={review}
