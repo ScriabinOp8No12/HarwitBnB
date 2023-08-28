@@ -8,7 +8,12 @@ function Reviews({ spotId }) {
 
   useEffect(() => {
     dispatch(fetchReviews(spotId));
-  }, [dispatch, spotId, reviews]);
+  }, [dispatch, spotId]);
+
+  // ******* WITH REVIEWS in dependency array, the firstName of reviewer shows up properly when we post the review, but otherwise we get an infinite loop
+  // useEffect(() => {
+  //   dispatch(fetchReviews(spotId));
+  // }, [dispatch, spotId, reviews]);
 
   // Sort reviews by most recent first
   const sortedReviews = reviews.sort(

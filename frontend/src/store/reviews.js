@@ -9,6 +9,8 @@ const ADD_REVIEW = "ADD_REVIEW";
 
 const UPDATE_SPOT_DETAILS = "UPDATE_SPOT_DETAILS";
 
+const DELETE_REVIEW = "DELETE_REVIEW";
+
 /********* Action creators ******/
 
 export const setReviews = (spotId, reviews) => ({
@@ -27,6 +29,11 @@ export const updateSpotDetails = (spotId, details) => ({
   type: UPDATE_SPOT_DETAILS,
   spotId,
   details,
+});
+
+export const deleteReview = (reviewId) => ({
+  type: DELETE_REVIEW,
+  payload: { reviewId },
 });
 
 // Thunks
@@ -76,6 +83,16 @@ export const addReviewThunk = (spotId, reviewDetails) => async (dispatch) => {
   );
 };
 
+export const deleteReviewThunk = (reviewId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/reviews/${reviewId}`, {
+    method: "DELETE",
+  });
+  if (response.ok) {
+    dispatch(deleteReview(reviewId));
+  } else {
+    throw new Error("deleteReview Thunk failed");
+  }
+};
 // Reducer
 // dealing with an object where keys are spotIds
 // reviews are now stored by spotId, so there's no overwritting
@@ -101,6 +118,15 @@ export default function reviewsReducer(state = initialState, action) {
           },
         },
       };
+    case DELETE_REVIEW:
+      const { reviewId } = action.payload; // Destructure from payload
+      const newState = { ...state };
+      for (const spotId in newState) {
+        newState[spotId] = newState[spotId].filter(
+          (review) => review.id !== reviewId
+        );
+      }
+      return newState;
     default:
       return state;
   }
