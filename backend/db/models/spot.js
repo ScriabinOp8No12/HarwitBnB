@@ -66,7 +66,7 @@ module.exports = (sequelize, DataTypes) => {
               !Validator.matches(value, /^(?=.*[a-zA-Z0-9])[a-zA-Z0-9\s]*$/)
             ) {
               throw new Error(
-                "Address must contain a combination of letters and numbers. White spaces are allowed too!"
+                "Invalid Address, it must contain a combination of letters and numbers, white spaces are allowed."
               );
             }
           },
