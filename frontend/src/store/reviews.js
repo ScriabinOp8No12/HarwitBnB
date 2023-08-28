@@ -59,13 +59,10 @@ export const addReviewThunk = (spotId, reviewDetails) => async (dispatch) => {
     body: JSON.stringify(reviewDetails),
   });
 
-  if (!response.ok) {
-    throw new Error("Network response was not ok!");
+  if (response.ok) {
+    const review = await response.json();
+    dispatch(addReview(spotId, review)); // Dispatch the action to add the review
   }
-
-  const review = await response.json();
-  // console.log("review: ", review);
-  dispatch(addReview(spotId, review)); // Dispatch the action to add the review
 
   // Fetch updated spot details
   const updatedDataResponse = await csrfFetch(`/api/spots/${spotId}`);
@@ -81,6 +78,8 @@ export const addReviewThunk = (spotId, reviewDetails) => async (dispatch) => {
       numReviews: updatedData.numReviews,
     })
   );
+
+  return response;
 };
 
 export const deleteReviewThunk = (reviewId) => async (dispatch) => {
