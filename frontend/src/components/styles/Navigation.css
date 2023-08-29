@@ -23,14 +23,16 @@
 /* make size in pixels because we want it to stay the same size even when the viewport gets smaller */
 .profile-button i {
   font-size: 40px;
+  padding: 3px;
 }
 /* move the STARTING POSITION of the profile button slightly away from the top right corner of the screen */
 .profile-button {
   transform: translate(-45px, 20px);
-
   cursor: pointer;
   /* align the profile icon to the top of the login and signup buttons on the right of it */
   align-self: flex-start;
+  border: 2px solid black;
+  border-radius: 20px;
 }
 
 .profile-button.dropdown-active .hamburger-icon {
@@ -41,7 +43,8 @@
 .profile-dropdown {
   list-style: none;
   position: absolute;
-  right: 40px;
+  padding-left: 20px;
+  padding-right: 30px;
   top: 100%; /* Position it right below the profile-button */
   cursor: pointer;
   z-index: 1001; /* Make sure it appears above other content */
@@ -51,21 +54,39 @@
 .profile-dropdown.logged-in {
   cursor: default;
   margin-top: 30px;
+  margin-right: 43.5px;
   z-index: 1002;
   background: white;
   border: 3px solid black;
 }
 
-/* only have the grey background hover effect when the user isn't logged in */
-.profile-dropdown.not-logged-in li:hover {
-  background-color: lightgrey;
+.profile-dropdown.not-logged-in {
+  cursor: default;
+  margin-top: 30px;
+  margin-right: 43.5px;
+  /* padding-right: 30px; */
+  z-index: 1002;
+  background: white;
+  border: 3px solid black;
 }
 
-.profile-dropdown li {
+.profile-dropdown.not-logged-in li {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-right: 60px;
+  width: 100%;
+}
+
+.profile-dropdown.logged-in li {
   margin-top: 10px;
   margin-bottom: 10px;
   margin-right: 29px;
   width: 100%;
+}
+
+/* only have the grey background hover effect when the user isn't logged in */
+.profile-dropdown.not-logged-in li:hover {
+  background-color: lightgrey;
 }
 
 /* the logout button needs the pointer effect too */
@@ -215,7 +236,7 @@
 /****** Create a new spot button styling below *****************/
 
 .spot-button-menu {
-  margin-right: 150px;
+  margin-right: 170px;
   padding-top: 35px;
   color: teal;
   text-decoration: none;
