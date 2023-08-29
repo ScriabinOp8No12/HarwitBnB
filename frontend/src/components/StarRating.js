@@ -13,7 +13,7 @@ function StarRating({ setStars, selectedStars }) {
   };
 
   return (
-    <div>
+    <div className="star-rating-container">
       {Array.from({ length: 5 }, (_, i) => i + 1).map((_, i) => (
         <span
           key={i}
