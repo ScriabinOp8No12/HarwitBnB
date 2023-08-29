@@ -45,7 +45,10 @@ function CurrentUserSpots() {
       <h1 className="manageSpots">Manage Spots</h1>
       {/* <button className="createNewSpotButton">Create a New Spot</button> */}
       {spots && spots.length === 0 ? (
-        <button className="createNewSpotButton" onClick={redirectToNewSpotForm}>
+        <button
+          className="create-new-spot-manage-spots"
+          onClick={redirectToNewSpotForm}
+        >
           Create a New Spot
         </button>
       ) : null}

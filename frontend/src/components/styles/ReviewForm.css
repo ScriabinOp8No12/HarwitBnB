@@ -47,6 +47,7 @@
   background-color: #d70466;
   color: black;
   font-weight: bold;
+  border: 3px solid black;
 }
 
 .star-rating-container {
@@ -55,4 +56,9 @@
 
 .review-form-text-area {
   height: 120px;
+}
+
+.review-form-h1 {
+  margin-top: 0px;
+  /* margin-bottom: 0px; */
 }

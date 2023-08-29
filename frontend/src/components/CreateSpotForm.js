@@ -294,7 +294,7 @@ function CreateSpotForm() {
           ))}
         </section>
         <div className="horizontal-line"></div> {/* Custom horizontal line */}
-        <button type="submit" className="create-spot-button">
+        <button type="submit" className="create-spot-form-button">
           Create Spot
         </button>
       </form>

@@ -7,10 +7,11 @@ h1.manageSpots {
   margin-bottom: 30px;
 }
 
-.createNewSpotButton {
+.create-new-spot-manage-spots {
   margin-top: -10px;
   margin-left: 2.2%;
-  color: teal;
+  border: 3px solid black;
+  /* color: teal; */
 }
 
 .separateUpdateDelete {
