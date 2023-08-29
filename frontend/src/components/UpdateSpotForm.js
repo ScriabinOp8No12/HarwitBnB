@@ -140,13 +140,13 @@ function UpdateSpotForm({ spotId }) {
           </div>
         </div>
         <h2 className="form-location-h2">Where's your place located?</h2>
-        <p>
+        <p className="guest-info-paragraph">
           Guests will only get your exact address once they booked a
           reservation.
         </p>
         <section>
           <label>
-            Country:
+            Country
             <input
               type="text"
               name="country"
@@ -157,18 +157,18 @@ function UpdateSpotForm({ spotId }) {
           </label>
 
           <label>
-            Address:
+            Street Address
             <input
               type="text"
               name="address"
-              placeholder="Street Address"
+              placeholder="Address"
               value={spotDetails.address}
               onChange={handleChange}
             />
           </label>
 
           <label className="city">
-            City:
+            City
             <input
               type="text"
               name="city"
@@ -177,10 +177,10 @@ function UpdateSpotForm({ spotId }) {
               onChange={handleChange}
             />
           </label>
-          <span className="separator">,</span>
+          <span className="comma-separator">,</span>
 
           <label className="state">
-            State:
+            State
             <input
               type="text"
               name="state"
@@ -191,7 +191,7 @@ function UpdateSpotForm({ spotId }) {
           </label>
 
           <label className="side-by-side">
-            Latitude:
+            Latitude
             <input
               type="number"
               name="lat"
@@ -200,9 +200,9 @@ function UpdateSpotForm({ spotId }) {
               onChange={handleChange}
             />
           </label>
-          <span className="separator">,</span>
+          <span className="comma-separator">,</span>
           <label className="side-by-side">
-            Longitude:
+            Longitude
             <input
               type="number"
               name="lng"
@@ -212,6 +212,7 @@ function UpdateSpotForm({ spotId }) {
             />
           </label>
         </section>
+        <div className="horizontal-line"></div> {/* Custom horizontal line */}
         <section>
           <h2>Describe your place to guests</h2>
           <p>
@@ -226,6 +227,7 @@ function UpdateSpotForm({ spotId }) {
             onChange={handleChange}
           ></textarea>
         </section>
+        <div className="horizontal-line"></div> {/* Custom horizontal line */}
         <section>
           <h2>Create a title for your spot</h2>
           <p>
@@ -240,6 +242,7 @@ function UpdateSpotForm({ spotId }) {
             onChange={handleChange}
           />
         </section>
+        <div className="horizontal-line"></div> {/* Custom horizontal line */}
         <section>
           <h2>Set a base price for your spot</h2>
           <p>
@@ -256,6 +259,7 @@ function UpdateSpotForm({ spotId }) {
             />
           </label>
         </section>
+        <div className="horizontal-line"></div> {/* Custom horizontal line */}
         <button type="submit" className="create-spot-button">
           Update Spot
         </button>
