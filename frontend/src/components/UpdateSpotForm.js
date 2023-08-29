@@ -94,25 +94,29 @@ function UpdateSpotForm({ spotId }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const validationErrors = validateForm();
-    if (validationErrors.length === 0) {
-      dispatch(updateSpot(spotId, simplifiedSpotDetails))
-        .then((result) => {
-          history.push(`/spots/${result.id}`);
-        })
-        .catch(async (res) => {
-          const data = await res.json();
-          if (data && data.errors) {
-            setErrors(data.errors); // Assuming errors is an object
-          }
-        });
-    } else {
-      const errorObj = {};
-      validationErrors.forEach((error) => {
-        const field = error.split(" ")[0].toLowerCase();
-        errorObj[field] = error;
-      });
-      setErrors(errorObj);
+
+    // Frontend validation
+    const frontendErrors = validateForm();
+    const errorObj = {};
+    frontendErrors.forEach((error) => {
+      const field = error.split(" ")[0].toLowerCase();
+      errorObj[field] = error;
+    });
+
+    try {
+      const updatedSpot = await dispatch(
+        updateSpot(spotId, simplifiedSpotDetails)
+      );
+      if (Object.keys(errorObj).length === 0 && updatedSpot) {
+        history.push(`/spots/${updatedSpot.id}`);
+      }
+    } catch (res) {
+      const data = await res.json();
+      if (data && data.errors) {
+        // Merge frontend and backend errors
+        const mergedErrors = { ...errorObj, ...data.errors };
+        setErrors(mergedErrors);
+      }
     }
   };
 
@@ -126,21 +130,11 @@ function UpdateSpotForm({ spotId }) {
             {/* Display validation errors at the top of the form */}
             {Object.keys(errors).length > 0 && (
               <div className="errorMessages">
-                {errors.country && (
-                  <p className="errorMessage">{errors.country}</p>
-                )}
-                {errors.address && (
-                  <p className="errorMessage">{errors.address}</p>
-                )}
-                {errors.city && <p className="errorMessage">{errors.city}</p>}
-                {errors.state && <p className="errorMessage">{errors.state}</p>}
-                {errors.lat && <p className="errorMessage">{errors.lat}</p>}
-                {errors.lng && <p className="errorMessage">{errors.lng}</p>}
-                {errors.description && (
-                  <p className="errorMessage">{errors.description}</p>
-                )}
-                {errors.name && <p className="errorMessage">{errors.name}</p>}
-                {errors.price && <p className="errorMessage">{errors.price}</p>}
+                {Object.keys(errors).map((key, index) => (
+                  <p className="errorMessage" key={index}>
+                    {errors[key]}
+                  </p>
+                ))}
               </div>
             )}
           </div>
