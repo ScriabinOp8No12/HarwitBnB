@@ -15,3 +15,8 @@ button {
   background-color: inherit;
   color: inherit;
 }
+
+/* Give class of disabled button to buttons that have to be disabled */
+.disabled-review-button:disabled {
+  background: grey;
+}

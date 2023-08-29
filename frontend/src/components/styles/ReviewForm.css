@@ -22,3 +22,22 @@
   color: red;
   margin-bottom: 10px;
 }
+
+.star-text {
+  margin-left: 8px;
+  font-size: 16px;
+}
+
+.review-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.disabled-review-button {
+  margin-top: 10px;
+}
+
+.star-rating-container {
+  font-size: 24px;
+}

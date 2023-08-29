@@ -66,7 +66,7 @@ export default function ReviewFormModal({
       <div className="modal-review"></div>
       {/* Attach ref below */}
       <div className="modal-review-content" ref={modalRef}>
-        <form onSubmit={handleSubmit}>
+        <form className="review-form" onSubmit={handleSubmit}>
           <h1>How was your stay?</h1>
           {errors && <div className="error-message">{errors}</div>}
           <textarea
@@ -75,7 +75,11 @@ export default function ReviewFormModal({
             onChange={(e) => setReview(e.target.value)}
           />
           <StarRating setStars={setStars} selectedStars={stars} />
-          <button type="submit" disabled={review.length < 10 || stars === 0}>
+          <button
+            type="submit"
+            className="disabled-review-button"
+            disabled={review.length < 10 || stars === 0}
+          >
             Submit Your Review
           </button>
         </form>
