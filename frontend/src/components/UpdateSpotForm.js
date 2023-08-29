@@ -123,27 +123,28 @@ function UpdateSpotForm({ spotId }) {
   return (
     <div>
       <form className="spotForm" onSubmit={handleSubmit}>
-        <section>
-          <div className="headerContainer">
-            {/* Dynamically render Update your spot text or create a new spot text based on if mode is update or not */}
-            <h1>Update your Spot</h1>
-            {/* Display validation errors at the top of the form */}
-            {Object.keys(errors).length > 0 && (
-              <div className="errorMessages">
-                {Object.keys(errors).map((key, index) => (
-                  <p className="errorMessage" key={index}>
-                    {errors[key]}
-                  </p>
-                ))}
-              </div>
+        <div className="headerContainer">
+          {/* Dynamically render Update your spot text or create a new spot text based on if mode is update or not */}
+          <h1>Update your Spot</h1>
+          {/* Display validation errors at the top of the form */}
+          <div className="errorMessages">
+            {Object.keys(errors).length > 0 ? (
+              Object.keys(errors).map((key, index) => (
+                <p className="errorMessage" key={index}>
+                  {errors[key]}
+                </p>
+              ))
+            ) : (
+              <></>
             )}
           </div>
-          <h2>Where's your place located?</h2>
-          <p>
-            Guests will only get your exact address once they booked a
-            reservation.
-          </p>
-
+        </div>
+        <h2 className="form-location-h2">Where's your place located?</h2>
+        <p>
+          Guests will only get your exact address once they booked a
+          reservation.
+        </p>
+        <section>
           <label>
             Country:
             <input

@@ -6,6 +6,7 @@
 }
 
 button {
+  font-family: "Manrope", sans-serif;
   background-color: black;
   color: white;
   cursor: pointer;
@@ -21,4 +22,8 @@ button {
 .disabled-review-button:disabled {
   background: grey;
   cursor: inherit;
+}
+
+body {
+  font-family: "Manrope", sans-serif;
 }

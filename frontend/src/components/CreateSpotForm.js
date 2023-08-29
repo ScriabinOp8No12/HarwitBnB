@@ -150,7 +150,7 @@ function CreateSpotForm() {
               ))}
             </div>
           </div>
-          <h2>Where's your place located?</h2>
+          <h2 className="form-location-h2">Where's your place located?</h2>
           <p>
             Guests will only get your exact address once they booked a
             reservation.

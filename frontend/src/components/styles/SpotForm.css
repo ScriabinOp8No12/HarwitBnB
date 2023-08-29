@@ -45,16 +45,20 @@ label.side-by-side {
 
 label.price {
   position: relative;
+  padding-left: 15px;
 }
 
 label.price input {
-  padding-left: 20px; /* Make space for the $ symbol */
+  padding-left: 5px; /* Make space for the $ symbol */
+  width: calc(100% - 12px);
 }
 
 label.price:before {
   content: "$";
+  font-size: 17px;
+  padding-bottom: 1px;
   position: absolute;
-  left: 5px;
+  left: 0px;
   top: 50%;
   transform: translateY(-50%);
 }
@@ -63,6 +67,8 @@ input,
 textarea {
   width: 100%;
   background-color: rgb(225, 243, 249);
+  padding-left: 5px;
+  border: 2px solid black;
 }
 
 .separator {
@@ -80,4 +86,8 @@ textarea {
   margin: 10px auto;
   background-color: #d70466;
   border: 3px solid black;
+}
+
+.form-location-h2 {
+  font-size: 16px;
 }
