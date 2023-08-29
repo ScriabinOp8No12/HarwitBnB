@@ -62,6 +62,7 @@ label.price:before {
 input,
 textarea {
   width: 100%;
+  background-color: rgb(225, 243, 249);
 }
 
 .separator {
@@ -77,4 +78,6 @@ textarea {
 .create-spot-button {
   display: block;
   margin: 10px auto;
+  background-color: #d70466;
+  border: 3px solid black;
 }
