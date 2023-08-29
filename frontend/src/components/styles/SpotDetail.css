@@ -22,6 +22,8 @@
 /* Styling for the large image on the left */
 .largeImage {
   width: 39%;
+  /* Adding dynamic height */
+  height: 30vw;
   padding-bottom: 10px;
   background-size: cover;
   background-position: center;
@@ -32,13 +34,13 @@
   display: flex;
   flex-wrap: wrap;
   width: 60%; /* half the width of the large image*/
+  align-items: stretch;
 }
 
 /* Styling the individual small images */
 .smallImage {
   width: 50%;
-  /* Maintain aspect ratio */
-  /* padding-bottom: 50%;  */
+  height: 15vw;
   background-size: cover;
   background-position: center;
 }
