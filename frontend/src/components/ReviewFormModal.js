@@ -70,6 +70,7 @@ export default function ReviewFormModal({
           <h1>How was your stay?</h1>
           {errors && <div className="error-message">{errors}</div>}
           <textarea
+            className="review-form-text-area"
             placeholder="Leave your review here..."
             value={review}
             onChange={(e) => setReview(e.target.value)}

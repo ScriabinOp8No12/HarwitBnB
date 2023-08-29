@@ -12,6 +12,10 @@
 /* also move the modal to the center of the screen using transform property! */
 .modal-review-content {
   position: fixed;
+  background: white;
+  padding: 20px;
+  border: 3px solid black;
+  border-radius: 15px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -21,6 +25,7 @@
 .error-message {
   color: red;
   margin-bottom: 10px;
+  max-width: 280px;
 }
 
 .star-text {
@@ -36,8 +41,18 @@
 
 .disabled-review-button {
   margin-top: 10px;
+  height: 30px;
+  width: 100%;
+  margin-bottom: -20px;
+  background-color: #d70466;
+  color: black;
+  font-weight: bold;
 }
 
 .star-rating-container {
   font-size: 24px;
+}
+
+.review-form-text-area {
+  height: 120px;
 }
