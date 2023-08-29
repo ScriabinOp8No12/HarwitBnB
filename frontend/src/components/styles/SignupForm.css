@@ -9,14 +9,15 @@ body {
   color: black;
 }
 
-form {
+.signup-form {
   max-width: 400px;
   max-height: 500px;
   overflow-y: auto;
   margin: 0 auto;
-  margin-top: 200px;
   padding: 20px;
   background-color: #ebedef;
+  border: 3px solid black;
+  border-radius: 15px;
 }
 
 .emailField,

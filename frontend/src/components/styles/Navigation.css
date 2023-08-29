@@ -43,8 +43,8 @@
 .profile-dropdown {
   list-style: none;
   position: absolute;
-  padding-left: 20px;
-  padding-right: 30px;
+  padding-left: 0px;
+  padding-right: 0px;
   top: 100%; /* Position it right below the profile-button */
   cursor: pointer;
   z-index: 1001; /* Make sure it appears above other content */
@@ -52,32 +52,36 @@
 
 /* when the user is loggedin, don't use the pointer clicker cursor */
 .profile-dropdown.logged-in {
+  text-align: center;
   cursor: default;
   margin-top: 30px;
-  margin-right: 43.5px;
+  margin-right: 44px;
   z-index: 1002;
   background: white;
   border: 3px solid black;
 }
 
 .profile-dropdown.not-logged-in {
+  text-align: center;
   cursor: default;
   margin-top: 30px;
-  margin-right: 43.5px;
-  /* padding-right: 30px; */
+  margin-right: 44px;
+  padding-right: 30px;
   z-index: 1002;
   background: white;
   border: 3px solid black;
 }
 
 .profile-dropdown.not-logged-in li {
+  /* text-align: center; */
   margin-top: 10px;
   margin-bottom: 10px;
-  margin-right: 60px;
+  margin-right: 50px;
   width: 100%;
 }
 
 .profile-dropdown.logged-in li {
+  /* text-align: center; */
   margin-top: 10px;
   margin-bottom: 10px;
   margin-right: 29px;
@@ -92,6 +96,31 @@
 /* the logout button needs the pointer effect too */
 .profile-dropdown li:last-child button {
   cursor: pointer;
+}
+
+.profile-dropdown.not-logged-in li:last-child {
+  margin-left: -5px;
+}
+
+/* Adding lines above and below "manage spots" in logged in user menu */
+
+.li-manage-spots-button {
+  padding-top: 2px;
+  padding-bottom: 2px;
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+}
+
+.li-manage-spots-button .redirectCurrentSpotsButton {
+  font-weight: bold;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.logout-button {
+  font-size: 16px;
+  border: 3px solid black;
+  border-radius: 15px;
 }
 
 /* Make the disabled button look ghosted out */
@@ -240,12 +269,8 @@
   padding-top: 35px;
   color: teal;
   text-decoration: none;
+  font-weight: bold;
 }
-
-/* Adjust this value to move the button to the desired position when the profile dropdown is opened */
-/* .spot-button-menu.extra-margin {
-  margin-right: 400px;
-} */
 
 /*****************  Manage Spots button styling below *******************/
 

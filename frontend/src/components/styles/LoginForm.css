@@ -6,15 +6,16 @@ body {
 
 .loginText {
   text-align: center;
-  /* color: black; */
   color: black;
 }
 
-form {
+.login-form-modal {
   max-width: 400px;
   margin: 0 auto;
   padding: 20px;
   background-color: #ebedef;
+  border: 3px solid black;
+  border-radius: 15px;
 }
 
 .usernameField,
