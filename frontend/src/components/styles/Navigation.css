@@ -121,6 +121,7 @@
   font-size: 16px;
   border: 3px solid black;
   border-radius: 15px;
+  background-color: #464545;
 }
 
 /* Make the disabled button look ghosted out */
@@ -237,10 +238,6 @@
   background-color: white;
   z-index: 1000; /* Ensure the navigation bar is above other content */
 }
-
-/* .navbar-expanded {
-  height: 130px;
-} */
 
 /* the .modal and .modal-overlay create the greyed out background when the user is on the modal */
 .modal-overlay {

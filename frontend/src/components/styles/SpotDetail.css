@@ -2,8 +2,7 @@
   max-width: 1000px;
   width: 100%;
   margin: 0 auto;
-  padding-left: 1%;
-  padding-top: 50px;
+  /* padding-left: 1%; */
 }
 
 /* Location flexbox includes the city, state, country -> in that order */
