@@ -71,6 +71,7 @@
   align-items: flex-end;
   width: 100%;
   border: 2px solid black;
+  border-radius: 5px;
   padding: 3%;
 }
 
