@@ -73,6 +73,9 @@ textarea {
 
 .separator {
   display: inline-block;
+  font-size: 20px;
+  margin-left: 2px;
+  margin-top: 20px;
   margin-right: 5px;
 }
 
@@ -90,4 +93,8 @@ textarea {
 
 .form-location-h2 {
   font-size: 16px;
+}
+
+.description-field {
+  height: 130px;
 }

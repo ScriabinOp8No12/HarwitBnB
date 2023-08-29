@@ -138,24 +138,24 @@ function CreateSpotForm() {
   return (
     <div>
       <form className="spotForm" onSubmit={handleSubmit}>
-        <section>
-          <div className="headerContainer">
-            <h1>Create a New Spot</h1>
-            {/* Display validation errors at the top of the form */}
-            <div className="errorMessages">
-              {Object.keys(errors).map((key, index) => (
-                <p className="errorMessage" key={index}>
-                  {errors[key]}
-                </p>
-              ))}
-            </div>
+        {/* <section> */}
+        <div className="headerContainer">
+          <h1>Create a New Spot</h1>
+          {/* Display validation errors at the top of the form */}
+          <div className="errorMessages">
+            {Object.keys(errors).map((key, index) => (
+              <p className="errorMessage" key={index}>
+                {errors[key]}
+              </p>
+            ))}
           </div>
-          <h2 className="form-location-h2">Where's your place located?</h2>
-          <p>
-            Guests will only get your exact address once they booked a
-            reservation.
-          </p>
-
+        </div>
+        <h2 className="form-location-h2">Where's your place located?</h2>
+        <p>
+          Guests will only get your exact address once they booked a
+          reservation.
+        </p>
+        <section>
           <label>
             Country:
             <input
@@ -188,14 +188,14 @@ function CreateSpotForm() {
               onChange={handleChange}
             />
           </label>
-          <span className="separator"></span>
+          <span className="separator">,</span>
 
           <label className="state">
             State:
             <input
               type="text"
               name="state"
-              placeholder="State"
+              placeholder="STATE"
               value={spotDetails.state}
               onChange={handleChange}
             />
@@ -211,7 +211,7 @@ function CreateSpotForm() {
               onChange={handleChange}
             />
           </label>
-          <span className="separator"></span>
+          <span className="separator">,</span>
           <label className="side-by-side">
             Longitude:
             <input
@@ -230,8 +230,9 @@ function CreateSpotForm() {
             fast wifi or parking, and what you love about the neighborhood.
           </p>
           <textarea
+            className="description-field"
             name="description"
-            placeholder="Please write at least 30 characters"
+            placeholder="Description"
             value={spotDetails.description}
             onChange={handleChange}
           ></textarea>

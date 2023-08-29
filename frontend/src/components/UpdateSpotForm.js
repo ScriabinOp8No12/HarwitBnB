@@ -177,14 +177,14 @@ function UpdateSpotForm({ spotId }) {
               onChange={handleChange}
             />
           </label>
-          <span className="separator"></span>
+          <span className="separator">,</span>
 
           <label className="state">
             State:
             <input
               type="text"
               name="state"
-              placeholder="State"
+              placeholder="STATE"
               value={spotDetails.state}
               onChange={handleChange}
             />
@@ -200,7 +200,7 @@ function UpdateSpotForm({ spotId }) {
               onChange={handleChange}
             />
           </label>
-          <span className="separator"></span>
+          <span className="separator">,</span>
           <label className="side-by-side">
             Longitude:
             <input
@@ -219,8 +219,9 @@ function UpdateSpotForm({ spotId }) {
             fast wifi or parking, and what you love about the neighborhood.
           </p>
           <textarea
+            className="description-field"
             name="description"
-            placeholder="Please write at least 30 characters"
+            placeholder="Description"
             value={spotDetails.description}
             onChange={handleChange}
           ></textarea>
