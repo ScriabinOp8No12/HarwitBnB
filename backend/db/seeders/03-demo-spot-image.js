@@ -12,7 +12,7 @@ module.exports = {
       [
         {
           spotId: 1,
-          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1692731556/10AirBnB_h6gwsd.jpg",
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1692731556/Faroe%20Islands%20preview.jpg",
           preview: true,
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -60,7 +60,7 @@ module.exports = {
         // Colmar, France
         {
           spotId: 2,
-          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1692731565/11AirBnB_ilvvgs.jpg",
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1692731565/Colmar%20France%20preview.jpg",
           preview: true,
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -100,7 +100,7 @@ module.exports = {
         // Svolvaer, Norway
         {
           spotId: 3,
-          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1692731553/7AirBnB_pdqgpb.jpg",
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1692731553/Nordland%20Norway%20preview.jpg",
           preview: true,
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -137,14 +137,43 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
-        // NEXT ONE
+        // Hallstatt, Austria
         {
           spotId: 4,
-          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1692731564/14AirBnB_dlzztc.jpg",
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1692731596/Halstatt%20Austria%20Preview.jpg",
           preview: true,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        {
+          spotId: 4,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693268452/Halstatt_Austria_1_ky8osc.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          spotId: 4,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693268451/Halstatt_Austria_3_gjql8c.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          spotId: 4,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693268452/Halstatt_Austria_2_bbpv4z.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          spotId: 4,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693268448/Halstatt_Austria_4_wliivs.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+
         {
           spotId: 5,
           url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1692731566/15AirBnB_nqxppa.jpg",
