@@ -169,8 +169,11 @@
   margin-top: 2.5px;
 }
 
-/***** *****/
-
-.postReviewButton {
+.post-review-button-div {
   padding-bottom: 10px;
+}
+
+.post-review-button {
+  background-color: #464545;
+  border: 3px solid black;
 }

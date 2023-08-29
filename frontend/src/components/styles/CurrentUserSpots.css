@@ -17,3 +17,17 @@ h1.manageSpots {
   display: inline-block;
   width: 10px;
 }
+
+.updateDeleteButtons {
+  padding-top: 10px;
+}
+
+.update-button-user-spots {
+  background-color: #464545;
+  border: 3px solid black;
+}
+
+.delete-button-user-spots {
+  background-color: #464545;
+  border: 3px solid black;
+}

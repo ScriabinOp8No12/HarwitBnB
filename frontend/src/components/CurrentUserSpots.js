@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 import { fetchCurrentUserSpots } from "../store/spots";
 import { openModal } from "../store/modal";
 import DeleteSpotModal from "./DeleteSpotModal";
-
 import "./styles/CurrentUserSpots.css";
 
 // Function to format the star rating / round it properly
@@ -97,6 +96,7 @@ function CurrentUserSpots() {
                   </div>
                   <div className="updateDeleteButtons">
                     <button
+                      className="update-button-user-spots"
                       onClick={(e) => {
                         e.stopPropagation();
                         redirectToUpdateForm(spot.id);
@@ -106,6 +106,7 @@ function CurrentUserSpots() {
                     </button>
                     <span className="separateUpdateDelete"></span>
                     <button
+                      className="delete-button-user-spots"
                       onClick={(e) => {
                         e.stopPropagation();
                         openDeleteModal(spot.id);
