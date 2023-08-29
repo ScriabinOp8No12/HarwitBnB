@@ -257,6 +257,86 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        // Bled, Slovenia preview
+        {
+          spotId: 7,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1692731588/Slovenia%20preview.jpg",
+          preview: true,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Bled, Slovenia no preview 1
+        {
+          spotId: 7,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693351393/Bled_Slovenia_4_q7omtq.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Bled, Slovenia no preview 2
+        {
+          spotId: 7,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693351393/Bled_Slovenia_1_maakyd.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Bled, Slovenia no preview 3
+        {
+          spotId: 7,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693351394/Bled_Slovenia_2_apgdtv.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Bled, Slovenia no preview 4
+        {
+          spotId: 7,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693351395/Bled_Slovenia_3_nbrfia.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Liguria, Italy preview
+        {
+          spotId: 8,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1692731574/Liguria%20Italy%20preview.jpg",
+          preview: true,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Liguria, Italy no preview 1
+        {
+          spotId: 8,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693351704/Laguria_Italy_3_exdtl4.jpg",
+          preview: true,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Liguria, Italy no preview 2
+        {
+          spotId: 8,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693351710/Laguria_Italy_2_z4lqcy.jpg",
+          preview: true,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Liguria, Italy no preview 3
+        {
+          spotId: 8,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693351711/Laguria_Italy_4_xh0cwe.jpg",
+          preview: true,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Liguria, Italy no preview 4
+        {
+          spotId: 8,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693351712/Laguria_Italy_1_vfb8so.jpg",
+          preview: true,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {}
     );
