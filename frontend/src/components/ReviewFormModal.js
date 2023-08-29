@@ -75,7 +75,11 @@ export default function ReviewFormModal({
             onChange={(e) => setReview(e.target.value)}
           />
           <StarRating setStars={setStars} selectedStars={stars} />
-          <button type="submit" disabled={review.length < 10 || stars === 0}>
+          <button
+            type="submit"
+            className="disabled-button"
+            disabled={review.length < 10 || stars === 0}
+          >
             Submit Your Review
           </button>
         </form>

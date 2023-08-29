@@ -37,7 +37,7 @@
   display: none;
 }
 
-/* make the dropdown menu relative, removes the white bullets on the left of the login and signup elements */
+/* make the dropdown menu absolute now, list-style: none removes the white bullets on the left of the login and signup elements */
 .profile-dropdown {
   list-style: none;
   position: absolute;
