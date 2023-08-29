@@ -8,9 +8,10 @@ h1.manageSpots {
 }
 
 .create-new-spot-manage-spots {
-  margin-top: -10px;
+  margin-top: -20px;
   margin-left: 2.2%;
   border: 3px solid black;
+  margin-bottom: 40px;
   /* color: teal; */
 }
 
