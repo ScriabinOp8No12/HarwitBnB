@@ -145,6 +145,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        // Hallstatt, Austria no preview 1
         {
           spotId: 4,
           url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693268452/Halstatt_Austria_1_ky8osc.jpg",
@@ -152,6 +153,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        // Hallstatt, Austria no preview 2
         {
           spotId: 4,
           url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693268451/Halstatt_Austria_3_gjql8c.jpg",
@@ -159,6 +161,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        // Hallstatt, Austria no preview 3
         {
           spotId: 4,
           url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693268452/Halstatt_Austria_2_bbpv4z.jpg",
@@ -166,9 +169,90 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        // Hallstatt, Austria no preview 4
         {
           spotId: 4,
           url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693268448/Halstatt_Austria_4_wliivs.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Dambulla, Sri Lanka
+        {
+          spotId: 5,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1692731595/Sri%20Lanka%20preview.jpg",
+          preview: true,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Dambulla, Sri Lanka no preview 1
+        {
+          spotId: 5,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693272138/Sri_Lanka_1_phsnws.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Dambulla, Sri Lanka no preview 2
+        {
+          spotId: 5,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693272138/Sri_Lanka_4_hhfb4i.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Dambulla, Sri Lanka no preview 3
+        {
+          spotId: 5,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693272136/Sri_Lanka_2_igsfu7.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Dambulla, Sri Lanka no preview 4
+        {
+          spotId: 5,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693272140/Sri_Lanka_3_ygicml.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Sachseln Switzerland
+        {
+          spotId: 6,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1692731553/Sachseln%20Switzerland%20preview.jpg",
+          preview: true,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Sachseln Switzerland no preview 1
+        {
+          spotId: 6,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693272769/Sachseln_Switzerland_1_dy9fxj.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Sachseln Switzerland no preview 2
+        {
+          spotId: 6,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693272769/Sachseln_Switzerland_2_mmz2ss.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Sachseln Switzerland no preview 3
+        {
+          spotId: 6,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693272769/Sachseln_Switzerland_3_px2w0f.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Sachseln Switzerland no preview 4
+        {
+          spotId: 6,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693272768/Sachseln_Switzerland_4_h4hys4.jpg",
           preview: false,
           createdAt: new Date(),
           updatedAt: new Date(),
