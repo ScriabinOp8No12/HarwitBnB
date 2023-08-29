@@ -57,6 +57,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        // Colmar, France
         {
           spotId: 2,
           url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1692731565/11AirBnB_ilvvgs.jpg",
@@ -64,13 +65,79 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        // Colmar, France no preview 1
+        {
+          spotId: 2,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693267171/Colmar%20France%201.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Colmar, France no preview 2
+        {
+          spotId: 2,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693267170/Colmar%20France%202.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Colmar, France no preview 3
+        {
+          spotId: 2,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693267169/Colmar%20France%203.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Colmar, France no preview 4
+        {
+          spotId: 2,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693267167/Colmar%20France%204.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Svolvaer, Norway
         {
           spotId: 3,
-          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1692731570/12AirBnB_lcxc44.jpg",
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1692731553/7AirBnB_pdqgpb.jpg",
           preview: true,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        // Svolvaer, Norway no preview 1
+        {
+          spotId: 3,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693267830/Nordland_Norway_1_flxy1v.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Svolvaer, Norway no preview 2
+        {
+          spotId: 3,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693267829/Nordland_Norway_3_jnrgr8.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Svolvaer, Norway no preview 3
+        {
+          spotId: 3,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693267828/Nordland_Norway_4_w8c9jv.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Svolvaer, Norway no preview 4
+        {
+          spotId: 3,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693267827/Nordland_Norway_2_nm7hld.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // NEXT ONE
         {
           spotId: 4,
           url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1692731564/14AirBnB_dlzztc.jpg",

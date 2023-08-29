@@ -12,6 +12,7 @@ module.exports = {
     return queryInterface.bulkInsert(
       options,
       [
+        // Faroe Islands, Denmark
         {
           ownerId: 1,
           address: "Faroe Islands",
@@ -27,6 +28,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        // Colmar, France
         {
           ownerId: 2,
           address: "68000 Colmar",
@@ -41,6 +43,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        // Svolvaer Norway
         {
           ownerId: 3,
           address: "8300 Svolvaer",
