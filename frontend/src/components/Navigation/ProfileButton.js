@@ -53,11 +53,16 @@ function ProfileButton({ user, showMenu, setShowMenu }) {
     history.push("/spots/current");
   };
 
+  const profileButtonClass = `profile-button${
+    showMenu ? " dropdown-active" : ""
+  }`;
+
   return (
     // Container for icon + menu, we will use a flexbox to align them side by side and in the top right of the screen
     <div className="navigation-container">
       {/* Add a class to the profile button */}
-      <button className="profile-button" onClick={openMenu}>
+      <button className={profileButtonClass} onClick={openMenu}>
+        <i className="fas fa-bars hamburger-icon" />
         <i className="fas fa-user-circle" />
       </button>
       <ul className={ulClassName} ref={ulRef}>

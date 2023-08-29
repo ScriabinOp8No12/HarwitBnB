@@ -33,12 +33,18 @@
   align-self: flex-start;
 }
 
+.profile-button.dropdown-active .hamburger-icon {
+  display: none;
+}
+
 /* make the dropdown menu relative, removes the white bullets on the left of the login and signup elements */
 .profile-dropdown {
   list-style: none;
-  position: relative;
+  position: absolute;
   right: 40px;
-  /* top: 15px; */
+  top: 100%; /* Position it right below the profile-button */
+  cursor: pointer;
+  z-index: 1001; /* Make sure it appears above other content */
   cursor: pointer;
 }
 
