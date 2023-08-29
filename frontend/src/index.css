@@ -1,13 +1,14 @@
 /* TODO Add site wide styles */
 
 #root {
-  margin-top: 200px;
+  margin-top: 100px;
   min-width: 300px;
 }
 
 button {
   background-color: black;
   color: white;
+  cursor: pointer;
 }
 
 /* Exclude the profile button to have a black background color and text color of white */
@@ -19,4 +20,5 @@ button {
 /* Give class of disabled button to buttons that have to be disabled */
 .disabled-review-button:disabled {
   background: grey;
+  cursor: inherit;
 }
