@@ -29,7 +29,8 @@ module.exports = {
         {
           spotId: 1,
           userId: 2,
-          review: "This place was not great.",
+          review:
+            "This is some placeholder text instead of using lorem ipsum because that's boring, yeah, see I got your attention, oh by the way, I'm trying to test the review length wrap to see if it overflows the container or not.  Looks like it doesn't which is great.",
           stars: 2,
           createdAt: new Date(),
           updatedAt: new Date(),

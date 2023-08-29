@@ -173,35 +173,6 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
-
-        {
-          spotId: 5,
-          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1692731566/15AirBnB_nqxppa.jpg",
-          preview: true,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          spotId: 6,
-          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1692731573/16AirBnB_hb6j0a.jpg",
-          preview: true,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          spotId: 7,
-          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1692731576/17AirBnB_tz8viz.jpg",
-          preview: true,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          spotId: 8,
-          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1692731570/18AirBnB_o6qext.jpg",
-          preview: true,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
       ],
       {}
     );
