@@ -52,7 +52,35 @@ module.exports = {
           firstName: "Carl",
           lastName: "Filtsch",
           email: "test5@gmail.com",
-          username: "RomanceWithoutWords",
+          username: "PianoConcertoInBminor",
+          hashedPassword: bcrypt.hashSync("password"),
+        },
+        {
+          firstName: "Amadeus",
+          lastName: "Mozart",
+          email: "test6@gmail.com",
+          username: "SonataK545",
+          hashedPassword: bcrypt.hashSync("password"),
+        },
+        {
+          firstName: "Johannes",
+          lastName: "Brahms",
+          email: "test7@gmail.com",
+          username: "IntermezzoAmajor",
+          hashedPassword: bcrypt.hashSync("password"),
+        },
+        {
+          firstName: "Vladimir",
+          lastName: "Horowitz",
+          email: "test8@gmail.com",
+          username: "ScriabinOp8No12",
+          hashedPassword: bcrypt.hashSync("password"),
+        },
+        {
+          firstName: "Nikolai",
+          lastName: "Lugansky",
+          email: "test9@gmail.com",
+          username: "RachmaninoffMusicalMomentNo4",
           hashedPassword: bcrypt.hashSync("password"),
         },
       ],
@@ -66,6 +94,7 @@ module.exports = {
     options.tableName = "Users";
     return queryInterface.bulkDelete(
       options,
+      // **** This down function is so unbelievably wrong it's insane lol ****
       {
         // needed to rename the usernames below to match what we changed in seeder data!
         username: { [Op.in]: ["Nathan", "Nathann", "Nathannn"] },
