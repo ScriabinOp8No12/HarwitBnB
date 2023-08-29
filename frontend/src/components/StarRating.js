@@ -27,6 +27,7 @@ function StarRating({ setStars, selectedStars }) {
           {renderStar(i + 1)}
         </span>
       ))}
+      <span className="star-text">Stars</span>
     </div>
   );
 }

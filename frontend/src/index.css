@@ -17,6 +17,6 @@ button {
 }
 
 /* Give class of disabled button to buttons that have to be disabled */
-.disabled-button:disabled {
+.disabled-review-button:disabled {
   background: grey;
 }
