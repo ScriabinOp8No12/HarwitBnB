@@ -20,10 +20,13 @@
 
 /* Styling for the large image on the left */
 .largeImage {
-  width: 39%;
+  width: 38%;
   /* Adding dynamic height */
-  height: 30vw;
-  padding-bottom: 10px;
+  height: 30.6vw;
+  /* height: 30%; */
+  margin-top: 5px;
+  /* padding-bottom: 10px; */
+  padding-right: 10px;
   background-size: cover;
   background-position: center;
 }
@@ -32,23 +35,25 @@
 .smallImages {
   display: flex;
   flex-wrap: wrap;
-  width: 60%; /* half the width of the large image*/
+  /* width: 60%;  */
   align-items: stretch;
 }
 
 /* Styling the individual small images */
 .smallImage {
-  width: 50%;
+  width: 40%;
   height: 15vw;
+  /* height: 15%; */
   background-size: cover;
   background-position: center;
+  padding: 5px;
 }
 
 .contentContainer {
   display: flex;
   padding-bottom: 25px;
   border-bottom: 2px solid lightgrey;
-  width: 99%;
+  width: 89.3%;
 }
 
 /* total width of description and calloutInfoBox needs to be around 96% to match the images above */
