@@ -1,74 +1,63 @@
-.spotDetailContainer {
+/* Wraps all the content on the page so we can left align it */
+
+.contentWrapperSpotDetails {
   max-width: 1000px;
-  width: 100%;
-  margin: 0 auto;
-  /* padding-left: 1%; */
+  margin: auto;
+  padding: 10px 0; /* 10 pixels of padding at the top and bottom */
 }
 
-/* Location flexbox includes the city, state, country -> in that order */
-.location {
-  display: flex;
-  align-items: center;
-  padding-bottom: 2.5%;
-}
-
-/* Includes all the images (all 5) */
-.images {
-  display: flex;
-  align-items: flex-start;
-}
-
-/* Styling for the large image on the left */
-.largeImage {
-  width: 38%;
-  /* Adding dynamic height */
-  height: 30.6vw;
-  /* height: 30%; */
-  margin-top: 5px;
-  /* padding-bottom: 10px; */
-  padding-right: 10px;
-  background-size: cover;
-  background-position: center;
-}
-
-/* Flex box containing all 4 of the smaller images */
-.smallImages {
-  display: flex;
-  flex-wrap: wrap;
-  /* width: 60%;  */
-  align-items: stretch;
-}
-
-/* Styling the individual small images */
-.smallImage {
-  width: 40%;
-  height: 15vw;
-  /* height: 15%; */
-  background-size: cover;
-  background-position: center;
-  padding: 5px;
-}
-
-.contentContainer {
-  display: flex;
-  padding-bottom: 25px;
-  border-bottom: 2px solid lightgrey;
-  width: 89.3%;
-}
-
-/* total width of description and calloutInfoBox needs to be around 96% to match the images above */
-.description {
-  width: 59.4%;
-}
-
-.calloutInfoBoxContainer {
-  width: 36%;
+/* Container for the entire component */
+.spotDetailContainer {
   display: flex;
   flex-direction: column;
-  padding-left: 2%;
+  padding: 10px 0; /* 10 pixels of padding at the top and bottom */
 }
 
-/* This is the call to action / where the reserve button is located */
+/* Container for all images */
+.images {
+  display: flex;
+  max-width: 1000px;
+  margin: auto;
+  padding-bottom: 10px; /* 10 pixels of padding at the bottom */
+}
+
+/* Large image */
+.largeImage {
+  flex: 1;
+  object-fit: cover;
+  height: auto;
+  max-height: 450px;
+  width: auto;
+  max-width: 50%;
+  margin-right: 5px;
+}
+
+/* Container for 4 smaller images */
+.smallImages {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 5px;
+  flex: 1;
+}
+
+/* Small images */
+.smallImage {
+  width: 100%;
+  /* Roughly half the height of the max-height of the large-image, which is at 450px
+  There's a 5 pixel gap, so it needs to be half of that off from 50% of the max height
+  450 / 2 = 225 -> subtract 2.5 pixels to line images up */
+  height: 222.5px;
+  object-fit: cover;
+}
+
+/* Ensure aspect ratio is maintained */
+.largeImage,
+.smallImage {
+  aspect-ratio: auto;
+}
+
+/*********** Everything not related to the images below **********************/
+
 .calloutInfoBox {
   display: flex;
   flex-direction: column;
@@ -77,6 +66,31 @@
   border: 2px solid black;
   border-radius: 5px;
   padding: 3%;
+}
+
+.location {
+  display: flex;
+  align-items: center;
+  padding-bottom: 2.5%;
+}
+
+.contentContainer {
+  display: flex;
+  padding-top: 15px;
+  padding-bottom: 25px;
+  border-bottom: 2px solid lightgrey;
+  width: 100%;
+}
+
+.description {
+  width: 59.5%;
+}
+
+.calloutInfoBoxContainer {
+  width: 36%;
+  display: flex;
+  flex-direction: column;
+  padding-left: 2%;
 }
 
 .ratingPriceContainer {
@@ -90,10 +104,9 @@
 .price {
   font-size: 24px;
   font-weight: bold;
-  flex-grow: 1; /* Making sure price takes up the remaining space */
+  flex-grow: 1;
 }
 
-/* Make the "night" text not bolded */
 .price span {
   font-weight: normal;
 }
@@ -106,7 +119,6 @@
 .middleDot {
   font-size: 20px;
   font-weight: bold;
-  /* margin: 0 5px; */
   margin-left: 2px;
   margin-right: 2px;
   margin-top: 2.5px;
@@ -119,6 +131,8 @@
 }
 
 .hostedBy {
+  /* This align-items: left just aligned everything to the left properly ??? huh? */
+  align-items: left;
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 10px;
@@ -147,7 +161,8 @@
 
 .reviewerName {
   font-weight: bold;
-  padding-bottom: 10px;
+  padding-bottom: 5px;
+  padding-top: 20px;
 }
 
 .reviewDate {
@@ -157,7 +172,6 @@
   display: flex;
   align-items: center;
   padding-top: 10px;
-  padding-bottom: 10px;
 }
 
 .reviewSummaryContainer .stars,
@@ -174,11 +188,17 @@
   margin-top: 2.5px;
 }
 
-.post-review-button-div {
-  padding-bottom: 10px;
-}
-
 .post-review-button {
   background-color: #464545;
   border: 3px solid black;
+}
+
+.post-review-button-div {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.review .deleteReviewButton {
+  padding-top: 0px;
+  padding-bottom: 0px;
 }
