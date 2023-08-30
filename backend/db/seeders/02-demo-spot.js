@@ -53,7 +53,7 @@ module.exports = {
           country: "Europe",
           lat: 68.24,
           lng: 14.56,
-          name: "Norway home on waternear mountains",
+          name: "Norway home on water near mountains",
           description:
             "Lakehome near mountains in Norway, this image is likely photoshopped, I'm pretty sure it shouldn't look that orange",
           price: 350,
