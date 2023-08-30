@@ -10,12 +10,19 @@ body {
 .signup-form {
   max-width: 400px;
   max-height: 500px;
-  overflow-y: auto;
   margin: 0 auto;
   padding: 20px;
   background-color: #ebedef;
   border: 3px solid black;
   border-radius: 15px;
+  overflow-y: auto;
+  scrollbar-width: none; /* Hiding scroll bar in FireFox*/
+  -ms-overflow-style: none; /* Hiding scroll bar in FireFox*/
+}
+
+/* Hiding scrollbar in Chrome in safari */
+.signup-form::-webkit-scrollbar {
+  display: none;
 }
 
 .emailField,

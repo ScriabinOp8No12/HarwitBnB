@@ -1,9 +1,17 @@
+/* CSS for both the create spot form and update spot form */
 .spotForm {
   max-width: 400px;
   max-height: 600px;
   overflow-y: auto;
   margin: 0 auto;
   padding: 20px;
+  scrollbar-width: none; /* Hiding scroll bar in FireFox*/
+  -ms-overflow-style: none; /* Hiding scroll bar in FireFox*/
+}
+
+/* Hiding scrollbar in Chrome in safari */
+.spotForm::-webkit-scrollbar {
+  display: none;
 }
 
 .header-container {
