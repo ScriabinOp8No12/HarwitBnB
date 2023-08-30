@@ -71,7 +71,7 @@ module.exports = {
         {
           spotId: 6,
           userId: 4,
-          review: "This wast he best place ever, would come again!",
+          review: "This was the best place ever, would come again!",
           stars: 5,
           createdAt: new Date(),
           updatedAt: new Date(),
