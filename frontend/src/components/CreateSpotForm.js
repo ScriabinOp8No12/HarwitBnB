@@ -138,26 +138,26 @@ function CreateSpotForm() {
   return (
     <div>
       <form className="spotForm" onSubmit={handleSubmit}>
-        <section>
-          <div className="headerContainer">
-            <h1>Create a New Spot</h1>
-            {/* Display validation errors at the top of the form */}
-            <div className="errorMessages">
-              {Object.keys(errors).map((key, index) => (
-                <p className="errorMessage" key={index}>
-                  {errors[key]}
-                </p>
-              ))}
-            </div>
+        {/* <section> */}
+        <div className="headerContainer">
+          <h1>Create a new Spot</h1>
+          {/* Display validation errors at the top of the form */}
+          <div className="errorMessages">
+            {Object.keys(errors).map((key, index) => (
+              <p className="errorMessage" key={index}>
+                {errors[key]}
+              </p>
+            ))}
           </div>
-          <h2>Where's your place located?</h2>
-          <p>
-            Guests will only get your exact address once they booked a
-            reservation.
-          </p>
-
+        </div>
+        <h2 className="form-location-h2">Where's your place located?</h2>
+        <p>
+          Guests will only get your exact address once they booked a
+          reservation.
+        </p>
+        <section>
           <label>
-            Country:
+            Country
             <input
               type="text"
               name="country"
@@ -168,18 +168,18 @@ function CreateSpotForm() {
           </label>
 
           <label>
-            Address:
+            Street Address
             <input
               type="text"
               name="address"
-              placeholder="Street Address"
+              placeholder="Address"
               value={spotDetails.address}
               onChange={handleChange}
             />
           </label>
 
           <label className="city">
-            City:
+            City
             <input
               type="text"
               name="city"
@@ -188,21 +188,21 @@ function CreateSpotForm() {
               onChange={handleChange}
             />
           </label>
-          <span className="separator"></span>
+          <span className="comma-separator">,</span>
 
           <label className="state">
-            State:
+            State
             <input
               type="text"
               name="state"
-              placeholder="State"
+              placeholder="STATE"
               value={spotDetails.state}
               onChange={handleChange}
             />
           </label>
 
           <label className="side-by-side">
-            Latitude:
+            Latitude
             <input
               type="number"
               name="lat"
@@ -211,9 +211,9 @@ function CreateSpotForm() {
               onChange={handleChange}
             />
           </label>
-          <span className="separator"></span>
+          <span className="comma-separator">,</span>
           <label className="side-by-side">
-            Longitude:
+            Longitude
             <input
               type="number"
               name="lng"
@@ -223,6 +223,7 @@ function CreateSpotForm() {
             />
           </label>
         </section>
+        <div className="horizontal-line"></div> {/* Custom horizontal line */}
         <section>
           <h2>Describe your place to guests</h2>
           <p>
@@ -230,12 +231,14 @@ function CreateSpotForm() {
             fast wifi or parking, and what you love about the neighborhood.
           </p>
           <textarea
+            className="description-field"
             name="description"
-            placeholder="Please write at least 30 characters"
+            placeholder="Description"
             value={spotDetails.description}
             onChange={handleChange}
           ></textarea>
         </section>
+        <div className="horizontal-line"></div> {/* Custom horizontal line */}
         <section>
           <h2>Create a title for your spot</h2>
           <p>
@@ -243,6 +246,7 @@ function CreateSpotForm() {
             your place special.
           </p>
           <input
+            className="name-spot-input"
             type="text"
             name="name"
             placeholder="Name of your spot"
@@ -250,6 +254,7 @@ function CreateSpotForm() {
             onChange={handleChange}
           />
         </section>
+        <div className="horizontal-line"></div> {/* Custom horizontal line */}
         <section>
           <h2>Set a base price for your spot</h2>
           <p>
@@ -266,6 +271,7 @@ function CreateSpotForm() {
             />
           </label>
         </section>
+        <div className="horizontal-line"></div> {/* Custom horizontal line */}
         <section>
           <h2>Liven up your spot with photos</h2>
           <p>Submit a link to at least one photo to publish your spot.</p>
@@ -287,7 +293,8 @@ function CreateSpotForm() {
             </div>
           ))}
         </section>
-        <button type="submit" className="create-spot-button">
+        <div className="horizontal-line"></div> {/* Custom horizontal line */}
+        <button type="submit" className="create-spot-form-button">
           Create Spot
         </button>
       </form>

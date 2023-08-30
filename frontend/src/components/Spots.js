@@ -43,13 +43,13 @@ function Spots() {
               <div className="textStarsContainer">
                 <div className="spotDetails">
                   {/* Displaying city and state of the spot */}
-                  <span>
+                  <span className="city-state-text">
                     {spot.city}, {spot.state}
                   </span>
                   <div>
                     {/* Display price of spot */}
                     <span className="price">${spot.price}</span>{" "}
-                    <span>night</span>
+                    <span className="night">night</span>
                   </div>
                 </div>
                 <div className="stars">

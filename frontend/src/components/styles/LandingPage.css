@@ -30,6 +30,15 @@
   margin-top: 10px; /* Space between image and text/stars*/
 }
 
+.city-state-text {
+  font-size: 20px;
+}
+
+.night {
+  font-size: 20px;
+  margin-left: 5px;
+}
+
 /* Style for the price, making it bold */
 .price {
   font-weight: bold;

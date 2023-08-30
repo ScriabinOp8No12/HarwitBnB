@@ -49,7 +49,7 @@ function LoginFormModal() {
   return (
     // add modal className to this LoginFormModal as well as the SignupFormModal
     <div className="modal">
-      <form onSubmit={handleSubmit}>
+      <form className="login-form-modal" onSubmit={handleSubmit}>
         <h1 className="loginText">Log In</h1>
         {errors.credential && (
           <div className="errorMessage">

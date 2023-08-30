@@ -1,20 +1,19 @@
 body {
-  font-family: Arial, sans-serif;
-  /* background-color: #1b262c; */
   background-color: white;
 }
 
 .loginText {
   text-align: center;
-  /* color: black; */
   color: black;
 }
 
-form {
+.login-form-modal {
   max-width: 400px;
   margin: 0 auto;
   padding: 20px;
   background-color: #ebedef;
+  border: 3px solid black;
+  border-radius: 15px;
 }
 
 .usernameField,
@@ -25,9 +24,7 @@ form {
 }
 
 .loginButton {
-  /* background-color: #2ea44f; */
   background-color: #d70466;
-  /* color: white; */
   color: black;
   width: 100%;
   padding: 10px 20px;

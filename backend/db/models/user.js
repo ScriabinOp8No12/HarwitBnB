@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           // force username to be a combination of letters, numbers, and optionally spaces
-          isAlphaNumbericWithSpaces(value) {
+          isAlphaNumericWithSpaces(value) {
             if (
               // regex that allows only letters and numbers, it can have spaces too
               !Validator.matches(value, /^(?=.*[a-zA-Z0-9])[a-zA-Z0-9\s]*$/)
@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
               );
             }
           },
-          len: [4, 30],
+          len: [4, 100],
           isNotEmail(value) {
             // use Validator.isEmail (Validator package contains isEmail())
             if (Validator.isEmail(value)) {

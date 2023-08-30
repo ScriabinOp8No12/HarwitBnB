@@ -70,7 +70,7 @@ function ProfileButton({ user, showMenu, setShowMenu }) {
           <>
             <li>Hello {user.firstName}</li>
             <li>{user.email}</li>
-            <li>
+            <li className="li-manage-spots-button">
               <button
                 className="redirectCurrentSpotsButton"
                 onClick={redirectToCurrentSpots}
@@ -79,18 +79,20 @@ function ProfileButton({ user, showMenu, setShowMenu }) {
               </button>
             </li>
             <li>
-              <button onClick={logout}>Log Out</button>
+              <button className="logout-button" onClick={logout}>
+                Log Out
+              </button>
             </li>
           </>
         ) : (
           <>
             <OpenModalMenuItem
-              itemText="Sign Up"
+              itemText="Sign up"
               onItemClick={closeMenu}
               modalComponent={<SignupFormModal />}
             />
             <OpenModalMenuItem
-              itemText="Log In"
+              itemText="Log in"
               onItemClick={closeMenu}
               modalComponent={<LoginFormModal />}
             />

@@ -1,39 +1,49 @@
-/* This is equivalent to the .modal we have in the Navigation.css,
-We just translate this to the center and we are good */
-/*.deleteModal {
+.deleteModal {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #ebedef;
-  /* z-index: 100;
 }
-*/
 
 .deleteText {
   text-align: center;
   color: black;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 .deleteButton,
 .cancelButton {
   width: 100%;
-  padding: 10px 20px;
+  /* padding: 10px 20px; */
   margin-top: 10px;
-  border: none;
+  border: 3px solid black;
+  height: 50px;
 }
 
 .deleteButton {
   background-color: #d70466;
-  color: black;
+  color: white;
+  font-weight: bold;
 }
 
 .cancelButton {
-  background-color: #ccc;
-  color: black;
+  background-color: #464545;
+  color: white;
+  font-weight: bold;
 }
 
 .deleteReviewButton {
   padding-bottom: 10px;
   padding-top: 10px;
+}
+
+.delete-modal-form {
+  box-sizing: border-box;
+  padding: 20px;
+  width: 400px;
+  background-color: white;
+  border: 3px solid black;
+  border-radius: 15px;
+  margin-bottom: 0px;
 }

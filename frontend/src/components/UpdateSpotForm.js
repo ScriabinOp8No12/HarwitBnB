@@ -123,29 +123,30 @@ function UpdateSpotForm({ spotId }) {
   return (
     <div>
       <form className="spotForm" onSubmit={handleSubmit}>
-        <section>
-          <div className="headerContainer">
-            {/* Dynamically render Update your spot text or create a new spot text based on if mode is update or not */}
-            <h1>Update your Spot</h1>
-            {/* Display validation errors at the top of the form */}
-            {Object.keys(errors).length > 0 && (
-              <div className="errorMessages">
-                {Object.keys(errors).map((key, index) => (
-                  <p className="errorMessage" key={index}>
-                    {errors[key]}
-                  </p>
-                ))}
-              </div>
+        <div className="headerContainer">
+          {/* Dynamically render Update your spot text or create a new spot text based on if mode is update or not */}
+          <h1>Update your Spot</h1>
+          {/* Display validation errors at the top of the form */}
+          <div className="errorMessages">
+            {Object.keys(errors).length > 0 ? (
+              Object.keys(errors).map((key, index) => (
+                <p className="errorMessage" key={index}>
+                  {errors[key]}
+                </p>
+              ))
+            ) : (
+              <></>
             )}
           </div>
-          <h2>Where's your place located?</h2>
-          <p>
-            Guests will only get your exact address once they booked a
-            reservation.
-          </p>
-
+        </div>
+        <h2 className="form-location-h2">Where's your place located?</h2>
+        <p className="guest-info-paragraph">
+          Guests will only get your exact address once they booked a
+          reservation.
+        </p>
+        <section>
           <label>
-            Country:
+            Country
             <input
               type="text"
               name="country"
@@ -156,18 +157,18 @@ function UpdateSpotForm({ spotId }) {
           </label>
 
           <label>
-            Address:
+            Street Address
             <input
               type="text"
               name="address"
-              placeholder="Street Address"
+              placeholder="Address"
               value={spotDetails.address}
               onChange={handleChange}
             />
           </label>
 
           <label className="city">
-            City:
+            City
             <input
               type="text"
               name="city"
@@ -176,21 +177,21 @@ function UpdateSpotForm({ spotId }) {
               onChange={handleChange}
             />
           </label>
-          <span className="separator"></span>
+          <span className="comma-separator">,</span>
 
           <label className="state">
-            State:
+            State
             <input
               type="text"
               name="state"
-              placeholder="State"
+              placeholder="STATE"
               value={spotDetails.state}
               onChange={handleChange}
             />
           </label>
 
           <label className="side-by-side">
-            Latitude:
+            Latitude
             <input
               type="number"
               name="lat"
@@ -199,9 +200,9 @@ function UpdateSpotForm({ spotId }) {
               onChange={handleChange}
             />
           </label>
-          <span className="separator"></span>
+          <span className="comma-separator">,</span>
           <label className="side-by-side">
-            Longitude:
+            Longitude
             <input
               type="number"
               name="lng"
@@ -211,6 +212,7 @@ function UpdateSpotForm({ spotId }) {
             />
           </label>
         </section>
+        <div className="horizontal-line"></div> {/* Custom horizontal line */}
         <section>
           <h2>Describe your place to guests</h2>
           <p>
@@ -218,12 +220,14 @@ function UpdateSpotForm({ spotId }) {
             fast wifi or parking, and what you love about the neighborhood.
           </p>
           <textarea
+            className="description-field"
             name="description"
-            placeholder="Please write at least 30 characters"
+            placeholder="Description"
             value={spotDetails.description}
             onChange={handleChange}
           ></textarea>
         </section>
+        <div className="horizontal-line"></div> {/* Custom horizontal line */}
         <section>
           <h2>Create a title for your spot</h2>
           <p>
@@ -238,6 +242,7 @@ function UpdateSpotForm({ spotId }) {
             onChange={handleChange}
           />
         </section>
+        <div className="horizontal-line"></div> {/* Custom horizontal line */}
         <section>
           <h2>Set a base price for your spot</h2>
           <p>
@@ -254,7 +259,8 @@ function UpdateSpotForm({ spotId }) {
             />
           </label>
         </section>
-        <button type="submit" className="create-spot-button">
+        <div className="horizontal-line"></div> {/* Custom horizontal line */}
+        <button type="submit" className="create-spot-form-button">
           Update Spot
         </button>
       </form>

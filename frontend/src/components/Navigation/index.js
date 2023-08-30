@@ -13,7 +13,6 @@ function Navigation({ isLoaded }) {
     <div className={`navbar ${showMenu ? "navbar-expanded" : ""}`}>
       <div>
         <NavLink exact to="/">
-          {/* Airbnb logo going to home page */}
           <img
             src="/airbnb-logo-cropped.jpg"
             alt="airbnb-logo"
@@ -23,25 +22,21 @@ function Navigation({ isLoaded }) {
       </div>
       {isLoaded && (
         <div className="navigation-container">
-          {/* Wrap button with profile icon */}
-          {/* <div className="button-and-profile-wrapper"> */}
-          {/* Render "create a new spot" button if user is logged in */}
-          {sessionUser && (
-            <NavLink
-              to="/spots"
-              className={`spot-button-menu ${showMenu ? "extra-margin" : ""}`}
-            >
-              Create a New Spot
-            </NavLink>
-          )}
-          {/* Profile Button with User icon in top right of screen */}
+          <div className="create-spot-button-wrapper">
+            <div className="create-spot-button">
+              {sessionUser && (
+                <NavLink to="/spots" className={`spot-button-menu ${showMenu}`}>
+                  Create a New Spot
+                </NavLink>
+              )}
+            </div>
+          </div>
           <ProfileButton
             user={sessionUser}
             showMenu={showMenu}
             setShowMenu={setShowMenu}
           />
         </div>
-        // </div>
       )}
     </div>
   );

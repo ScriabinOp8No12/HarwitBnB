@@ -108,6 +108,70 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        // Bled, Slovenia
+        {
+          ownerId: 7,
+          address: "Lake Bled",
+          city: "Bled",
+          state: "Slovenia",
+          country: "Europe",
+          lat: 46.36,
+          lng: 14.1,
+          name: "Resort town in Julian Alps, Slovenia",
+          description:
+            "Bled, a Slovenian resort town in the foothills of the Julian Alps, is set along the glacial Lake Bled. On a cliff overlooking the lake is the 11th-century Bled Castle, which houses a museum, chapel and printing press. Atop a small island in the lake's center is the Pilgrimage Church of the Assumption of Maria, with its steep staircase and bell tower. Source: google maps description",
+          price: 355,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Liguria, Italy
+        {
+          ownerId: 8,
+          address: "Cinque Terre",
+          city: "Liguria",
+          state: "Italy",
+          country: "Europe",
+          lat: 44.15,
+          lng: 9.64,
+          name: "Ocean view, Italy",
+          description:
+            "Cinque Terre is a string of centuries-old seaside villages on the rugged Italian Riviera coastline. In each of the 5 towns, colorful houses and vineyards cling to steep terraces, harbors are filled with fishing boats and trattorias turn out seafood specialties along with the Liguria region’s famous sauce, pesto. The Sentiero Azzurro cliffside hiking trail links the villages and offers sweeping sea vistas. Source: google maps",
+          price: 555,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Prague, Czech
+        {
+          ownerId: 9,
+          address: "Prague Castle",
+          city: "Prague",
+          state: "Czech Republic",
+          country: "Europe",
+          lat: 50.08,
+          lng: 14.44,
+          name: "Prague castle at night",
+          description:
+            "Vast castle complex with buildings revealing architecture from Roman-style to Gothic & 20th century. Source: google maps",
+          price: 130,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Maldives
+        {
+          ownerId: 10,
+          address: "Raa Atoll",
+          city: "Raa Atoll",
+          state: "Maldives",
+          country: "Maldive Islands",
+          lat: 5.67,
+          lng: 72.85,
+          name: "Maldive Islands",
+          description:
+            "Home near the mountain side of Switzerland, everything looks so blue and calm!",
+          price: 232,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {}
     );

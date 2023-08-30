@@ -7,13 +7,29 @@ h1.manageSpots {
   margin-bottom: 30px;
 }
 
-.createNewSpotButton {
-  margin-top: -10px;
+.create-new-spot-manage-spots {
+  margin-top: -20px;
   margin-left: 2.2%;
-  color: teal;
+  border: 3px solid black;
+  margin-bottom: 40px;
+  /* color: teal; */
 }
 
 .separateUpdateDelete {
   display: inline-block;
   width: 10px;
+}
+
+.updateDeleteButtons {
+  padding-top: 10px;
+}
+
+.update-button-user-spots {
+  background-color: #464545;
+  border: 3px solid black;
+}
+
+.delete-button-user-spots {
+  background-color: #464545;
+  border: 3px solid black;
 }

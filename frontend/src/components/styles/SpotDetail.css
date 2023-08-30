@@ -2,8 +2,7 @@
   max-width: 1000px;
   width: 100%;
   margin: 0 auto;
-  padding-left: 1%;
-  padding-top: 50px;
+  /* padding-left: 1%; */
 }
 
 /* Location flexbox includes the city, state, country -> in that order */
@@ -80,6 +79,7 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  padding-bottom: 10px;
 }
 
 .price {
@@ -94,7 +94,7 @@
 }
 
 .stars {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
 }
 
@@ -108,8 +108,9 @@
 }
 
 .reviewCount {
-  font-size: 14px;
+  font-size: 16px;
   margin-top: 1px;
+  font-weight: bolder;
 }
 
 .hostedBy {
@@ -125,6 +126,8 @@
   background-color: #d70466;
   color: black;
   width: 100%;
+  font-weight: bold;
+  border: 3px solid black;
 }
 
 .reserveButton:hover {
@@ -166,8 +169,11 @@
   margin-top: 2.5px;
 }
 
-/***** *****/
-
-.postReviewButton {
+.post-review-button-div {
   padding-bottom: 10px;
+}
+
+.post-review-button {
+  background-color: #464545;
+  border: 3px solid black;
 }

@@ -165,9 +165,11 @@ function SpotDetail() {
       </div>
       {/* Conditionally render the ReviewFormModal */}
       {/* It will only render if there's a logged-in user, who hasn't posted a review, and isn't the owner */}
-      <div className="postReviewButton">
+      <div className="post-review-button-div">
         {currentUser && !userHasPostedReview && !isOwner && (
-          <button onClick={openModal}>Post Your Review</button>
+          <button className="post-review-button" onClick={openModal}>
+            Post Your Review
+          </button>
         )}
       </div>
       {showModal && (
