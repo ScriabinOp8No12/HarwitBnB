@@ -79,125 +79,134 @@ function SpotDetail() {
   // Check if the current user is the owner of the spot
   const isOwner = currentUser && currentUser.id === spot.ownerId;
 
+  // ***************** return portion ********************* //
   return (
-    <div className="spotDetailContainer">
-      {/* Display spot's name */}
-      <h1>{spot.name}</h1>
-      {/* {errors && <div className="error">{errors}</div>} */}
-      <div className="location">
-        {/* Display spot's location in city, state, country format */}
-        {spot.city}, {spot.state}, {spot.country}
-      </div>
-      <div className="images">
-        {/* Main, large image on the left */}
-        <img src={mainImage} alt={spot.name} className="largeImage" />
-        {/* 4 smaller images on the right of the main, large image, loop through to grab first 4 (see lines 35-36) */}
-        <div className="smallImages">
-          {otherImages.map((image, index) => (
-            <img
-              src={image.url}
-              alt={`${spot.name} ${index}`}
-              key={index}
-              className="smallImage"
-            />
-          ))}
+    <div className="contentWrapperSpotDetails">
+      <div className="spotDetailContainer">
+        <h1 className="spotName">{spot.name}</h1>
+        <div className="location">
+          {spot.city}, {spot.state}, {spot.country}
         </div>
-      </div>
-      <div className="contentContainer">
-        <div className="description">
-          {/* Host information, includes firstname and lastname, Owner object is in the response with this info */}
-          <div className="hostedBy">
-            {spot.ownerId &&
-              `Hosted by ${spot.Owner?.firstName} ${spot.Owner?.lastName}`}
+        <div className="images">
+          <img src={mainImage} alt={spot.name} className="largeImage" />
+          {/* 4 smaller images on the right of the main, large image, loop through to grab first 4 (see lines 35-36) */}
+          <div className="smallImages">
+            {otherImages.map((image, index) => (
+              <img
+                src={image.url}
+                alt={`${spot.name} ${index}`}
+                key={index}
+                className="smallImage"
+              />
+            ))}
           </div>
-
-          <div className="spotDescription">{spot.description}</div>
         </div>
-        <div className="calloutInfoBoxContainer">
-          <div className="calloutInfoBox">
-            <div className="ratingPriceContainer">
-              <div className="price">
-                ${spot.price} <span>night</span>
-              </div>
-              {/* Ternary logic -> if reviews greater than 1, then format it with a star, a dot,
+        <div className="contentContainer">
+          <div className="description">
+            {/* Host information, includes firstname and lastname, Owner object is in the response with this info */}
+            <div className="hostedBy">
+              {spot.ownerId &&
+                `Hosted by ${spot.Owner?.firstName} ${spot.Owner?.lastName}`}
+            </div>
+
+            <div className="spotDescription">{spot.description}</div>
+          </div>
+          <div className="calloutInfoBoxContainer">
+            <div className="calloutInfoBox">
+              <div className="ratingPriceContainer">
+                <div className="price">
+                  ${spot.price} <span>night</span>
+                </div>
+                {/* Ternary logic -> if reviews greater than 1, then format it with a star, a dot,
               then the number of review, if reviews equals 1, then use singular "review" instead of "reviews"
               and otherwise (no reviews), just have a star with the word "new" on the right of it */}
-              {spot.numReviews > 1 ? (
-                <>
-                  <span className="stars">★ {formattedRating}</span>
-                  <span className="middleDot">·</span>
-                  <span className="reviewCount">{spot.numReviews} reviews</span>
-                </>
-              ) : spot.numReviews === 1 ? (
-                <>
-                  <span className="stars">★ {formattedRating}</span>
-                  <span className="middleDot">·</span>
-                  <span className="reviewCount">{spot.numReviews} review</span>
-                </>
-              ) : (
-                <span className="stars">★ New</span>
-              )}
+                <div className="reviewSummaryCalloutInfoBox">
+                  {spot.numReviews > 1 ? (
+                    <>
+                      <span className="stars">★ {formattedRating}</span>
+                      <span className="middleDot">·</span>
+                      <span className="reviewCount">
+                        {spot.numReviews} reviews
+                      </span>
+                    </>
+                  ) : spot.numReviews === 1 ? (
+                    <>
+                      <span className="stars">★ {formattedRating}</span>
+                      <span className="middleDot">·</span>
+                      <span className="reviewCount">
+                        {spot.numReviews} review
+                      </span>
+                    </>
+                  ) : (
+                    <span className="stars">★ New</span>
+                  )}
+                </div>
+              </div>
+              <button
+                onClick={handleReservationClick}
+                className="reserveButton"
+              >
+                Reserve
+              </button>
             </div>
-            <button onClick={handleReservationClick} className="reserveButton">
-              Reserve
-            </button>
           </div>
         </div>
-      </div>
-      {/* Same logic for reviews as for the calloutInfoBox, but we use different css class names so we
+        {/* Same logic for reviews as for the calloutInfoBox, but we use different css class names so we
       can increase the size of the elements and/or style them differently too */}
-      <div className="reviewSummaryContainer">
-        {spot.numReviews > 1 ? (
-          <>
-            <span className="stars">★ {formattedRating}</span>
-            <span className="middleDot">·</span>
-            <span className="reviewCount">{spot.numReviews} reviews</span>
-          </>
-        ) : spot.numReviews === 1 ? (
-          <>
-            <span className="stars">★ {formattedRating}</span>
-            <span className="middleDot">·</span>
-            <span className="reviewCount">{spot.numReviews} review</span>
-          </>
-        ) : (
-          <span className="stars">★ New</span>
-        )}
-      </div>
-      {/* Conditionally render the ReviewFormModal */}
-      {/* It will only render if there's a logged-in user, who hasn't posted a review, and isn't the owner */}
-      <div className="post-review-button-div">
-        {currentUser && !userHasPostedReview && !isOwner && (
-          <button className="post-review-button" onClick={openModal}>
-            Post Your Review
-          </button>
-        )}
-      </div>
-      {showModal && (
-        <ReviewFormModal
-          spotId={spotId}
-          showModal={showModal}
-          closeModal={closeModal}
-          onReviewPosted={handleReviewPosted}
-        />
-      )}
 
-      {/* Logic for if the message "Be the first to post a review!" should be displayed
+        <div className="reviewSummaryContainer">
+          {spot.numReviews > 1 ? (
+            <>
+              <span className="stars">★ {formattedRating}</span>
+              <span className="middleDot">·</span>
+              <span className="reviewCount">{spot.numReviews} reviews</span>
+            </>
+          ) : spot.numReviews === 1 ? (
+            <>
+              <span className="stars">★ {formattedRating}</span>
+              <span className="middleDot">·</span>
+              <span className="reviewCount">{spot.numReviews} review</span>
+            </>
+          ) : (
+            <span className="stars">★ New</span>
+          )}
+        </div>
+        {/* Conditionally render the ReviewFormModal */}
+        {/* It will only render if there's a logged-in user, who hasn't posted a review, and isn't the owner */}
+        <div className="post-review-button-div">
+          {currentUser && !userHasPostedReview && !isOwner && (
+            <button className="post-review-button" onClick={openModal}>
+              Post Your Review
+            </button>
+          )}
+        </div>
+        {showModal && (
+          <ReviewFormModal
+            spotId={spotId}
+            showModal={showModal}
+            closeModal={closeModal}
+            onReviewPosted={handleReviewPosted}
+          />
+        )}
+
+        {/* Logic for if the message "Be the first to post a review!" should be displayed
       Only display it if these 3 conditions are both satisfied:
       1. There are no reviews for this spot
       2. There is a logged in user
       3. The logged in user is NOT the owner of the spot */}
-      {spot.numReviews === 0 &&
-      currentUser &&
-      currentUser.id !== spot.ownerId ? (
-        <div>Be the first to post a review!</div>
-      ) : (
-        // Added additional props to Reviews component that gets rendered here
-        <Reviews
-          spotId={spotId}
-          currentUser={currentUser}
-          onReviewPosted={handleReviewPosted}
-        />
-      )}
+        {spot.numReviews === 0 &&
+        currentUser &&
+        currentUser.id !== spot.ownerId ? (
+          <div>Be the first to post a review!</div>
+        ) : (
+          // Added additional props to Reviews component that gets rendered here
+          <Reviews
+            spotId={spotId}
+            currentUser={currentUser}
+            onReviewPosted={handleReviewPosted}
+          />
+        )}
+      </div>
     </div>
   );
 }

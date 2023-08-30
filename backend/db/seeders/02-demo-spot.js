@@ -167,7 +167,7 @@ module.exports = {
           lng: 72.85,
           name: "Maldive Islands",
           description:
-            "Home near the mountain side of Switzerland, everything looks so blue and calm!",
+            "Homes on water in the Maldive Islands, the water color looks very different here than further out.",
           price: 232,
           createdAt: new Date(),
           updatedAt: new Date(),
