@@ -309,7 +309,7 @@ module.exports = {
         {
           spotId: 8,
           url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693351704/Laguria_Italy_3_exdtl4.jpg",
-          preview: true,
+          preview: false,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -317,7 +317,7 @@ module.exports = {
         {
           spotId: 8,
           url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693351710/Laguria_Italy_2_z4lqcy.jpg",
-          preview: true,
+          preview: false,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -325,7 +325,7 @@ module.exports = {
         {
           spotId: 8,
           url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693351711/Laguria_Italy_4_xh0cwe.jpg",
-          preview: true,
+          preview: false,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -333,7 +333,87 @@ module.exports = {
         {
           spotId: 8,
           url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693351712/Laguria_Italy_1_vfb8so.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Prague, Czech preview
+        {
+          spotId: 9,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1692731572/Prague%2C%20Czech%20preview.jpg",
           preview: true,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Prague, Czech no preview 1
+        {
+          spotId: 9,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693353975/Prague_Czech_3_wtilul.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Prague, Czech no preview 2
+        {
+          spotId: 9,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693353980/Prague_Czech_1_votmqm.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Prague, Czech no preview 3
+        {
+          spotId: 9,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693353981/Prague_Czech_2_rggp3v.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Prague, Czech no preview 4
+        {
+          spotId: 9,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693353981/Prague_Czech_4_sggaid.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Maldives preview
+        {
+          spotId: 10,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1692731586/Maldives%20preview.jpg",
+          preview: true,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Maldives no preview 1
+        {
+          spotId: 10,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693354298/Maldives_4_fr2nzj.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Maldives no preview 2
+        {
+          spotId: 10,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693354299/Maldives_1_qbtnak.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Maldives no preview 3
+        {
+          spotId: 10,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693354301/Maldives_3_kavbp6.jpg",
+          preview: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        // Maldives no preview 4
+        {
+          spotId: 10,
+          url: "https://res.cloudinary.com/dxq77puhi/image/upload/v1693354304/Maldives_2_b2xwm9.jpg",
+          preview: false,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
