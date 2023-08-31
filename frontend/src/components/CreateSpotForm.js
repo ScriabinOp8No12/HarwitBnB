@@ -233,7 +233,7 @@ function CreateSpotForm() {
           <textarea
             className="description-field"
             name="description"
-            placeholder="Description"
+            placeholder="Please write at least 30 characters"
             value={spotDetails.description}
             onChange={handleChange}
           ></textarea>
