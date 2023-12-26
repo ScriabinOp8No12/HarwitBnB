@@ -11,6 +11,32 @@
   width: 40px;
 }
 
+/************************* About me styling below ************************/
+
+.about-me-link {
+  position: fixed;
+  border: none;
+  top: 30px;
+  left: 120px;
+  text-decoration: none;
+  color: teal;
+  font-weight: bold;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.about-me-link:hover {
+  border: 3px solid black;
+  border-radius: 15px;
+  background-color: lightgrey;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
 .loginText {
   margin-top: 0px;
 }
@@ -283,6 +309,10 @@
   background-color: white !important;
   border: none !important;
   margin-top: 33px !important;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .create-spot-button:hover {
@@ -290,8 +320,8 @@
   border: 3px solid black !important;
   border-radius: 15px !important;
   background-color: lightgrey !important;
-  padding-top: 2px;
-  padding-bottom: 2px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   padding-left: 5px;
   padding-right: 5px;
 }
