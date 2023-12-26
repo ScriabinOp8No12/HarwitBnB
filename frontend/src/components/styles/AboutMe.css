@@ -1,0 +1,59 @@
+.about-me-outer-container {
+  width: 65%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.about-me-h1 {
+  margin-top: 120px;
+  color: teal;
+  text-align: center;
+}
+
+.about-me-paragraph-text {
+  color: black;
+  width: 82%;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.about-me-image {
+  width: 30%;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.about-me-caption {
+  text-align: center;
+  color: aliceblue;
+  margin-top: 10px;
+}
+
+.about-me-outer-container a {
+  color: teal;
+  text-decoration: none;
+}
+
+/* Styling github, linkedin, portfolio, and resume links at the bottom of the page */
+
+.connect-section {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  color: black;
+  width: 82%;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.connect-section .links {
+  display: flex;
+  gap: 10px;
+  margin-left: 10px;
+}
+
+.connect-section a {
+  text-decoration: none;
+}

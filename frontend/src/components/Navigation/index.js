@@ -17,7 +17,13 @@ function Navigation({ isLoaded }) {
             src="/airbnb-logo-cropped.jpg"
             alt="airbnb-logo"
             className="logo"
+            title="Home"
           />
+        </NavLink>
+      </div>
+      <div>
+        <NavLink exact to="/about-me" className="about-me-link">
+          About Me
         </NavLink>
       </div>
       {isLoaded && (

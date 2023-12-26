@@ -9,6 +9,7 @@ import SpotDetail from "./components/SpotDetail";
 import CreateSpotForm from "./components/CreateSpotForm";
 import CurrentUserSpots from "./components/CurrentUserSpots";
 import UpdateSpotForm from "./components/UpdateSpotForm";
+import AboutMe from "./components/AboutMe";
 
 function App() {
   // dispatch is used to send actions to the store and trigger them
@@ -68,6 +69,7 @@ function App() {
       {isLoaded && (
         <Switch>
           <Route exact path="/" component={Spots} />
+          <Route path="/about-me" component={AboutMe} />
           <Route path="/spots/current" component={CurrentUserSpots} />
           {/* Add update to the end, doesn't have to match backend route */}
           <Route
