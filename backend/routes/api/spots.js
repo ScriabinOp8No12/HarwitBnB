@@ -216,37 +216,47 @@ router.post("/", requireAuth, async (req, res) => {
 // Create and return a new image for a spot specified by id
 router.post("/:spotId/images", requireAuth, async (req, res) => {
   const { spotId } = req.params;
-  const { url, preview } = req.body;
+  const { images } = req.body; // expect an array of images now, not just one image
 
-  // console.log(
-  //   "Received request to add image to spot:",
-  //   req.params.id,
-  //   req.body
-  // );
+  // // Basic validation for images array
+  // if (!Array.isArray(images) || images.length === 0) {
+  //   return res.status(400).json({ message: "Invalid images data provided" });
+  // }
+
+  // // Validate each image object
+  // for (const image of images) {
+  //   if (typeof image.url !== 'string' || image.url.trim() === '') {
+  //     return res.status(400).json({ message: "Invalid image URL" });
+  //   }
+  //   if (image.preview !== undefined && typeof image.preview !== 'boolean') {
+  //     return res.status(400).json({ message: "Invalid preview flag" });
+  //   }
+  // }
 
   // find the spot by primary key, if that spot doesn't exist, then throw a 404 error
   const spot = await Spot.findByPk(spotId);
   if (!spot) {
     return res.status(404).json({ message: "Spot couldn't be found" });
-    // request holds the authenticated user's id
-    // set that equal to the ownerId of the spot
   } else if (req.user.id !== spot.ownerId) {
     return res.status(403).json({ message: "Not authorized!" });
   }
-  const imageData = await SpotImage.create({
-    spotId,
-    url,
-    preview,
-  });
 
-  // Create a new object with the properties we want (same trick as the first get route)
-  const formattedImageData = {
-    id: imageData.id,
-    url: imageData.url,
-    preview: imageData.preview,
-  };
+  let savedImages = [];
+  for (const image of images) {
+    const imageData = await SpotImage.create({
+      spotId,
+      url: image.url,
+      preview: image.preview || false, // if preview for image is set to true, then that's the preview, otherwise it will always be false, these false
+      // ones are our 4 secondary images, the smaller ones that go with the larger preview image
+    });
+    savedImages.push({
+      id: imageData.id,
+      url: imageData.url,
+      preview: imageData.preview,
+    });
+  }
 
-  return res.json(formattedImageData);
+  return res.json(savedImages); // output is an array of objects, with an id, url, and preview boolean value!  If the preview boolean value is true, that's the largest image, the other 4 have a preview value of false
 });
 
 // Requires authorization
