@@ -75,31 +75,65 @@ export const createSpot = (spotDetails) => async (dispatch) => {
 
   // console.log("Received new spot from server:", newSpot);
 
-  // If the spot was created successfully, add the image
-  // Basically if newSpot.id exists and there's a previewImage on the spot, then we
-  // Make another post request to /spots/:id/images to add the image(s) to that spot
+  // If the spot was created successfully, add the image. Basically if newSpot.id exists, then we make another post request to /spots/:id/images to add the image(s) to that spot
 
-  if (newSpot.id && spotDetails.previewImage) {
-    const imageResponse = await csrfFetch(`/api/spots/${newSpot.id}/images`, {
-      // Use csrfFetch
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        url: spotDetails.previewImage,
-        preview: true,
-      }),
-    });
-    const image = await imageResponse.json();
-    newSpot.images = [image]; // Add the image to the newSpot object
+  if (newSpot.id) {
+    let images = [];
+    if (spotDetails.previewImage) {
+      // previewImage is
+      images.push({ url: spotDetails.previewImage, preview: true });
+    }
+
+    if (spotDetails.images) {
+      images = images.concat(
+        // additional images use "images" as found in our CreateSpotForm component, these HAVE to match
+        // merge preview image with any additional images (up to 4)
+        spotDetails.images
+          .filter((url) => url !== "") // filter out blank urls
+          .map((url) => {
+            return { url: url, preview: false }; // set their preview to false, since these are not the main preview image
+          })
+      );
+    }
+
+    if (images.length > 0) {
+      const imageResponse = await csrfFetch(`/api/spots/${newSpot.id}/images`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ images }),
+      });
+      const addedImages = await imageResponse.json();
+      newSpot.images = addedImages;
+    }
   }
   dispatch(createSpotAction(newSpot));
-  // Return a promise here
-  // By structuring the code this way, you ensure that the Promise returned by the thunk resolves with the newSpot object, including the image if one was added. This allows the calling code to handle the result of both operations in a single .then() block, as shown in the previous snippet.
-  // This pattern provides a clean way to handle complex asynchronous operations that involve multiple steps, ensuring that the calling code can respond to the complete result of the operation.
   return Promise.resolve(newSpot);
 };
+
+// If the spot was created successfully, add the image. Basically if newSpot.id exists and there's a previewImage on the spot, then we make another post request to /spots/:id/images to add the image(s) to that spot
+
+// if (newSpot.id && spotDetails.previewImage) {
+//   const imageResponse = await csrfFetch(`/api/spots/${newSpot.id}/images`, {
+//     // Use csrfFetch
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({
+//       url: spotDetails.previewImage,
+//       preview: true,
+//     }),
+//   });
+//   const image = await imageResponse.json();
+//   newSpot.images = [image]; // Add the image to the newSpot object
+// }
+// dispatch(createSpotAction(newSpot));
+// // Return a promise here, by structuring the code this way, you ensure that the Promise returned by the thunk resolves with the newSpot object, including the image if one was added. This allows the calling code to handle the result of both operations in a single .then() block, as shown in the previous snippet.
+// // This pattern provides a clean way to handle complex asynchronous operations that involve multiple steps, ensuring that the calling code can respond to the complete result of the operation.
+// return Promise.resolve(newSpot);
+// };
 
 // Thunk to get the current user's spots from the backend
 

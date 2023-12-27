@@ -116,6 +116,8 @@ function UpdateSpotForm({ spotId }) {
         // Merge frontend and backend errors
         const mergedErrors = { ...errorObj, ...data.errors };
         setErrors(mergedErrors);
+        // Scroll to the top of the page to show the error messages
+        window.scrollTo(0, 0);
       }
     }
   };

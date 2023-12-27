@@ -20,11 +20,11 @@ function CreateSpotForm() {
     description: "",
     name: "",
     price: "",
-    previewImage: "",
-    images: Array(5).fill(""), // Four additional optional image URLs (5)
+    previewImage: "", // make sure this matches the previewImage found in the thunk
+    images: Array(4).fill(""), // Four additional optional image URLs, name needs to make thunk
   });
 
-  const [imageErrors, setImageErrors] = useState(Array(5).fill(false));
+  const [imageErrors, setImageErrors] = useState(Array(4).fill(false));
   const [errors, setErrors] = useState([]);
 
   const handleChange = (e) => {
@@ -32,25 +32,32 @@ function CreateSpotForm() {
 
     if (name.startsWith("image")) {
       const index = Number(name.split("-")[1]);
-      const newImages = [...spotDetails.images];
-      newImages[index] = value;
-      setSpotDetails((prevDetails) => ({
-        ...prevDetails,
-        previewImage: index === 0 ? value : prevDetails.previewImage,
-        images: newImages,
-      }));
-      setImageErrors((prevErrors) => {
-        const newErrors = [...prevErrors];
-        if (value === "") {
-          newErrors[index] = false;
-        } else newErrors[index] = !value.match(/\.(jpg|jpeg|png)$/);
-        return newErrors;
-      });
+
+      // Update the imageErrors array for image URL validation
+      const newImageErrors = [...imageErrors];
+      newImageErrors[index] = value !== "" && !value.match(/\.(jpg|jpeg|png)$/);
+
+      if (index === 0) {
+        // Update only the preview image
+        setSpotDetails((prevDetails) => ({
+          ...prevDetails,
+          previewImage: value,
+        }));
+      } else {
+        // Correctly map to the images array
+        const adjustedIndex = index - 1;
+        const newImages = [...spotDetails.images];
+        newImages[adjustedIndex] = value;
+
+        setSpotDetails((prevDetails) => ({
+          ...prevDetails,
+          images: newImages,
+        }));
+      }
+
+      setImageErrors(newImageErrors);
     } else {
-      setSpotDetails((prevDetails) => ({
-        ...prevDetails,
-        [name]: value,
-      }));
+      setSpotDetails((prevDetails) => ({ ...prevDetails, [name]: value }));
     }
   };
 
@@ -110,6 +117,8 @@ function CreateSpotForm() {
         // Merge frontend and backend errors
         const mergedErrors = { ...frontendErrors, ...data.errors };
         setErrors(mergedErrors);
+        // Scroll to the top of the page to show the error messages
+        window.scrollTo(0, 0);
       }
     }
   };
@@ -126,7 +135,7 @@ function CreateSpotForm() {
       name: "",
       price: "",
       previewImage: "",
-      images: Array(5).fill(""),
+      images: Array(4).fill(""),
     });
     setErrors([]);
   };
@@ -275,16 +284,33 @@ function CreateSpotForm() {
         <section>
           <h2>Liven up your spot with photos</h2>
           <p>Submit a link to at least one photo to publish your spot.</p>
+          {/* Input for the Preview Image */}
+          <div className="image-input">
+            <input
+              type="text"
+              name="image-0"
+              placeholder="Preview Image URL"
+              value={spotDetails.previewImage}
+              onChange={handleChange}
+            />
+            {imageErrors[0] && (
+              <p className="errorMessage">
+                Image URL needs to be a valid url and end in png, jpg, or jpeg.
+              </p>
+            )}
+          </div>
+
+          {/* Inputs for Additional Images */}
           {spotDetails.images.map((image, index) => (
             <div className="image-input" key={index}>
               <input
                 type="text"
-                name={`image-${index}`}
-                placeholder={index === 0 ? "Preview Image URL" : "Image URL"}
+                name={`image-${index + 1}`}
+                placeholder="Image URL"
                 value={image}
                 onChange={handleChange}
               />
-              {imageErrors[index] && ( // Use imageErrors array
+              {imageErrors[index + 1] && (
                 <p className="errorMessage">
                   Image URL needs to be a valid url and end in png, jpg, or
                   jpeg.
