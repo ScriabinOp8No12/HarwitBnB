@@ -20,8 +20,8 @@ function CreateSpotForm() {
     description: "",
     name: "",
     price: "",
-    previewImage: "",
-    images: Array(5).fill(""), // Four additional optional image URLs (5)
+    previewImage: "", // make sure this matches the previewImage found in the thunk
+    images: Array(5).fill(""), // Four additional optional image URLs (5) -> needs to match thunk
   });
 
   const [imageErrors, setImageErrors] = useState(Array(5).fill(false));
