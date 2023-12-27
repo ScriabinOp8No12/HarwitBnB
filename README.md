@@ -8,7 +8,7 @@
 
 ## Description
 
-This website is a clone of AirBnB, a large fraction of my time was spent styling with raw CSS, and managing state with React and Redux. The backend went surprisingly smoothly, only requiring 40 hours to fully build out, while the frontend took over 80 hours.
+This website is a clone of AirBnB, where users can view, create, edit and delete spot. There's also a review feature, which allows users to view, create, edit and delete their reviews. Cloudinary was used as the CDN to store the images. A large fraction of my time was spent managing state with React and Redux as well as styling with raw CSS. The backend went surprisingly smoothly, only requiring 40 hours to fully build out, while the frontend took over 80 hours.
 
 <br>
 
@@ -43,14 +43,6 @@ This website is a clone of AirBnB, a large fraction of my time was spent styling
 </p>
 
 <br>
-
-<br>
-
-## Features
-
-- Full Cruds (2): Spots and Reviews
-- Users can read, create, update and delete a spot
-- Users can read, create, update and delete a review
 
 <br>
 
